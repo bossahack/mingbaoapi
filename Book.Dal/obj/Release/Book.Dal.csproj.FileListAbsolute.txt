@@ -1,0 +1,16 @@
+E:\nolineup\api\Book.Dal\bin\Release\Book.Dal.dll
+E:\nolineup\api\Book.Dal\bin\Release\Book.Dal.pdb
+E:\nolineup\api\Book.Dal\bin\Release\Book.Model.dll
+E:\nolineup\api\Book.Dal\bin\Release\Dapper.dll
+E:\nolineup\api\Book.Dal\bin\Release\Dapper.SimpleCRUD.dll
+E:\nolineup\api\Book.Dal\bin\Release\MySql.Data.dll
+E:\nolineup\api\Book.Dal\bin\Release\Google.Protobuf.dll
+E:\nolineup\api\Book.Dal\bin\Release\BouncyCastle.Crypto.dll
+E:\nolineup\api\Book.Dal\bin\Release\Book.Model.pdb
+E:\nolineup\api\Book.Dal\bin\Release\Dapper.xml
+E:\nolineup\api\Book.Dal\bin\Release\Dapper.SimpleCRUD.pdb
+E:\nolineup\api\Book.Dal\bin\Release\Dapper.SimpleCRUD.xml
+E:\nolineup\api\Book.Dal\bin\Release\MySql.Data.xml
+E:\nolineup\api\Book.Dal\obj\Release\Book.Dal.csprojResolveAssemblyReference.cache
+E:\nolineup\api\Book.Dal\obj\Release\Book.Dal.dll
+E:\nolineup\api\Book.Dal\obj\Release\Book.Dal.pdb

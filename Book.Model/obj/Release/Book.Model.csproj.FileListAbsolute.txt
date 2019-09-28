@@ -1,0 +1,5 @@
+E:\nolineup\api\Book.Model\bin\Release\Book.Model.dll
+E:\nolineup\api\Book.Model\bin\Release\Book.Model.pdb
+E:\nolineup\api\Book.Model\obj\Release\Book.Model.csprojResolveAssemblyReference.cache
+E:\nolineup\api\Book.Model\obj\Release\Book.Model.dll
+E:\nolineup\api\Book.Model\obj\Release\Book.Model.pdb

@@ -7,3 +7,12 @@ E:\预约\api\Book\Book.Utils\obj\Debug\Book.Utils.dll
 E:\预约\api\Book\Book.Utils\obj\Debug\Book.Utils.pdb
 E:\预约\api\Book\Book.Utils\bin\Debug\Newtonsoft.Json.dll
 E:\预约\api\Book\Book.Utils\bin\Debug\Newtonsoft.Json.xml
+E:\nolineup\api\Book.Utils\bin\Debug\Book.Utils.dll
+E:\nolineup\api\Book.Utils\bin\Debug\Book.Utils.pdb
+E:\nolineup\api\Book.Utils\bin\Debug\Book.Model.dll
+E:\nolineup\api\Book.Utils\bin\Debug\Newtonsoft.Json.dll
+E:\nolineup\api\Book.Utils\bin\Debug\Book.Model.pdb
+E:\nolineup\api\Book.Utils\bin\Debug\Newtonsoft.Json.xml
+E:\nolineup\api\Book.Utils\obj\Debug\Book.Utils.csprojResolveAssemblyReference.cache
+E:\nolineup\api\Book.Utils\obj\Debug\Book.Utils.dll
+E:\nolineup\api\Book.Utils\obj\Debug\Book.Utils.pdb
