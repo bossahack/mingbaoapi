@@ -1,0 +1,4 @@
+E:\预约\api\Book\Book.Model\bin\Debug\Book.Model.dll
+E:\预约\api\Book\Book.Model\bin\Debug\Book.Model.pdb
+E:\预约\api\Book\Book.Model\obj\Debug\Book.Model.dll
+E:\预约\api\Book\Book.Model\obj\Debug\Book.Model.pdb
