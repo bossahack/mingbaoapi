@@ -88,6 +88,8 @@ namespace Book.Model
         /// 
         /// </summary>
         public int Qty { get; set; }
+
+        public int OrderId { get; set; }
     }
 
     public class BookOrderRequest

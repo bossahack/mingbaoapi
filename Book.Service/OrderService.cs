@@ -56,7 +56,8 @@ namespace Book.Service
                     FoodId=item.FoodId,
                     FoodName=item.FoodName,
                     FoodPrice=item.FoodPrice,
-                    Qty=item.Qty
+                    Qty=item.Qty,
+                    OrderId = item.OrderId
                 });
             }
             //foreach(var shop in shops)
