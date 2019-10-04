@@ -112,6 +112,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DbEntity.cs</LastGenOutput>
     </Content>
+    <Content Include="PublicDll\MySql.Data.dll" />
     <None Include="Model\Manager.ttinclude">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Manager.cs</LastGenOutput>

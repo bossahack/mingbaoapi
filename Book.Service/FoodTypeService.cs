@@ -1,6 +1,10 @@
 ﻿using Book.Dal;
+using Book.Dal.Model;
+using Book.Model;
 using Book.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Book.Service
 {
@@ -54,6 +58,18 @@ namespace Book.Service
                 throw new Exception("此类型下存在商品，不可删除");
 
             foodTypeDal.remove(id);
+        }
+
+        public List<FoodTypeResponse> GetTypes()
+        {
+            var currentUser = UserUtil.CurrentUser();
+            var list = foodTypeDal.GetList(currentUser.ShopId);
+            if (list == null)
+                return null;
+            return list.Select(c => new FoodTypeResponse() {
+                Id=c.Id,
+                Name=c.Name
+            }).ToList();
         }
     }
 }

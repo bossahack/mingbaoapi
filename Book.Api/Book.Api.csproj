@@ -136,6 +136,7 @@
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserOrderController.cs" />
+    <Compile Include="Filters\GlobalErrorFilterAttribute.cs" />
     <Compile Include="Filters\ShopFilterAttribute.cs" />
     <Compile Include="Filters\UserFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Book.Api.Filters;
 
 namespace Book.Api
 {
@@ -24,6 +25,8 @@ namespace Book.Api
 
             //调用前面的静态方法，将映射关系注册
             Book.Dal.Model.ColumnMapper.SetMapper();
+
+            config.Filters.Add(new GlobalErrorFilterAttribute());
         }
     }
 }

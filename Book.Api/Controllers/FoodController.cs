@@ -1,5 +1,6 @@
 ﻿using Book.Model;
 using Book.Service;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace Book.Api.Controllers
@@ -9,6 +10,11 @@ namespace Book.Api.Controllers
 
         private static FoodTypeService foodtypeService = FoodTypeService.GetInstance();
         private static FoodService foodService = FoodService.GetInstance();
+
+        public List<FoodTypeResponse> GetTypes()
+        {
+            return foodtypeService.GetTypes();
+        }
 
         [Filters.ShopFilter]
         [HttpPost]

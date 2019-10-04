@@ -8,6 +8,10 @@ namespace Book.Utils
     {
         public static UserInfoModel CurrentUser()
         {
+            return new UserInfoModel() {
+                Id=1,
+                ShopId=1
+            };
             var autho = System.Web.HttpContext.Current.Request.Headers.GetValues("Authorization");
             if (autho == null || autho.Count() == 0)
             {
