@@ -1,9 +1,0 @@
-E:\nolineup\api\Book.Utils\bin\Release\Book.Utils.dll
-E:\nolineup\api\Book.Utils\bin\Release\Book.Utils.pdb
-E:\nolineup\api\Book.Utils\bin\Release\Book.Model.dll
-E:\nolineup\api\Book.Utils\bin\Release\Newtonsoft.Json.dll
-E:\nolineup\api\Book.Utils\bin\Release\Book.Model.pdb
-E:\nolineup\api\Book.Utils\bin\Release\Newtonsoft.Json.xml
-E:\nolineup\api\Book.Utils\obj\Release\Book.Utils.csprojResolveAssemblyReference.cache
-E:\nolineup\api\Book.Utils\obj\Release\Book.Utils.dll
-E:\nolineup\api\Book.Utils\obj\Release\Book.Utils.pdb

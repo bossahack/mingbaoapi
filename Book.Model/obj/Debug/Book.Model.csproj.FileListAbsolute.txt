@@ -1,9 +1,0 @@
-E:\预约\api\Book\Book.Model\bin\Debug\Book.Model.dll
-E:\预约\api\Book\Book.Model\bin\Debug\Book.Model.pdb
-E:\预约\api\Book\Book.Model\obj\Debug\Book.Model.dll
-E:\预约\api\Book\Book.Model\obj\Debug\Book.Model.pdb
-E:\nolineup\api\Book.Model\bin\Debug\Book.Model.dll
-E:\nolineup\api\Book.Model\bin\Debug\Book.Model.pdb
-E:\nolineup\api\Book.Model\obj\Debug\Book.Model.csprojResolveAssemblyReference.cache
-E:\nolineup\api\Book.Model\obj\Debug\Book.Model.dll
-E:\nolineup\api\Book.Model\obj\Debug\Book.Model.pdb
