@@ -37,10 +37,16 @@ namespace Book.Api.Controllers
             foodtypeService.Remove(id);
         }
 
+
+
         [Filters.ShopFilter]
         [HttpPost]
         public void Create(FoodRequest request)
         {
+            if (string.IsNullOrEmpty(request.Img))
+            {
+                request.Img = "https://bpic.588ku.com/art_water_pic/19/07/13/4ab51bea856b0993ec8c9eb220b3ed7d.jpg";
+            }
             foodService.Create(request);
         }
 
@@ -63,6 +69,13 @@ namespace Book.Api.Controllers
         public void SetDisable(int id)
         {
             foodService.SetDisable(id);
+        }
+
+        [Filters.ShopFilter]
+        [HttpPost]
+        public void SetRemoved(int id)
+        {
+            foodService.SetRemoved(id);
         }
 
         [Filters.UserFilter]

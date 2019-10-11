@@ -12,12 +12,10 @@ namespace Book.Api.Filters
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
             base.OnException(actionExecutedContext);
-
-            var s = typeof(LogTraceListener).AssemblyQualifiedName;
-
+            
             try
             {
-                Trace.WriteLine(actionExecutedContext.Exception.ToString());
+                Trace.WriteLine(actionExecutedContext.Exception.ToString());//FileLogTraceListener
             }
             catch(Exception ex)
             {

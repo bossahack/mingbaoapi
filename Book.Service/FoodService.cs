@@ -84,6 +84,19 @@ namespace Book.Service
             foodDal.disable(id);
         }
 
+        public void SetRemoved(int id)
+        {
+            var food = foodDal.Get(id);
+            if (food == null)
+                throw new Exception("未查询到该食品");
+
+            var currentUser = UserUtil.CurrentUser();
+            if (food.ShopId != currentUser.ShopId)
+                throw new Exception("您没有权限进行此操作");
+
+            foodDal.Remove(id);
+        }
+
         public List<Food> GetList(int type)
         {
             var currentUser = UserUtil.CurrentUser();

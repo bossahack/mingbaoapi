@@ -21,7 +21,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                return conn.Query<Food>("SELECT * FROM food where type=@type AND shop_id=@shopid").ToList();
+                return conn.Query<Food>("SELECT * FROM food where type=@type AND shop_id=@shopid and status<>@status",new { shopid=shopid,type=type,status=FoodStatus.Removed}).ToList();
             }
         }
 
