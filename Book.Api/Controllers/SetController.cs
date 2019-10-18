@@ -22,7 +22,7 @@ namespace Book.Api.Controllers
         [HttpPost]
         public void ShopAddress(string address)
         {
-            SetService.GetInstance().SetShopName(address);
+            SetService.GetInstance().SetAddress(address);
         }
 
         [HttpPost]
@@ -36,6 +36,12 @@ namespace Book.Api.Controllers
         {
             SetService.GetInstance().SetRecommender(recommender);
         }
-        
+
+        [HttpPost]
+        public void Status(bool normal)
+        {
+            SetService.GetInstance().SetStatus(normal);
+        }
+
     }
 }

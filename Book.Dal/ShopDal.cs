@@ -82,5 +82,13 @@ namespace Book.Dal
                 conn.Execute("UPDATE shop SET recommender=@recommender where id=@id", new { recommender = recommender, id = shopid });
             }
         }
+
+        public void SetStatus(int shopid, int status)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Execute("UPDATE shop SET Status=@status where id=@id", new { status = status, id = shopid });
+            }
+        }
     }
 }

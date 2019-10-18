@@ -1,4 +1,5 @@
 ﻿using Book.Dal;
+using Book.Model.Enums;
 using Book.Utils;
 using System;
 
@@ -61,8 +62,20 @@ namespace Book.Service
             var shop = ShopDal.GetInstance().Get(currentUser.ShopId);
             if (shop.UserId != currentUser.Id)
                 throw new Exception("操作失败");
+            if(!string.IsNullOrEmpty(shop.Recommender))
+                ShopDal.GetInstance().SetRecommender(shop.Id, recommender);
+        }
 
-            ShopDal.GetInstance().SetRecommender(shop.Id, recommender);
+        public void SetStatus(bool normal)
+        {
+            var currentUser = UserUtil.CurrentUser();
+            var shop = ShopDal.GetInstance().Get(currentUser.ShopId);
+            if (shop.UserId != currentUser.Id)
+                throw new Exception("操作失败");
+            if (shop.Status == (int)ShopStatus.Arrears)
+                throw new Exception("欠费状态，不可更改");
+
+            ShopDal.GetInstance().SetStatus(shop.Id, normal?(int)ShopStatus.Normal: (int)ShopStatus.Closed);
         }
 
     }
