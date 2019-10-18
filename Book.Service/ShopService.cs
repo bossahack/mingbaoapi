@@ -20,9 +20,10 @@ namespace Book.Service
         }
 
 
-        public ShopResponse GetShopInfo(int shopid)
+        public ShopResponse GetShopInfo()
         {
-            var shop = ShopDal.GetInstance().Get(shopid);
+            var current = UserUtil.CurrentUser();
+            var shop = ShopDal.GetInstance().Get(current.ShopId);
             if (shop == null)
                 return null;
             return new ShopResponse()

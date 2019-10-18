@@ -9,9 +9,9 @@ namespace Book.Api.Controllers
     {
         [Filters.UserFilter]
         [HttpGet]
-        public ShopResponse GetInfo(int id)
+        public ShopResponse GetInfo()
         {
-            return ShopService.GetInstance().GetShopInfo(id);
+            return ShopService.GetInstance().GetShopInfo();
         }
 
         [Filters.UserFilter]
