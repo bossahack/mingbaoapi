@@ -11,6 +11,27 @@ namespace Book.Api.Controllers
         private static FoodTypeService foodtypeService = FoodTypeService.GetInstance();
         private static FoodService foodService = FoodService.GetInstance();
 
+
+        #region 用户端
+
+        [Filters.UserFilter]
+        public List<FoodTypeResponse> GetTypes_U(int id)
+        {
+            return foodtypeService.GetShopTypes(id);
+        }
+
+
+
+        [Filters.UserFilter]
+        [HttpGet]
+        public object GetList_U(int shopid)
+        {
+            return foodService.GetShopFoods(shopid);
+        }
+        #endregion
+
+
+        [Filters.ShopFilter]
         public List<FoodTypeResponse> GetTypes()
         {
             return foodtypeService.GetTypes();

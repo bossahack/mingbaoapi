@@ -1,4 +1,5 @@
 ﻿using Book.Model;
+using Book.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,26 +15,20 @@ namespace Book.Api.Filters
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             base.OnActionExecuting(actionContext);
-            
 
-            //var autho = System.Web.HttpContext.Current.Request.Headers.GetValues("Authorization");
-            //if(autho==null||autho.Count()==0)
-            //{
-            //    actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
-            //    return;
-            //}
-            //var loginInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
-            //if (loginInfo == null)
-            //{
-            //    actionContext.Response =new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
 
-            //    return;
-            //}
-            //if(loginInfo.Id<=0)
-            //{
-            //    actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
-            //    return;
-            //}
+            var autho = System.Web.HttpContext.Current.Request.Headers.GetValues("Authorization");
+            if (autho == null || autho.Count() == 0)
+            {
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+                return;
+            }
+            string str = SecurityUtil.GetInstance().DecryptString(autho[0]);
+            var arr = str.Split('-');
+            if (arr == null || arr.Length != 2)
+            {
+                throw new Exception("登录失效，请登录");
+            }            
         }
     }
 }

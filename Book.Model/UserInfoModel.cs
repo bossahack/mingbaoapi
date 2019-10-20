@@ -7,12 +7,12 @@
         /// 
         /// </summary>
         public int Id { get; set; }
-        
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public string Wxid { get; set; }
-                
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Token { get; set; }
+
 
         public int ShopId { get; set; }
     }

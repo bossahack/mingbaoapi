@@ -17,11 +17,19 @@ namespace Book.Dal
             return _Instance;
         }
 
+        public List<Food> GetList(int shopid)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.Query<Food>("SELECT * FROM food where shop_id=@shopid and status<>@status", new { shopid = shopid, status = FoodStatus.Removed }).ToList();
+            }
+        }
+
         public List<Food> GetList(int type, int shopid)
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                return conn.Query<Food>("SELECT * FROM food where type=@type AND shop_id=@shopid and status<>@status",new { shopid=shopid,type=type,status=FoodStatus.Removed}).ToList();
+                return conn.Query<Food>("SELECT * FROM food where type=@type AND shop_id=@shopid and status<>@status", new { shopid = shopid, type = type, status = FoodStatus.Removed }).ToList();
             }
         }
 

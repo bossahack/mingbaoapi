@@ -8,21 +8,22 @@ namespace Book.Utils
     {
         public static UserInfoModel CurrentUser()
         {
-            return new UserInfoModel() {
-                Id=1,
-                ShopId=1
-            };
             var autho = System.Web.HttpContext.Current.Request.Headers.GetValues("Authorization");
             if (autho == null || autho.Count() == 0)
             {
                 throw new Exception("登录失效，请登录");
             }
-            var loginInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
-            if (loginInfo == null)
+            string str = SecurityUtil.GetInstance().DecryptString(autho[0]);
+            var arr = str.Split('-');
+            if (arr == null || arr.Length != 2)
             {
                 throw new Exception("登录失效，请登录");
             }
-            return loginInfo;
+            return new UserInfoModel()
+            {
+                Id = int.Parse(arr[0]),
+                ShopId = int.Parse(arr[1])
+            };
         }
     }
 }

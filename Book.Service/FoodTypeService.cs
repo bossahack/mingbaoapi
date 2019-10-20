@@ -71,5 +71,18 @@ namespace Book.Service
                 Name=c.Name
             }).ToList();
         }
+
+
+        public List<FoodTypeResponse> GetShopTypes(int shopid)
+        {
+            var list = foodTypeDal.GetList(shopid);
+            if (list == null)
+                return null;
+            return list.Select(c => new FoodTypeResponse()
+            {
+                Id = c.Id,
+                Name = c.Name
+            }).ToList();
+        }
     }
 }

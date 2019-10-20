@@ -102,5 +102,10 @@ namespace Book.Service
             var currentUser = UserUtil.CurrentUser();
             return foodDal.GetList(type, currentUser.ShopId);
         }
+
+        public List<Food> GetShopFoods(int shopId)
+        {
+            return foodDal.GetList(shopId);
+        }
     }
 }

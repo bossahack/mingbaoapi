@@ -1,6 +1,7 @@
 ﻿using Book.Dal;
 using Book.Dal.Model;
 using Book.Model;
+using Book.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Web.Configuration;
@@ -29,6 +30,7 @@ namespace Book.Service
                 throw new Exception("登陆失败");
 
             var dbUser = UserInfoDal.GetInstance().Get(oiask.openid);
+            UserInfoModel result = null;
             if (dbUser == null)
             {
                 UserInfo userCreate = new UserInfo()
@@ -37,22 +39,19 @@ namespace Book.Service
                     CreateDate = DateTime.Now
                 };
                 var id = userInfoDal.Create(userCreate);
-                return new UserInfoModel()
+                result= new UserInfoModel()
                 {
                     Id = id
                 };
-            }
-            var shopid = 0;
-            if (dbUser.HasShop)
+            }else
             {
-                var shop = ShopDal.GetInstance().GetByUser(dbUser.Id);
-                shopid = shop.Id;
+                result= new UserInfoModel()
+                {
+                    Id = dbUser.Id
+                };
             }
-            return new UserInfoModel()
-            {
-                Id = dbUser.Id,
-                ShopId = shopid
-            };
+            result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
+            return result;
         }
 
 
