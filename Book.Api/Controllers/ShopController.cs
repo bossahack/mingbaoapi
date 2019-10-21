@@ -7,25 +7,33 @@ namespace Book.Api.Controllers
 {
     public class ShopController : ApiController
     {
-        [Filters.UserFilter]
+        [Filters.ShopFilter]
         [HttpGet]
         public ShopResponse GetInfo()
         {
             return ShopService.GetInstance().GetShopInfo();
         }
 
-        [Filters.UserFilter]
+        [Filters.ShopFilter]
         [HttpGet]
         public List<ShopResponse> GetUserShops()
         {
             return ShopService.GetInstance().GetUserShops();
         }
 
-        [Filters.UserFilter]
+        [Filters.ShopFilter]
         [HttpPost]
         public void CollectShop(int shopid)
         {
             ShopService.GetInstance().CollectShop(shopid);
+        }
+
+
+        [Filters.ShopFilter]
+        [HttpGet]
+        public object GetQRCode()
+        {
+            return ShopService.GetInstance().GetQRCode();
         }
     }
 }
