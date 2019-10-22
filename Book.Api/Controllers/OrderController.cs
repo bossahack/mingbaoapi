@@ -1,4 +1,5 @@
-﻿using Book.Service;
+﻿using Book.Model;
+using Book.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,15 +33,20 @@ namespace Book.Api.Controllers
             orderService.Taked(orderId);
         }
 
-        public void Cancel(int orderId)
-        {
-            orderService.Cancel(orderId);
-        }
+        //public void Cancel(int orderId)
+        //{
+        //    orderService.Cancel(orderId);
+        //}
 
         public void Abnormal(int orderId)
         {
             orderService.Abnormal(orderId);
         }
-        
+
+        public ShopOrderHistoryResponse GetPages(int index,int size)
+        {
+            return orderService.GetShopOrderPages(index, size);
+        }
+
     }
 }

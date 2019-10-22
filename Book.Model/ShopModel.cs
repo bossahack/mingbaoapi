@@ -66,4 +66,35 @@ namespace Book.Model
         /// </summary>
         public string Address { get; set; }
     }
+
+    public class ShopModel
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Id { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Name { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Address { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Logo { get; set; }
+
+        
+        /// <summary>
+        /// 0:正常 10:不营业 20:欠费
+        /// </summary>
+        public int Status { get; set; }
+        
+    }
 }

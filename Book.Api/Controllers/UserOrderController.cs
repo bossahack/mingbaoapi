@@ -35,6 +35,17 @@ namespace Book.Api.Controllers
             orderService.CopyBookOrder(orderId);
         }
 
+        [HttpPost]
+        public void Cancel(int orderId)
+        {
+            orderService.Cancel(orderId);
+        }
+
+        public object GetPages(int index,int size)
+        {
+            return orderService.GetPages(index, size);
+        }
+
 
     }
 }

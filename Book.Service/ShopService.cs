@@ -38,6 +38,21 @@ namespace Book.Service
             };
         }
 
+        public ShopModel GetShopInfo(int id)
+        {
+            var shop = ShopDal.GetInstance().Get(id);
+            if (shop == null)
+                return null;
+            return new ShopModel()
+            {
+                Id = shop.Id,
+                Address = shop.Address,
+                Logo = shop.Logo,
+                Name = shop.Name,
+                Status = shop.Status
+            };
+        }
+
         public List<ShopResponse> GetUserShops()
         {
             var current = UserUtil.CurrentUser();

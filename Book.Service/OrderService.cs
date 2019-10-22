@@ -22,11 +22,12 @@ namespace Book.Service
         private static OrderDal orderDal = OrderDal.GetInstance();
         private static OrderItemDal orderItemDal = OrderItemDal.GetInstance();
         private static ShopDal shopDal = ShopDal.GetInstance();
+        private static UserInfoDal userInfoDal = UserInfoDal.GetInstance();
 
         public OrderResponse GetShopOrderToday()
         {
             var currentUser = UserUtil.CurrentUser();
-            var orders = orderDal.GetShopOrderList(currentUser.ShopId, DateTime.Now);
+            var orders = orderDal.GetShopOrderToday(currentUser.ShopId);
             if (orders == null || orders.Count == 0)
                 return null;
 
@@ -105,10 +106,10 @@ namespace Book.Service
             var order = orderDal.Get(orderId);
             if (order == null)
                 throw new Exception("未查询到订单信息");
-            if (order.ShopId != currentUser.ShopId)
+            if (order.UserId != currentUser.Id)
                 throw new Exception("您无权操作");
-            if (new List<int>() { (int)OrderStatus.Completed }.Contains(order.Status))
-                throw new Exception("已完成单据不可取消");
+            if (order.Status!=(int)OrderStatus.Origin)
+                throw new Exception("非初始状态订单不可取消");
 
             orderDal.SetStatus(orderId, (int)OrderStatus.Canceled);
         }
@@ -325,6 +326,91 @@ namespace Book.Service
                 orderItems.ForEach(c => c.OrderId = orderid);
                 orderItemDal.Create(orderItems);
             });
+        }
+
+        public OrderResponseHistory GetPages(int index, int size)
+        {
+            var currentUser = UserUtil.CurrentUser();
+            var orders = orderDal.GetPages(currentUser.Id, index, size);
+            if (orders == null || orders.Count == 0)
+                return null;
+
+            var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
+            OrderResponseHistory result = new OrderResponseHistory()
+            {
+                Orders = new List<OrderVMHistory>(),
+                OrderItems = new List<OrderItemVMHistory>(),
+                Shops = new List<ShopModelHistory>()
+            };
+            var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
+            foreach (var order in orders)
+            {
+                result.Orders.Add(new OrderVMHistory()
+                {
+                    Id = order.Id,
+                    ShopId = order.ShopId,
+                    CreateDate = order.CreateDate,
+                    Status = order.Status,
+                });
+            }
+            foreach (var item in orderItems)
+            {
+                result.OrderItems.Add(new OrderItemVMHistory()
+                {
+                    FoodName = item.FoodName,
+                    Qty = item.Qty,
+                    OrderId = item.OrderId
+                });
+            }
+            return result;
+        }
+
+        public ShopOrderHistoryResponse GetShopOrderPages(int index, int size)
+        {
+
+            var currentUser = UserUtil.CurrentUser();
+            var orders = orderDal.GetShopOrderPages(currentUser.ShopId, index, size);
+            if (orders == null || orders.Count == 0)
+                return null;
+
+            ShopOrderHistoryResponse result = new ShopOrderHistoryResponse()
+            {
+                Orders = new List<ShopOrderHistory>(),
+                OrderItems = new List<ShopOrderItemHistory>(),
+                Users=new List<ShopOrderHistoryUserInfoModel>(),
+            };
+            var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
+            foreach (var order in orders)
+            {
+                result.Orders.Add(new ShopOrderHistory()
+                {
+                    Id = order.Id,
+                    CreateDate = order.CreateDate,
+                    Status = order.Status,
+                    UserId=order.UserId
+                });
+            }
+            var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
+            foreach (var item in orderItems)
+            {
+                result.OrderItems.Add(new ShopOrderItemHistory()
+                {
+                    FoodName = item.FoodName,
+                    Qty = item.Qty,
+                    OrderId = item.OrderId,
+                    FoodPrice=item.FoodPrice
+                });
+            }
+            var users = userInfoDal.GetList(orders.Select(c=>c.UserId).Distinct().ToList());
+            foreach(var item in users)
+            {
+                result.Users.Add(new ShopOrderHistoryUserInfoModel()
+                {
+                    Id = item.Id,
+                    WXName = item.WxName
+                });
+            }
+            return result;
         }
     }
 }

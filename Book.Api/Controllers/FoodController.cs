@@ -30,7 +30,7 @@ namespace Book.Api.Controllers
         }
         #endregion
 
-
+        #region shop
         [Filters.ShopFilter]
         public List<FoodTypeResponse> GetTypes()
         {
@@ -105,6 +105,6 @@ namespace Book.Api.Controllers
         {
             return foodService.GetList(type);
         }
-
+        #endregion
     }
 }

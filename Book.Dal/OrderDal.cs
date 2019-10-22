@@ -16,11 +16,11 @@ namespace Book.Dal
             return _Instance;
         }
 
-        public List<BOrder> GetShopOrderList(int shopid, DateTime endtime)
+        public List<BOrder> GetShopOrderToday(int shopid)
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var result = conn.Query<BOrder>("SELECT *  FROM b_order WHERE shop_id=@shopid AND create_date>=@today", new { shopid = shopid, today = endtime.ToString("yyyy-MM-dd") }).ToList();
+                var result = conn.Query<BOrder>("SELECT *  FROM b_order WHERE shop_id=@shopid AND create_date>=@today", new { shopid = shopid, today = DateTime.Now.ToString("yyyy-MM-dd") }).ToList();
                 return result;
             }
         }
@@ -65,6 +65,23 @@ namespace Book.Dal
             using (var conn = SqlHelper.GetInstance())
             {
                 return conn.Insert<BOrder>(order).Value;
+            }
+        }
+
+        public List<BOrder> GetPages(int userId, int index, int size)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Query<BOrder>($"SELECT * from b_order WHERE user_id=@userid ORDER BY create_date DESC LIMIT {index * size},{size}", new { userid = userId }).ToList();
+                return result;
+            }
+        }
+        public List<BOrder> GetShopOrderPages(int shopId, int index, int size)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Query<BOrder>($"SELECT * from b_order WHERE shop_id=@userid ORDER BY create_date DESC LIMIT {index * size},{size}", new { userid = shopId }).ToList();
+                return result;
             }
         }
     }

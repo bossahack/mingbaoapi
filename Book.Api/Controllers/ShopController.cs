@@ -35,5 +35,12 @@ namespace Book.Api.Controllers
         {
             return ShopService.GetInstance().GetQRCode();
         }
+
+        [Filters.UserFilter]
+        [HttpGet]
+        public ShopModel GetInfo_U(int id)
+        {
+            return ShopService.GetInstance().GetShopInfo(id);
+        }
     }
 }
