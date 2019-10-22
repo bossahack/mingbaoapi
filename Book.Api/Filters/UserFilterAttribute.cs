@@ -23,13 +23,13 @@ namespace Book.Api.Filters
                 actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
                 return;
             }
-            var loginInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
-            if (loginInfo == null)
-            {
-                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
-                return;
-            }
-            string str = SecurityUtil.GetInstance().DecryptString(loginInfo.Token);
+            //var loginInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
+            //if (loginInfo == null)
+            //{
+            //    actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+            //    return;
+            //}
+            string str = SecurityUtil.GetInstance().DecryptString(autho[0]);
             var arr = str.Split('-');
             if (arr == null || arr.Length != 2)
             {
