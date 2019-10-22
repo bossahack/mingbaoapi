@@ -100,5 +100,19 @@ namespace Book.Service
                 };
             }
         }
+
+        public UserInfoModel ShopLogin()
+        {
+
+            UserInfoModel result = new UserInfoModel()
+            {
+                Id = 1,
+                ShopId=2,
+               
+            };
+            
+            result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
+            return result;
+        }
     }
 }

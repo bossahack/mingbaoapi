@@ -13,12 +13,17 @@ namespace Book.Utils
             {
                 throw new Exception("登录失效，请登录");
             }
-            string str = SecurityUtil.GetInstance().DecryptString(autho[0]);
+            var userinfo=Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
+            if (userinfo == null)
+                throw new Exception("登录失效");
+
+            string str = SecurityUtil.GetInstance().DecryptString(userinfo.Token);
             var arr = str.Split('-');
             if (arr == null || arr.Length != 2)
             {
                 throw new Exception("登录失效，请登录");
             }
+           
             return new UserInfoModel()
             {
                 Id = int.Parse(arr[0]),

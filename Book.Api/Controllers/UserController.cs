@@ -17,6 +17,12 @@ namespace Book.Api.Controllers
         {
             return UserService.GetInstance().Login(wcLoginInfo);
         }
+
+        [HttpPost]
+        public object ShopLogin()
+        {
+            return UserService.GetInstance().ShopLogin();
+        }
         
     }
 }

@@ -16,24 +16,24 @@ namespace Book.Api.Filters
             base.OnActionExecuting(actionContext);
 
 
-            //var autho = System.Web.HttpContext.Current.Request.Headers.GetValues("Authorization");
-            //if (autho == null || autho.Count() == 0)
-            //{
-            //    actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
-            //    return;
-            //}
-            //var loginInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
-            //if (loginInfo == null)
-            //{
-            //    actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+            var autho = System.Web.HttpContext.Current.Request.Headers.GetValues("Authorization");
+            if (autho == null || autho.Count() == 0)
+            {
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+                return;
+            }
+            var loginInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
+            if (loginInfo == null)
+            {
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
 
-            //    return;
-            //}
-            //if (loginInfo.Id <= 0 || loginInfo.ShopId <= 0)
-            //{
-            //    actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
-            //    return;
-            //}
+                return;
+            }
+            if (loginInfo.Id <= 0 || loginInfo.ShopId <= 0)
+            {
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+                return;
+            }
         }
     }
 }
