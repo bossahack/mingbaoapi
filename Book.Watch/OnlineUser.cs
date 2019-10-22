@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Book.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -18,20 +19,26 @@ namespace Book.Watch
             server = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             server.Bind(new IPEndPoint(IPAddress.Any, point));//绑定端口号和IP
 
+            Console.WriteLine("开始监听");
             while (true)
             {
-                Console.WriteLine("开始监听");
+                try
+                {
+                    EndPoint point = new IPEndPoint(IPAddress.Any, 0);//用来保存发送方的ip和端口号
+                    byte[] buffer = new byte[1024];
+                    int length = server.ReceiveFrom(buffer, ref point);//接收数据报
+                    string message = Encoding.UTF8.GetString(buffer, 0, length);
+                    int shopId = 0;
+                    int.TryParse(message, out shopId);
+                    if (shopId == 0)
+                        continue;
 
-                EndPoint point = new IPEndPoint(IPAddress.Any, 0);//用来保存发送方的ip和端口号
-                byte[] buffer = new byte[1024];
-                int length = server.ReceiveFrom(buffer, ref point);//接收数据报
-                string message = Encoding.UTF8.GetString(buffer, 0, length);
-                int shopId = 0;
-                int.TryParse(message,out shopId);
-                if (shopId == 0)
-                    continue;
+                    ShopOnlineService.GetInstance().Save(shopId, point.ToString(), 0);
 
-                
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
     }

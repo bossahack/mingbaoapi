@@ -6,7 +6,7 @@
     bool serviceModel = false;
     
     // 数据库连接
-    var connectionString = @"Server=localhost;Database=book;Uid=root;Pwd=1111qqqq!;charset=utf8;";
+    var connectionString = @"Server=localhost;Database=book;Uid=root;Pwd=1111qqqq;";
 
     // 需要解析的数据库
     var database = new List<string> { "book" };

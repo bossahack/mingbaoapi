@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: food_type.cs
-// * history : Created by T4 08/05/2019 22:07:15 
+// * history : Created by T4 10/22/2019 17:54:35 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
