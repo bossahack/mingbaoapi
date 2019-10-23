@@ -27,7 +27,7 @@ namespace Book.Api
 
         public override void Write(string message)
         {
-            File.AppendAllText(FilePath,DateTime.Now.ToString("HH:mm:ss")+ message);
+            File.AppendAllText(FilePath,DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+ message);
         }
 
         public override void WriteLine(string message)

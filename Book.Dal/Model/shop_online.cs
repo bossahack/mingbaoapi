@@ -40,8 +40,8 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "point")]
-        public string Point { get; set; }
+		[Column(Name = "port")]
+        public int Port { get; set; }
     
 
         /// <summary>

@@ -19,18 +19,20 @@ namespace Book.Service
             return _Instance;
         }
 
-        public void Save(int shopId,string ip,int point)
+        public void Save(int shopId,string ip,int port)
         {
             ShopOnline shopOnline = new ShopOnline() {
                 Ip=ip,
                 ShopId=shopId,
                 LastKeepTime= DateTime.Now,
-                Point=point.ToString()
+                Port= port
             };
             if (ShopOnLineDal.GetInstance().Update(shopOnline) == 0)
             {
                 ShopOnLineDal.GetInstance().Create(shopOnline);
             }
         }
+
+
     }
 }

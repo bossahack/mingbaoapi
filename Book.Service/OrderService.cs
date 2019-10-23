@@ -276,6 +276,12 @@ namespace Book.Service
                 orderItems.ForEach(c => c.OrderId = orderid);
                 orderItemDal.Create(orderItems);
             });
+
+            var online=ShopOnLineDal.GetInstance().Get(request.ShopId);
+            if(online!=null&&(DateTime.Now- online.LastKeepTime).TotalMinutes <= 22)
+            {
+                UdpSendHelper.Send(online.Ip, online.Port, "");
+            }
         }
 
         public void CopyBookOrder(int orderId)

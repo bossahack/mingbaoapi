@@ -28,12 +28,14 @@ namespace Book.Watch
                     byte[] buffer = new byte[1024];
                     int length = server.ReceiveFrom(buffer, ref point);//接收数据报
                     string message = Encoding.UTF8.GetString(buffer, 0, length);
+                    Console.WriteLine(point);
                     int shopId = 0;
                     int.TryParse(message, out shopId);
                     if (shopId == 0)
                         continue;
 
-                    ShopOnlineService.GetInstance().Save(shopId, point.ToString(), 0);
+                    IPEndPoint ipPoint = ((System.Net.IPEndPoint)point);
+                    ShopOnlineService.GetInstance().Save(shopId, ipPoint.Address.ToString(), ipPoint.Port);
 
                 }catch(Exception ex)
                 {

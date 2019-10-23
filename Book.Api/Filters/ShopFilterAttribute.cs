@@ -1,4 +1,5 @@
 ﻿using Book.Model;
+using Book.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,17 +23,11 @@ namespace Book.Api.Filters
                 actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
                 return;
             }
-            var loginInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<UserInfoModel>(autho[0]);
-            if (loginInfo == null)
+            string str = SecurityUtil.GetInstance().DecryptString(autho[0]);
+            var arr = str.Split('-');
+            if (arr == null || arr.Length != 2)
             {
-                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
-
-                return;
-            }
-            if (loginInfo.Id <= 0 || loginInfo.ShopId <= 0)
-            {
-                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
-                return;
+                throw new Exception("登录失效，请登录");
             }
         }
     }
