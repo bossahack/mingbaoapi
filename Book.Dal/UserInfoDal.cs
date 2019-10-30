@@ -1,6 +1,7 @@
 ﻿using Book.Dal.Model;
 using Dapper;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Book.Dal
 {
@@ -28,7 +29,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var result = conn.QueryFirstOrDefault<List<UserInfo>>("SELECT * FROM user_info WHERE wxid in  @ids", new { ids });
+                var result = conn.Query<UserInfo>("SELECT * FROM user_info WHERE id in  @ids", new { ids }).ToList();
                 return result;
             }
         }

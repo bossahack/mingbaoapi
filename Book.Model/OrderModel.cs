@@ -206,6 +206,10 @@ namespace Book.Model
 
     public class ShopOrderItemHistory
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         /// 

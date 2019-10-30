@@ -401,6 +401,7 @@ namespace Book.Service
             {
                 result.OrderItems.Add(new ShopOrderItemHistory()
                 {
+                    Id=item.Id,
                     FoodName = item.FoodName,
                     Qty = item.Qty,
                     OrderId = item.OrderId,
