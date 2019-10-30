@@ -35,14 +35,14 @@ namespace Book.Service
             OrderResponse result = new OrderResponse() {
                 Orders = new List<OrderVM>(),
                 OrderItems = new List<OrderItemVM>(),
-                Shops = new List<OrderShopModel>()
             };
             var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
+            var users = userInfoDal.GetList(orders.Select(c => c.UserId).ToList());
             foreach (var order in orders)
             {
                 result.Orders.Add(new OrderVM() {
                     Id=order.Id,
-                    ShopId=order.ShopId,
+                    //ShopId=order.ShopId,
                     UserId=order.UserId,
                     CreateDate=order.CreateDate,
                     Status=order.Status,
@@ -61,14 +61,14 @@ namespace Book.Service
                     OrderId = item.OrderId
                 });
             }
-            //foreach(var shop in shops)
-            //{
-            //    result.Shops.Add(new OrderShopModel() {
-            //        Address=shop.Address,
-            //        Id=shop.Id,
-            //        Name=shop.Name
-            //    });
-            //}
+            foreach (var user in users)
+            {
+                result.Users.Add(new ShopOrderHistoryUserInfoModel()
+                {
+                    Id=user.Id,
+                    WXName=user.WxName
+                });
+            }
             return result;
         }
 

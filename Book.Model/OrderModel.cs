@@ -9,6 +9,8 @@ namespace Book.Model
         public List<OrderItemVM> OrderItems { get; set; }
 
         public List<OrderShopModel> Shops { get; set; }
+
+        public List<ShopOrderHistoryUserInfoModel> Users { get; set; }
     }
 
     public class OrderVM
