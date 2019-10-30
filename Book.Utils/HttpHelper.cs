@@ -26,10 +26,11 @@ namespace Book.Utils
             FormUrlEncodedContent formUrlEncodedContent = new FormUrlEncodedContent(dict);
             return httpClient.PostAsync(url, formUrlEncodedContent).Result.Content.ReadAsStringAsync().Result;
         }
-        public static string Post(string url, string txt)
+        public static byte[] Post(string url, string txt)
         {
             StringContent stringContent = new StringContent(txt);
-            return httpClient.PostAsync(url, stringContent).Result.Content.ReadAsStringAsync().Result;
+            var bytes= httpClient.PostAsync(url, stringContent).Result.Content.ReadAsByteArrayAsync().Result;
+            return bytes;
         }
         
     }
