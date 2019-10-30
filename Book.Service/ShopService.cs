@@ -118,7 +118,7 @@ namespace Book.Service
                 accessToken = response.access_token;
                 CacheHelper.SetCache(cacheName, accessToken,TimeSpan.FromSeconds(response.expires_in));
             }
-            string json = "{\"scene\":\"id"+shop.Id+ "\",\"width\":430,\"page\":\"pages/love\"}";
+            string json = "{\"scene\":\"id="+shop.Id+ "\",\"width\":430,\"page\":\"pages/love\"}";
             //string json = "{'scene' = 'id="+shop.Id+"','width':430,'page'='page/home'}";
             var codeResult= HttpHelper.Post($"https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={accessToken}", json);
             return codeResult;
