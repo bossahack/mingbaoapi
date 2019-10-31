@@ -420,5 +420,51 @@ namespace Book.Service
             }
             return result;
         }
+
+        public OrderResponse GetOrderDetail(int orderid)
+        {
+            var order = orderDal.Get(orderid);
+            if (order == null)
+                throw new Exception("该订单不存在");
+            var currentUser = UserUtil.CurrentUser();
+
+            OrderResponse result = new OrderResponse()
+            {
+                Orders = new List<OrderVM>(),
+                OrderItems = new List<OrderItemVM>(),
+                Shops = new List<OrderShopModel>()
+            };
+            var orderItems = orderItemDal.GetList(order.Id);
+            var shop = shopDal.Get(order.ShopId);
+            result.Orders.Add(new OrderVM()
+            {
+                Id = order.Id,
+                ShopId = order.ShopId,
+                UserId = order.UserId,
+                CreateDate = order.CreateDate,
+                Status = order.Status,
+                Note = order.Note,
+                TakeCode = order.TakeCode,
+                ArriveTimeType = order.ArriveTimeType
+            });
+            foreach (var item in orderItems)
+            {
+                result.OrderItems.Add(new OrderItemVM()
+                {
+                    OrderId = item.OrderId,
+                    FoodId = item.FoodId,
+                    FoodName = item.FoodName,
+                    FoodPrice = item.FoodPrice,
+                    Qty = item.Qty
+                });
+            }
+            result.Shops.Add(new OrderShopModel()
+            {
+                Address = shop.Address,
+                Id = shop.Id,
+                Name = shop.Name
+            });
+            return result;
+        }
     }
 }

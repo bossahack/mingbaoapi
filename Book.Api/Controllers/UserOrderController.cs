@@ -46,6 +46,10 @@ namespace Book.Api.Controllers
             return orderService.GetPages(index, size);
         }
 
+        public object GetOrderDetail(int id)
+        {
+            return orderService.GetOrderDetail(id);
+        }
 
     }
 }
