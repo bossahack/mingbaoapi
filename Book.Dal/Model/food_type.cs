@@ -35,5 +35,12 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "name")]
         public string Name { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Column(Name = "level")]
+        public int Level { get; set; }
     }
 }

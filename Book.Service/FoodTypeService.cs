@@ -68,7 +68,8 @@ namespace Book.Service
                 return null;
             return list.Select(c => new FoodTypeResponse() {
                 Id=c.Id,
-                Name=c.Name
+                Name=c.Name,
+                Level = c.Level
             }).ToList();
         }
 
@@ -81,7 +82,8 @@ namespace Book.Service
             return list.Select(c => new FoodTypeResponse()
             {
                 Id = c.Id,
-                Name = c.Name
+                Name = c.Name,
+                Level=c.Level
             }).ToList();
         }
     }

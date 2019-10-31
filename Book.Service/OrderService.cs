@@ -163,6 +163,7 @@ namespace Book.Service
             {
                 result.OrderItems.Add(new OrderItemVM()
                 {
+                    OrderId=item.OrderId,
                     FoodId = item.FoodId,
                     FoodName = item.FoodName,
                     FoodPrice = item.FoodPrice,
