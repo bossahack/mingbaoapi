@@ -35,6 +35,7 @@ namespace Book.Service
             OrderResponse result = new OrderResponse() {
                 Orders = new List<OrderVM>(),
                 OrderItems = new List<OrderItemVM>(),
+                Users=new List<ShopOrderHistoryUserInfoModel>()
             };
             var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
             var users = userInfoDal.GetList(orders.Select(c => c.UserId).ToList());
@@ -54,6 +55,7 @@ namespace Book.Service
             foreach(var item in orderItems)
             {
                 result.OrderItems.Add(new OrderItemVM() {
+                    Id=item.Id,
                     FoodId=item.FoodId,
                     FoodName=item.FoodName,
                     FoodPrice=item.FoodPrice,
@@ -67,6 +69,61 @@ namespace Book.Service
                 {
                     Id=user.Id,
                     WXName=user.WxName
+                });
+            }
+            return result;
+        }
+
+        public OrderResponse GetShopOrderAfter(DateTime? dt)
+        {
+            if (!dt.HasValue)
+                dt =DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+            var currentUser = UserUtil.CurrentUser();
+            var orders = orderDal.GetShopOrderAfter(currentUser.ShopId,dt.Value);
+            if (orders == null || orders.Count == 0)
+                return null;
+
+            var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
+            OrderResponse result = new OrderResponse()
+            {
+                Orders = new List<OrderVM>(),
+                OrderItems = new List<OrderItemVM>(),
+                Users = new List<ShopOrderHistoryUserInfoModel>()
+            };
+            var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
+            var users = userInfoDal.GetList(orders.Select(c => c.UserId).ToList());
+            foreach (var order in orders)
+            {
+                result.Orders.Add(new OrderVM()
+                {
+                    Id = order.Id,
+                    //ShopId=order.ShopId,
+                    UserId = order.UserId,
+                    CreateDate = order.CreateDate,
+                    Status = order.Status,
+                    Note = order.Note,
+                    TakeCode = order.TakeCode,
+                    ArriveTimeType = order.ArriveTimeType
+                });
+            }
+            foreach (var item in orderItems)
+            {
+                result.OrderItems.Add(new OrderItemVM()
+                {
+                    Id = item.Id,
+                    FoodId = item.FoodId,
+                    FoodName = item.FoodName,
+                    FoodPrice = item.FoodPrice,
+                    Qty = item.Qty,
+                    OrderId = item.OrderId
+                });
+            }
+            foreach (var user in users)
+            {
+                result.Users.Add(new ShopOrderHistoryUserInfoModel()
+                {
+                    Id = user.Id,
+                    WXName = user.WxName
                 });
             }
             return result;

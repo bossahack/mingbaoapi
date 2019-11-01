@@ -23,6 +23,12 @@ namespace Book.Api.Controllers
             return orderService.GetShopOrderToday();
         }
 
+        public OrderResponse GetShopOrderAfter(DateTime? dt)
+        {
+
+            return orderService.GetShopOrderAfter(dt);
+        }
+
         public void Receipt(int orderId)
         {
             orderService.Receipt(orderId);

@@ -40,7 +40,8 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                return conn.Execute("update shop_online set ip=@ip,port=@port,last_keep_time=@time where shop_id=@shopid", new { ip= shopOnline.Ip,time= shopOnline.LastKeepTime,shopid= shopOnline.ShopId, port = shopOnline.Port });
+                var result= conn.Execute("update shop_online set ip=@ip,port=@port,last_keep_time=@time where shop_id=@shopid", new { ip= shopOnline.Ip,time= shopOnline.LastKeepTime,shopid= shopOnline.ShopId, port = shopOnline.Port });
+                return result;
             }
         }
     }

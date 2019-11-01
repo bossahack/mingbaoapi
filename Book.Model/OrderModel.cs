@@ -71,6 +71,11 @@ namespace Book.Model
         /// <summary>
         /// 
         /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int FoodId { get; set; }
 
 

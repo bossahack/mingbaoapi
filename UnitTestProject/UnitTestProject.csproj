@@ -62,6 +62,10 @@
       <Project>{446e473c-740e-4109-b83c-910bd4e6a705}</Project>
       <Name>Book.Dal</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Book.Utils\Book.Utils.csproj">
+      <Project>{5F6EF37D-D827-4763-BDC7-40AEC2A53EBE}</Project>
+      <Name>Book.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

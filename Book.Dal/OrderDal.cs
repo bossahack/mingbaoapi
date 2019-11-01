@@ -25,6 +25,15 @@ namespace Book.Dal
             }
         }
 
+        public List<BOrder> GetShopOrderAfter(int shopid,DateTime dt)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Query<BOrder>("SELECT *  FROM b_order WHERE shop_id=@shopid AND create_date>=@dt", new { shopid = shopid, dt = dt.ToString("yyyy-MM-dd HH:mm:ss") }).ToList();
+                return result;
+            }
+        }
+
         public List<BOrder> GetUserOrderList(int userId, DateTime endtime)
         {
             using (var conn = SqlHelper.GetInstance())
