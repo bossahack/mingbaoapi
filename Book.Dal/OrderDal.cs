@@ -47,7 +47,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var result = conn.Query<BOrder>("SELECT  * FROM b_order WHERE user_id=@userid ORDER BY create_date DESC LIMIT 0,@count", new { userid = userId,@count=count }).ToList();
+                var result = conn.Query<BOrder>("SELECT  * FROM b_order WHERE user_id=@userid AND create_date<=@dt ORDER BY create_date DESC LIMIT 0,@count", new { userid = userId,@count=count, dt = DateTime.Now.ToString("yyyy-MM-dd") }).ToList();
                 return result;
             }
         }

@@ -25,11 +25,13 @@ namespace Book.Api.Controllers
             return orderService.GetLastedOrders();
         }
 
+        [HttpPost]
         public void BookOrder(BookOrderRequest request)
         {
             orderService.BookOrder(request);
         }
 
+        [HttpPost]
         public void CopyBookOrder(int orderId)
         {
             orderService.CopyBookOrder(orderId);

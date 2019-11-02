@@ -193,7 +193,7 @@ namespace Book.Service
             var orders = orderDal.GetUserOrderList(currentUser.Id, DateTime.Now);
             if (orders == null || orders.Count == 0)
                 return null;
-
+            orders = orders.OrderByDescending(c => c.CreateDate).ToList();
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
             OrderResponse result = new OrderResponse()
             {
@@ -247,6 +247,7 @@ namespace Book.Service
             if (orders == null || orders.Count == 0)
                 return null;
 
+            orders = orders.OrderByDescending(c => c.CreateDate).ToList();
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
             OrderResponse result = new OrderResponse()
             {
@@ -273,6 +274,8 @@ namespace Book.Service
             {
                 result.OrderItems.Add(new OrderItemVM()
                 {
+                    Id=item.Id,
+                    OrderId=item.OrderId,
                     FoodId = item.FoodId,
                     FoodName = item.FoodName,
                     FoodPrice = item.FoodPrice,
@@ -399,6 +402,7 @@ namespace Book.Service
             if (orders == null || orders.Count == 0)
                 return null;
 
+            orders = orders.OrderByDescending(c => c.CreateDate).ToList();
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
             OrderResponseHistory result = new OrderResponseHistory()
             {
@@ -437,6 +441,7 @@ namespace Book.Service
             if (orders == null || orders.Count == 0)
                 return null;
 
+            orders = orders.OrderByDescending(c => c.CreateDate).ToList();
             ShopOrderHistoryResponse result = new ShopOrderHistoryResponse()
             {
                 Orders = new List<ShopOrderHistory>(),
