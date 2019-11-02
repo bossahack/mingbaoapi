@@ -425,9 +425,18 @@ namespace Book.Service
             {
                 result.OrderItems.Add(new OrderItemVMHistory()
                 {
+                    Id=item.Id,
                     FoodName = item.FoodName,
                     Qty = item.Qty,
                     OrderId = item.OrderId
+                });
+            }
+            foreach(var shop in shops)
+            {
+                result.Shops.Add(new ShopModelHistory()
+                {
+                    Id = shop.Id,
+                    Name = shop.Name
                 });
             }
             return result;
