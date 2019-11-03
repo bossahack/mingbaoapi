@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" shop_online.cs" company="xxxx Enterprises">
+// <copyright file=" shop_day_order.cs" company="xxxx Enterprises">
 // * Copyright (C) 2019 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: shop_online.cs
+// * FileName: shop_day_order.cs
 // * history : Created by T4 11/03/2019 11:10:53 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,10 +12,10 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// shop_online Entity Model
+    /// shop_day_order Entity Model
     /// </summary>   
-	[Dapper.Table("shop_online")]
-    public class ShopOnline
+	[Dapper.Table("shop_day_order")]
+    public class ShopDayOrder
     {
         /// <summary>
         /// 
@@ -33,21 +33,14 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "ip")]
-        public string Ip { get; set; }
+		[Column(Name = "date")]
+        public DateTime Date { get; set; }
     
 
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "port")]
-        public int Port { get; set; }
-    
-
-        /// <summary>
-        /// 
-        /// </summary>
-		[Column(Name = "last_keep_time")]
-        public DateTime LastKeepTime { get; set; }
+		[Column(Name = "qty")]
+        public int Qty { get; set; }
     }
 }

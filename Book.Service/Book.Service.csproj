@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="QiniuService.cs" />
+    <Compile Include="ShopDayOrderService.cs" />
     <Compile Include="ShopOnlineService.cs" />
     <Compile Include="TransactionHelper.cs" />
     <Compile Include="FoodService.cs" />

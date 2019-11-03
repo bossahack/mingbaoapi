@@ -23,7 +23,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var result = conn.QueryFirst<ShopOnline>("SELECT * from shop_online where shop_id =@shopid", new { shopid = shopId });
+                var result = conn.QueryFirstOrDefault<ShopOnline>("SELECT * from shop_online where shop_id =@shopid", new { shopid = shopId });
                 return result;
             }
         }

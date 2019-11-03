@@ -133,6 +133,7 @@ namespace Book.Dal.Model
             SqlMapper.SetTypeMap(typeof(UserInfo), new ColumnAttributeTypeMapper<UserInfo>());
             SqlMapper.SetTypeMap(typeof(UserShop), new ColumnAttributeTypeMapper<UserShop>());
             SqlMapper.SetTypeMap(typeof(ShopOnline), new ColumnAttributeTypeMapper<ShopOnline>());
+            SqlMapper.SetTypeMap(typeof(ShopDayOrder), new ColumnAttributeTypeMapper<ShopDayOrder>());
 
             //每个需要用到[colmun(Name="")]特性的model，都要在这里添加映射
         }

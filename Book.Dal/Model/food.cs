@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: food.cs
-// * history : Created by T4 10/22/2019 17:54:35 
+// * history : Created by T4 11/03/2019 11:10:53 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -77,5 +77,12 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "create_date")]
         public DateTime CreateDate { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "level")]
+        public int Level { get; set; }
     }
 }

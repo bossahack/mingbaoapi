@@ -319,7 +319,8 @@ namespace Book.Service
                 Status=(int)OrderStatus.Origin,
                 ArriveTimeType=request.ArriveTimeType,
                 Note=request.Note,
-                CreateDate=DateTime.Now
+                CreateDate=DateTime.Now,
+                TakeCode= generateTakeCode(request.ShopId)
             };
             var orderItems = new List<BOrderItem>();
             foreach( var item in request.Items)
@@ -336,13 +337,9 @@ namespace Book.Service
                 var orderid=orderDal.Create(border);
                 orderItems.ForEach(c => c.OrderId = orderid);
                 orderItemDal.Create(orderItems);
+                ShopDayOrderService.GetInstance().AddQty(border.ShopId, 1);
             });
-
-            var online=ShopOnLineDal.GetInstance().Get(request.ShopId);
-            if(online!=null&&(DateTime.Now- online.LastKeepTime).TotalMinutes <= 22)
-            {
-                UdpSendHelper.Send(online.Ip, online.Port, "");
-            }
+            sendUdp(request.ShopId);            
         }
 
         public void CopyBookOrder(int orderId)
@@ -374,7 +371,8 @@ namespace Book.Service
                 Status = (int)OrderStatus.Origin,
                 ArriveTimeType = order.ArriveTimeType,
                 Note = order.Note,
-                CreateDate = DateTime.Now
+                CreateDate = DateTime.Now,
+                TakeCode = generateTakeCode(order.ShopId)
             };
             var orderItems = new List<BOrderItem>();
             foreach (var item in items)
@@ -392,7 +390,9 @@ namespace Book.Service
                 var orderid = orderDal.Create(border);
                 orderItems.ForEach(c => c.OrderId = orderid);
                 orderItemDal.Create(orderItems);
+                ShopDayOrderService.GetInstance().AddQty(border.ShopId, 1);
             });
+            sendUdp(order.ShopId);
         }
 
         public OrderResponseHistory GetPages(int index, int size)
@@ -537,5 +537,41 @@ namespace Book.Service
             });
             return result;
         }
+
+        private void sendUdp( int shopId)
+        {
+            System.Threading.Tasks.Task.Run(() => {
+                var online = ShopOnLineDal.GetInstance().Get(shopId);
+                if (online != null && (DateTime.Now - online.LastKeepTime).TotalMinutes <= 22)
+                {
+                    UdpSendHelper.Send(online.Ip, online.Port, "");
+                }
+            });
+        }
+
+        private string generateTakeCode(int shopId)
+        {
+            int totalQty = 0;
+            var dayOrder=ShopDayOrderDal.GetInstance().get(shopId, DateTime.Now);
+            if(dayOrder==null)
+            {
+                totalQty = 1;
+            }else
+            {
+                totalQty = dayOrder.Qty+1;
+            }
+            var lenght = words.Length;
+            if (totalQty < lenght *10 )
+            {
+                var l = totalQty / 10;
+                var r = totalQty % 10;
+                return $"{words[l]}0{r - 1}";
+            }else
+            {
+                return "牛"+totalQty.ToString();
+            }
+        }
+        //60个字符
+        private static string[] words =new string[] { "A", "B", " C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "喔", "P", "Q", "R", "S", "T", "U", "V", "W", "X","Y","Z", "恭", "喜", "发", "财", "万", "事", "大", "吉", "土", "豪", "啊", "我", "们", "做", "朋", "友", "太", "厉", "嗨", "啦", "哇", "赞", "美", "帅", "绝", "牛", "旺", "顺", "天", "和", "敬", "爽", "鸣", "！" };
     }
 }
