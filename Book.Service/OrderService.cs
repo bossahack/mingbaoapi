@@ -169,6 +169,7 @@ namespace Book.Service
                 throw new Exception("非初始状态订单不可取消");
 
             orderDal.SetStatus(orderId, (int)OrderStatus.Canceled);
+            sendUdp(order.ShopId, "c" + order.Id);
         }
 
         public void Abnormal(int orderId)
@@ -538,13 +539,18 @@ namespace Book.Service
             return result;
         }
 
-        private void sendUdp( int shopId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <param name="msg">a:新单子，c:取消了</param>
+        private void sendUdp( int shopId,string msg="a")
         {
             System.Threading.Tasks.Task.Run(() => {
                 var online = ShopOnLineDal.GetInstance().Get(shopId);
                 if (online != null && (DateTime.Now - online.LastKeepTime).TotalMinutes <= 22)
                 {
-                    UdpSendHelper.Send(online.Ip, online.Port, "");
+                    UdpSendHelper.Send(online.Ip, online.Port, msg);
                 }
             });
         }
