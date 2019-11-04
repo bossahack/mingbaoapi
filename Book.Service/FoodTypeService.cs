@@ -86,5 +86,12 @@ namespace Book.Service
                 Level=c.Level
             }).ToList();
         }
+        
+        public void TypeReorder(List<FoodTypeResponse> types)
+        {
+            if (types == null || types.Count == 0)
+                return;
+            foodTypeDal.TypeReorder(types);
+        }
     }
 }

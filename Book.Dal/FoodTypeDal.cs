@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Book.Model;
+using System.Text;
+
 namespace Book.Dal
 {
     public class FoodTypeDal
@@ -60,6 +63,19 @@ namespace Book.Dal
             using (var conn = SqlHelper.GetInstance())
             {
                 return conn.QueryFirstOrDefault<FoodType>("SELECT * FROM food_type where shop_id=@shopid and name=@name",new { shopid=shopid, name=name })==null?false:true;
+            }
+        }
+
+        public void TypeReorder(List<FoodTypeResponse> types)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (var conn = SqlHelper.GetInstance())
+            {
+                types.ForEach(type =>
+                {
+                    sb.Append($"update food_type set `Level`={type.Level} where id={type.Id};");
+                });
+                conn.Execute(sb.ToString());
             }
         }
     }

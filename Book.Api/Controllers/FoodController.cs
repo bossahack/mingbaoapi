@@ -105,6 +105,13 @@ namespace Book.Api.Controllers
         {
             return foodService.GetList(type);
         }
+
+        [Filters.UserFilter]
+        [HttpPost]
+        public void TypeReorder([FromBody]List<FoodTypeResponse> types)
+        {
+            foodtypeService.TypeReorder(types);
+        }
         #endregion
     }
 }
