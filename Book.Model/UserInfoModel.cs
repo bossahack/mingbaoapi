@@ -15,6 +15,8 @@
 
 
         public int ShopId { get; set; }
+
+        public string WXName { get; set; }
     }
 
     /// <summary>

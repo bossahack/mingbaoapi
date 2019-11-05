@@ -41,13 +41,14 @@ namespace Book.Service
                 var id = userInfoDal.Create(userCreate);
                 result= new UserInfoModel()
                 {
-                    Id = id
+                    Id = id,
                 };
             }else
             {
                 result= new UserInfoModel()
                 {
-                    Id = dbUser.Id
+                    Id = dbUser.Id,
+                    WXName =dbUser.WxName
                 };
             }
             result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
@@ -76,7 +77,8 @@ namespace Book.Service
                 var id = userInfoDal.Create(userCreate);
                 return new UserInfoModel()
                 {
-                    Id = id
+                    Id = id,
+                    WXName=result.nickName
                 };
             }
             else
@@ -96,7 +98,8 @@ namespace Book.Service
                 return new UserInfoModel()
                 {
                     Id = dbUser.Id,
-                    ShopId = shopid
+                    ShopId = shopid,
+                    WXName=result.nickName
                 };
             }
         }
