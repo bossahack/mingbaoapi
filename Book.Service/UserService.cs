@@ -48,7 +48,8 @@ namespace Book.Service
                 result= new UserInfoModel()
                 {
                     Id = dbUser.Id,
-                    WXName =dbUser.WxName
+                    WXName =dbUser.WxName,
+                    Type=dbUser.Type
                 };
             }
             result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
@@ -89,17 +90,17 @@ namespace Book.Service
                     dbUser.WxName = result.nickName;
                     userInfoDal.Update(dbUser);
                 }
-                var shopid = 0;
-                if (dbUser.HasShop)
-                {
-                    var shop = ShopDal.GetInstance().GetByUser(dbUser.Id);
-                    shopid = shop.Id;
-                }
+                //var shopid = 0;
+                //if (dbUser.HasShop)
+                //{
+                //    var shop = ShopDal.GetInstance().GetByUser(dbUser.Id);
+                //    shopid = shop.Id;
+                //}
                 return new UserInfoModel()
                 {
                     Id = dbUser.Id,
-                    ShopId = shopid,
-                    WXName=result.nickName
+                    WXName=result.nickName,
+                    Type=dbUser.Type
                 };
             }
         }
@@ -116,6 +117,15 @@ namespace Book.Service
             
             result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
             return result;
+        }
+
+        public void JoinUs(JoinUsModel model)
+        {
+            var current = UserUtil.CurrentUser();
+            var userInfo = userInfoDal.Get(current.Id);
+            userInfo.WxNum = model.WxNum;
+            userInfo.Type = 1;
+            userInfoDal.Update(userInfo);
         }
     }
 }

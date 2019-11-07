@@ -1,4 +1,5 @@
-﻿using Book.Service;
+﻿using Book.Model;
+using Book.Service;
 using System.Web.Http;
 
 namespace Book.Api.Controllers
@@ -22,6 +23,11 @@ namespace Book.Api.Controllers
         public object ShopLogin()
         {
             return UserService.GetInstance().ShopLogin();
+        }
+
+        public void JoinUs(JoinUsModel model)
+        {
+            UserService.GetInstance().JoinUs(model);
         }
         
     }

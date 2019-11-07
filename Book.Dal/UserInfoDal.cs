@@ -25,6 +25,15 @@ namespace Book.Dal
             }
         }
 
+        public UserInfo Get(int id)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.QueryFirstOrDefault<UserInfo>("SELECT * FROM user_info WHERE id= @id", new { id });
+                return result;
+            }
+        }
+
         public List<UserInfo> GetList(List<int> ids)
         {
             using (var conn = SqlHelper.GetInstance())

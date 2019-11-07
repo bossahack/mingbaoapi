@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: user_info.cs
-// * history : Created by T4 11/07/2019 10:21:03 
+// * history : Created by T4 11/07/2019 16:52:57 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -33,6 +33,13 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
+		[Column(Name = "wx_num")]
+        public string WxNum { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
 		[Column(Name = "wx_name")]
         public string WxName { get; set; }
     
@@ -56,6 +63,13 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "has_shop")]
         public bool HasShop { get; set; }
+    
+
+        /// <summary>
+        /// 1:推广者
+        /// </summary>
+		[Column(Name = "type")]
+        public int Type { get; set; }
     
 
         /// <summary>
