@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Book.Model.Enums;
+using System.Text;
 
 namespace Book.Dal
 {
@@ -97,6 +98,20 @@ namespace Book.Dal
                 if (result != null)
                     return true;
                 return false;
+            }
+        }
+
+
+        public void FoodReorder(List<Food> foods)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (var conn = SqlHelper.GetInstance())
+            {
+                foods.ForEach(food =>
+                {
+                    sb.Append($"update food set `Level`={food.Level} where id={food.Id};");
+                });
+                conn.Execute(sb.ToString());
             }
         }
     }

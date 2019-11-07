@@ -107,5 +107,12 @@ namespace Book.Service
         {
             return foodDal.GetList(shopId);
         }
+
+        public void FoodReorder(List<Food> foods)
+        {
+            if (foods == null || foods.Count == 0)
+                return;
+            foodDal.FoodReorder(foods);
+        }
     }
 }

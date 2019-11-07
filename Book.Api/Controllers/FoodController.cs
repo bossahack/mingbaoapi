@@ -1,4 +1,5 @@
-﻿using Book.Model;
+﻿using Book.Dal.Model;
+using Book.Model;
 using Book.Service;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -99,18 +100,26 @@ namespace Book.Api.Controllers
             foodService.SetRemoved(id);
         }
 
-        [Filters.UserFilter]
-        [HttpGet]
-        public object GetList(int type)
-        {
-            return foodService.GetList(type);
-        }
 
-        [Filters.UserFilter]
+        [Filters.ShopFilter]
         [HttpPost]
         public void TypeReorder([FromBody]List<FoodTypeResponse> types)
         {
             foodtypeService.TypeReorder(types);
+        }
+
+        [Filters.ShopFilter]
+        [HttpPost]
+        public void FoodReorder([FromBody]List<Food> foods)
+        {
+            foodService.FoodReorder(foods);
+        }
+
+        [Filters.ShopFilter]
+        [HttpGet]
+        public object GetList(int type)
+        {
+            return foodService.GetList(type);
         }
         #endregion
     }
