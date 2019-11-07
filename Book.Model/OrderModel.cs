@@ -63,6 +63,11 @@ namespace Book.Model
         /// </summary>
         public int Status { get; set; }
 
+        /// <summary>
+        /// 是否有异常
+        /// </summary>
+        public bool HasAbnormal { get; set; }
+
     }
 
     public class OrderItemVM

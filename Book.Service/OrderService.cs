@@ -32,13 +32,14 @@ namespace Book.Service
                 return null;
 
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
+            var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
+            var users = userInfoDal.GetList(orders.Select(c => c.UserId).ToList());
+            var abnormals = OrderAbnormalDal.GetInstance().GetList(currentUser.ShopId, users.Select(c => c.Id).ToList(), DateTime.Now.AddDays(-30));
             OrderResponse result = new OrderResponse() {
                 Orders = new List<OrderVM>(),
                 OrderItems = new List<OrderItemVM>(),
                 Users=new List<ShopOrderHistoryUserInfoModel>()
             };
-            var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
-            var users = userInfoDal.GetList(orders.Select(c => c.UserId).ToList());
             foreach (var order in orders)
             {
                 result.Orders.Add(new OrderVM() {
@@ -49,7 +50,8 @@ namespace Book.Service
                     Status=order.Status,
                     Note=order.Note,
                     TakeCode=order.TakeCode,
-                    ArriveTimeType=order.ArriveTimeType
+                    ArriveTimeType=order.ArriveTimeType,
+                    HasAbnormal= abnormals.Exists(c=>c.UserId==order.UserId)
                 });
             }
             foreach(var item in orderItems)
@@ -92,6 +94,7 @@ namespace Book.Service
             };
             var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
             var users = userInfoDal.GetList(orders.Select(c => c.UserId).ToList());
+            var abnormals = OrderAbnormalDal.GetInstance().GetList(currentUser.ShopId, users.Select(c => c.Id).ToList(), DateTime.Now.AddDays(-30));
             foreach (var order in orders)
             {
                 result.Orders.Add(new OrderVM()
@@ -103,7 +106,8 @@ namespace Book.Service
                     Status = order.Status,
                     Note = order.Note,
                     TakeCode = order.TakeCode,
-                    ArriveTimeType = order.ArriveTimeType
+                    ArriveTimeType = order.ArriveTimeType,
+                    HasAbnormal = abnormals.Exists(c => c.UserId == order.UserId)
                 });
             }
             foreach (var item in orderItems)
@@ -157,7 +161,7 @@ namespace Book.Service
             orderDal.SetStatus(orderId, (int)OrderStatus.Completed);
         }
 
-        public void Cancel(int orderId)
+        public void CancelByUser(int orderId)
         {
             var currentUser = UserUtil.CurrentUser();
             var order = orderDal.Get(orderId);
@@ -172,6 +176,27 @@ namespace Book.Service
             sendUdp(order.ShopId, "c" + order.Id);
         }
 
+        public void CancelByShop(int orderId)
+        {
+            var currentUser = UserUtil.CurrentUser();
+            var order = orderDal.Get(orderId);
+            if (order == null)
+                throw new Exception("未查询到订单信息");
+            if (order.ShopId != currentUser.ShopId)
+                throw new Exception("您无权操作");
+            if (order.Status != (int)OrderStatus.Abnormaled)
+                throw new Exception("非异常状态订单不可取消");
+            TransactionHelper.Run(()=> {
+                orderDal.SetStatus(orderId, (int)OrderStatus.Canceled);
+                var abnormal = OrderAbnormalDal.GetInstance().Get(currentUser.ShopId, order.UserId, orderId);
+                if (abnormal != null)
+                {
+                    OrderAbnormalDal.GetInstance().Remove(abnormal.Id);
+                }
+            });
+            sendUdp(order.ShopId, "c" + order.Id);
+        }
+
         public void Abnormal(int orderId)
         {
             var currentUser = UserUtil.CurrentUser();
@@ -182,8 +207,16 @@ namespace Book.Service
                 throw new Exception("您无权操作");
             if (new List<int>() { (int)OrderStatus.Completed }.Contains(order.Status))
                 throw new Exception("已完成单据不可异常");
-
-            orderDal.SetStatus(orderId, (int)OrderStatus.Abnormaled);
+            TransactionHelper.Run(()=> {
+                OrderAbnormalDal.Create(new BOrderAbnormal()
+                {
+                    OrderId = order.Id,
+                    ShopId = currentUser.ShopId,
+                    UserId = order.UserId,
+                    CreateDate = DateTime.Now
+                });
+                orderDal.SetStatus(orderId, (int)OrderStatus.Abnormaled);
+            });
         }
 
 
@@ -566,18 +599,19 @@ namespace Book.Service
             {
                 totalQty = dayOrder.Qty+1;
             }
-            var lenght = words.Length;
-            if (totalQty < lenght *10 )
-            {
-                var l = totalQty / 10;
-                var r = totalQty % 10;
-                return $"{words[l]}0{r - 1}";
-            }else
-            {
-                return "牛"+totalQty.ToString();
-            }
+            return totalQty.ToString();
+            //var lenght = words.Length;
+            //if (totalQty < lenght *10 )
+            //{
+            //    var l = totalQty / 10;
+            //    var r = totalQty % 10;
+            //    return $"{words[l]}0{r - 1}";
+            //}else
+            //{
+            //    return "牛"+totalQty.ToString();
+            //}
         }
         //60个字符
-        private static string[] words =new string[] { "A", "B", " C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "喔", "P", "Q", "R", "S", "T", "U", "V", "W", "X","Y","Z", "恭", "喜", "发", "财", "万", "事", "大", "吉", "土", "豪", "啊", "我", "们", "做", "朋", "友", "太", "厉", "嗨", "啦", "哇", "赞", "美", "帅", "绝", "牛", "旺", "顺", "天", "和", "敬", "爽", "鸣", "！" };
+        //private static string[] words =new string[] { "A", "B", " C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "喔", "P", "Q", "R", "S", "T", "U", "V", "W", "X","Y","Z", "恭", "喜", "发", "财", "万", "事", "大", "吉", "土", "豪", "啊", "我", "们", "做", "朋", "友", "太", "厉", "嗨", "啦", "哇", "赞", "美", "帅", "绝", "牛", "旺", "顺", "天", "和", "敬", "爽", "鸣", "！" };
     }
 }

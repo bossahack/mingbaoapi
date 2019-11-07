@@ -105,6 +105,7 @@
     <Compile Include="Model\user_shop.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderAbnormalDal.cs" />
     <Compile Include="OrderDal.cs" />
     <Compile Include="OrderItemDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

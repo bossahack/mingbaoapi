@@ -40,7 +40,7 @@ namespace Book.Api.Controllers
         [HttpPost]
         public void Cancel(int orderId)
         {
-            orderService.Cancel(orderId);
+            orderService.CancelByUser(orderId);
         }
 
         public object GetPages(int index,int size)

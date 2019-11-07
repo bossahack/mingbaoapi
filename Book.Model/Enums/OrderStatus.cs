@@ -34,4 +34,5 @@ namespace Book.Model.Enums
         Abnormaled=40
 
     }
+    
 }

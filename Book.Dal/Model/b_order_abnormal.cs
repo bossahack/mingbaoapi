@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: b_order_abnormal.cs
-// * history : Created by T4 11/03/2019 11:10:53 
+// * history : Created by T4 11/07/2019 10:21:03 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -49,5 +49,12 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "note")]
         public string Note { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "create_date")]
+        public DateTime CreateDate { get; set; }
     }
 }

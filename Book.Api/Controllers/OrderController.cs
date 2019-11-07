@@ -39,10 +39,10 @@ namespace Book.Api.Controllers
             orderService.Taked(orderId);
         }
 
-        //public void Cancel(int orderId)
-        //{
-        //    orderService.Cancel(orderId);
-        //}
+        public void Cancel(int orderId)
+        {
+            orderService.CancelByShop(orderId);
+        }
 
         public void Abnormal(int orderId)
         {
