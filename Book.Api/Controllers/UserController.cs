@@ -6,11 +6,11 @@ namespace Book.Api.Controllers
 {
     public class UserController : ApiController
     {
-
+        [Filters.UserFilter]
         [HttpPost]
-        public object UpdateWXInfo(WechatLoginInfo wcLoginInfo)
+        public object UpdateWXInfo([FromBody]WechatUserInfo wechatUserInfo)
         {
-            return UserService.GetInstance().UpdateWXInfo(wcLoginInfo);
+            return UserService.GetInstance().UpdateWXInfo(wechatUserInfo);
         }
 
         [HttpPost]
@@ -25,10 +25,18 @@ namespace Book.Api.Controllers
             return UserService.GetInstance().ShopLogin();
         }
 
+        [Filters.UserFilter]
+        [HttpPost]
         public void JoinUs(JoinUsModel model)
         {
             UserService.GetInstance().JoinUs(model);
         }
-        
+
+        [Filters.UserFilter]
+        [HttpGet]
+        public string GetUserQrCode()
+        {
+           return UserService.GetInstance().GetQRCode();
+        }
     }
 }

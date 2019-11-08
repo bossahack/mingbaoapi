@@ -49,7 +49,8 @@ namespace Book.Service
                 {
                     Id = dbUser.Id,
                     WXName =dbUser.WxName,
-                    Type=dbUser.Type
+                    Type=dbUser.Type,
+                    WxNum=dbUser.WxNum
                 };
             }
             result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
@@ -57,52 +58,22 @@ namespace Book.Service
         }
 
 
-        public UserInfoModel UpdateWXInfo(WechatLoginInfo wcLoginInfo)
+        public UserInfoModel UpdateWXInfo(WechatUserInfo wechatUserInfo)
         {
-            var dec = new WeChatAppDecrypt(WebConfigurationManager.AppSettings["wxID"], WebConfigurationManager.AppSettings["wxKey"]);
-            var result = dec.Decrypt(wcLoginInfo);
-            if (result == null)
+            var current = UserUtil.CurrentUser();
+            var dbUser = userInfoDal.Get(current.Id);           
+            if (wechatUserInfo.avatarUrl != dbUser.WxPhoto || wechatUserInfo.nickName != dbUser.WxName)//更新头像
             {
-                throw new Exception("登陆失败");
+                dbUser.WxPhoto = wechatUserInfo.avatarUrl;
+                dbUser.WxName = wechatUserInfo.nickName;
+                userInfoDal.Update(dbUser);
             }
-            var dbUser = userInfoDal.Get(result.openId);
-            if (dbUser == null)
+            return new UserInfoModel()
             {
-                UserInfo userCreate = new UserInfo()
-                {
-                    Wxid = result.openId,
-                    WxName = result.nickName,
-                    WxPhoto = result.avatarUrl,
-                    //wx = result.unionId
-                };
-                var id = userInfoDal.Create(userCreate);
-                return new UserInfoModel()
-                {
-                    Id = id,
-                    WXName=result.nickName
-                };
-            }
-            else
-            {
-                if (result.avatarUrl != dbUser.WxPhoto || result.nickName != dbUser.WxName)//更新头像
-                {
-                    dbUser.WxPhoto = result.avatarUrl;
-                    dbUser.WxName = result.nickName;
-                    userInfoDal.Update(dbUser);
-                }
-                //var shopid = 0;
-                //if (dbUser.HasShop)
-                //{
-                //    var shop = ShopDal.GetInstance().GetByUser(dbUser.Id);
-                //    shopid = shop.Id;
-                //}
-                return new UserInfoModel()
-                {
-                    Id = dbUser.Id,
-                    WXName=result.nickName,
-                    Type=dbUser.Type
-                };
-            }
+                Id = dbUser.Id,
+                WXName= wechatUserInfo.nickName,
+                Type=dbUser.Type
+            };
         }
 
         public UserInfoModel ShopLogin()
@@ -126,6 +97,14 @@ namespace Book.Service
             userInfo.WxNum = model.WxNum;
             userInfo.Type = 1;
             userInfoDal.Update(userInfo);
+        }
+        
+        public string GetQRCode()
+        {
+            var current = UserUtil.CurrentUser();
+            string scene = "user" + current.Id;
+            var bytes= WxService.GetInstance().GetQrCode(scene, 300);
+            return Convert.ToBase64String(bytes);
         }
     }
 }

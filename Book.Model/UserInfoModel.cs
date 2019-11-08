@@ -19,6 +19,8 @@
         public string WXName { get; set; }
 
         public int Type { get; set; }
+
+        public string WxNum { get; set; }
     }
 
     ///// <summary>

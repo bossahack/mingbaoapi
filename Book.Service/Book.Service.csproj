@@ -63,6 +63,7 @@
     <Compile Include="ShopService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="WeChatAppDecrypt.cs" />
+    <Compile Include="WxService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Book.Dal\Book.Dal.csproj">
