@@ -38,5 +38,12 @@ namespace Book.Api.Controllers
         {
            return UserService.GetInstance().GetQRCode();
         }
+
+        [Filters.UserFilter]
+        [HttpPost]
+        public void Recommend(int userId)
+        {
+            UserService.GetInstance().Recommend(userId);
+        }
     }
 }

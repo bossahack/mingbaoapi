@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: user_info.cs
-// * history : Created by T4 11/07/2019 16:52:57 
+// * history : Created by T4 11/08/2019 14:27:54 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -77,5 +77,12 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "create_date")]
         public DateTime CreateDate { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "recommender")]
+        public int Recommender { get; set; }
     }
 }

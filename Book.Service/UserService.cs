@@ -106,5 +106,15 @@ namespace Book.Service
             var bytes= WxService.GetInstance().GetQrCode(scene, 300);
             return Convert.ToBase64String(bytes);
         }
+
+        public void Recommend(int userId)
+        {
+            var current = UserUtil.CurrentUser();
+            var userInfo = userInfoDal.Get(current.Id);
+            if (userInfo.Recommender > 0)
+                return;
+            userInfo.Recommender = userId;
+            userInfoDal.Update(userInfo);
+        }
     }
 }
