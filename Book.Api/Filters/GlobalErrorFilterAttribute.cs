@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http.Filters;
 
@@ -11,16 +12,17 @@ namespace Book.Api.Filters
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            base.OnException(actionExecutedContext);
-            
             try
             {
                 Trace.WriteLine(actionExecutedContext.Exception.ToString());//FileLogTraceListener
             }
-            catch(Exception ex)
-            {
+            catch { }
+            actionExecutedContext.Response = new System.Net.Http.HttpResponseMessage() {
+                StatusCode=System.Net.HttpStatusCode.InternalServerError,
+                Content = new StringContent(actionExecutedContext.Exception.Message)
+            };
 
-            }
+            base.OnException(actionExecutedContext);
         }
     }
 }

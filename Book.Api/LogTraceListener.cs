@@ -27,13 +27,14 @@ namespace Book.Api
 
         public override void Write(string message)
         {
-            File.AppendAllText(FilePath,DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+ message);
+            _TraceWriter.Write(DateTime.Now.ToString("HH:mm:ss ") + message);
+            //File.AppendAllText(FilePath,DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+ message);
         }
 
         public override void WriteLine(string message)
         {
             CheckRollover();
-            _TraceWriter.WriteLine(message);
+            _TraceWriter.WriteLine(DateTime.Now.ToString("HH:mm:ss ")+message);
             //File.AppendAllText(FilePath, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss ") + message + Environment.NewLine);
         }
 
