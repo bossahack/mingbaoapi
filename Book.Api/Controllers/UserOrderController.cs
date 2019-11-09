@@ -26,9 +26,9 @@ namespace Book.Api.Controllers
         }
 
         [HttpPost]
-        public void BookOrder(BookOrderRequest request)
+        public string BookOrder(BookOrderRequest request)
         {
-            orderService.BookOrder(request);
+            return orderService.BookOrder(request);
         }
 
         [HttpPost]

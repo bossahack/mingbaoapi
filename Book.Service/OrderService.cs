@@ -329,7 +329,7 @@ namespace Book.Service
             return result;
         }
 
-        public void BookOrder(BookOrderRequest request)
+        public string BookOrder(BookOrderRequest request)
         {
             if (request == null || request.Items == null)
                 throw new Exception("异常，请重新下单");
@@ -346,7 +346,7 @@ namespace Book.Service
                 throw new Exception("商家异常，不可下单");
             var foods = FoodDal.GetInstance().GetList(request.Items.Select(c=>c.FoodId).ToList());
             if (foods.Exists(c => c.Status != (int)FoodStatus.Normal))
-                throw new Exception("部分商品已下架，请刷新页面重试");
+                return string.Join(",", foods.Where(c => c.Status != (int)FoodStatus.Normal).Select(c => c.Id));
 
             var border = new BOrder() {
                 UserId=currentUser.Id,
@@ -374,7 +374,8 @@ namespace Book.Service
                 orderItemDal.Create(orderItems);
                 ShopDayOrderService.GetInstance().AddQty(border.ShopId, 1);
             });
-            sendUdp(request.ShopId);            
+            sendUdp(request.ShopId);
+            return null;      
         }
 
         public void CopyBookOrder(int orderId)
