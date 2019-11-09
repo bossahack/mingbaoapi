@@ -30,6 +30,7 @@ namespace Book.Service
             var orders = orderDal.GetShopOrderToday(currentUser.ShopId);
             if (orders == null || orders.Count == 0)
                 return null;
+            orders = orders.OrderByDescending(c => c.CreateDate).ToList();
 
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
             var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
@@ -84,7 +85,7 @@ namespace Book.Service
             var orders = orderDal.GetShopOrderAfter(currentUser.ShopId,dt.Value);
             if (orders == null || orders.Count == 0)
                 return null;
-
+            orders = orders.OrderBy(c => c.CreateDate).ToList();
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
             OrderResponse result = new OrderResponse()
             {
@@ -483,8 +484,7 @@ namespace Book.Service
             var orders = orderDal.GetShopOrderPages(currentUser.ShopId, index, size);
             if (orders == null || orders.Count == 0)
                 return null;
-
-            orders = orders.OrderByDescending(c => c.CreateDate).ToList();
+            
             ShopOrderHistoryResponse result = new ShopOrderHistoryResponse()
             {
                 Orders = new List<ShopOrderHistory>(),
