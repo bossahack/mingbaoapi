@@ -59,5 +59,14 @@ namespace Book.Dal
             }
         }
 
+        public List<UserInfo> GetByRecommender(int recommendId)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Query<UserInfo>("SELECT * from user_info where recommender=@id", new { id=recommendId }).ToList();
+                return result;
+            }
+        }
+
     }
 }

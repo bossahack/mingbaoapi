@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" shop_day_order.cs" company="xxxx Enterprises">
+// <copyright file=" shop_month_order.cs" company="xxxx Enterprises">
 // * Copyright (C) 2019 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: shop_day_order.cs
+// * FileName: shop_month_order.cs
 // * history : Created by T4 11/10/2019 10:02:16 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,10 +12,10 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// shop_day_order Entity Model
+    /// shop_month_order Entity Model
     /// </summary>   
-	[Dapper.Table("shop_day_order")]
-    public class ShopDayOrder
+	[Dapper.Table("shop_month_order")]
+    public class ShopMonthOrder
     {
         /// <summary>
         /// 
@@ -33,8 +33,15 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "date")]
-        public DateTime Date { get; set; }
+		[Column(Name = "year")]
+        public int Year { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "month")]
+        public int Month { get; set; }
     
 
         /// <summary>
@@ -49,5 +56,19 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "effect_qty")]
         public int EffectQty { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "should_pay")]
+        public decimal ShouldPay { get; set; }
+    
+
+        /// <summary>
+        /// 0:待统计，10:待结算，20:已付款
+        /// </summary>
+		[Column(Name = "status")]
+        public int Status { get; set; }
     }
 }

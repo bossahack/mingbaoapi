@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DictDal.cs" />
     <Compile Include="FoodDal.cs" />
     <Compile Include="FoodTypeDal.cs" />
     <Compile Include="Model\b_order.cs">
@@ -69,6 +70,9 @@
     <Compile Include="Model\DbEntity.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\dict.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\food.cs">
@@ -91,6 +95,9 @@
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\shop_day_order.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\shop_month_order.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\shop_online.cs">

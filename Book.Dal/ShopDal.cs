@@ -90,5 +90,15 @@ namespace Book.Dal
                 conn.Execute("UPDATE shop SET Status=@status where id=@id", new { status = status, id = shopid });
             }
         }
+
+
+        public List<Shop> GetListByUsers(List<int> userIds)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Query<Shop>("SELECT * from shop where user_id in @ids", new { ids = userIds }).ToList();
+                return result;
+            }
+        }
     }
 }

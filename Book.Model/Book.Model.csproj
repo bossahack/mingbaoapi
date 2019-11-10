@@ -44,6 +44,7 @@
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\ShopStatus.cs" />
     <Compile Include="OrderModel.cs" />
+    <Compile Include="ShopDayOrderModel.cs" />
     <Compile Include="ShopModel.cs" />
     <Compile Include="Enums\FoodStatus.cs" />
     <Compile Include="FoodModel.cs" />

@@ -130,11 +130,13 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DictController.cs" />
     <Compile Include="Controllers\FoodController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\QiniuController.cs" />
     <Compile Include="Controllers\SetController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserOrderController.cs" />
     <Compile Include="Filters\GlobalErrorFilterAttribute.cs" />

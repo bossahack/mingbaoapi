@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" shop_day_order.cs" company="xxxx Enterprises">
+// <copyright file=" dict.cs" company="xxxx Enterprises">
 // * Copyright (C) 2019 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: shop_day_order.cs
+// * FileName: dict.cs
 // * history : Created by T4 11/10/2019 10:02:16 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,10 +12,10 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// shop_day_order Entity Model
+    /// dict Entity Model
     /// </summary>   
-	[Dapper.Table("shop_day_order")]
-    public class ShopDayOrder
+	[Dapper.Table("dict")]
+    public class Dict
     {
         /// <summary>
         /// 
@@ -26,28 +26,14 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "shop_id")]
-        public int ShopId { get; set; }
+		[Column(Name = "flag")]
+        public string Flag { get; set; }
     
 
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "date")]
-        public DateTime Date { get; set; }
-    
-
-        /// <summary>
-        /// 
-        /// </summary>
-		[Column(Name = "qty")]
-        public int Qty { get; set; }
-    
-
-        /// <summary>
-        /// 
-        /// </summary>
-		[Column(Name = "effect_qty")]
-        public int EffectQty { get; set; }
+		[Column(Name = "value")]
+        public string Value { get; set; }
     }
 }

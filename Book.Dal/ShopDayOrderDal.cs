@@ -43,5 +43,14 @@ namespace Book.Dal
                 return result;
             }            
         }
+
+
+        public List<ShopDayOrder> getList(List<int> shopIds, DateTime day)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.Query<ShopDayOrder>("SELECT * from shop_day_order where shop_id in @shopids and date=@date", new { shopIds = shopIds, date = day.ToString("yyyy-MM-dd") }).ToList();
+            }
+        }
     }
 }
