@@ -57,6 +57,7 @@
     <Compile Include="CalcShopDayOrderJob.cs" />
     <Compile Include="CalcShopMonthOrderJob.cs" />
     <Compile Include="FinishOrderJob.cs" />
+    <Compile Include="LogTraceListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
