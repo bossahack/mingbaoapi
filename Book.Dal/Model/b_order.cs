@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: b_order.cs
-// * history : Created by T4 11/10/2019 10:02:16 
+// * history : Created by T4 11/20/2019 09:43:12 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -70,5 +70,19 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "status")]
         public int Status { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "update_time")]
+        public DateTime UpdateTime { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "update_user")]
+        public int UpdateUser { get; set; }
     }
 }

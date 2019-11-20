@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: shop_day_order.cs
-// * history : Created by T4 11/10/2019 10:02:16 
+// * history : Created by T4 11/20/2019 09:43:12 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;

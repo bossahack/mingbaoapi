@@ -93,5 +93,20 @@ namespace Book.Dal
                 return result;
             }
         }
+
+        /// <summary>
+        /// 距离指定时间2天以内的已接单
+        /// 距离指定时间2天以内24小时以前的初始状态的单子
+        /// </summary>
+        public void FinishOrder(DateTime date)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Execute(@"UPDATE b_order set `status`= 20, update_user = -1 where `status`= 10 AND create_date >= DATE_ADD(@date, INTERVAL - 2 DAY);
+UPDATE b_order set `status`=20,update_user=-1 where `status`=0 AND create_date>=DATE_ADD(@date,interval -2 DAY) and create_date<date_add(@date, interval -24 hour);
+",new { date = date.ToString("yyyy-MM-dd") });
+            }
+        }
+        
     }
 }

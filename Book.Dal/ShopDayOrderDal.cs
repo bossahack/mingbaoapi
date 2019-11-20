@@ -52,5 +52,19 @@ namespace Book.Dal
                 return conn.Query<ShopDayOrder>("SELECT * from shop_day_order where shop_id in @shopids and date=@date", new { shopIds = shopIds, date = day.ToString("yyyy-MM-dd") }).ToList();
             }
         }
+
+        /// <summary>
+        /// n天内的有效单量
+        /// </summary>
+        /// <param name="fromDate"></param>
+        public void CalcShopDayOrder(DateTime fromDate)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Execute(@"update main set main.effect_qty=SELECT count(1) from b_order border where border.shop_id=main.shop_id and border.`status`=20 and border.create_date>=@date and DATEDIFF(border.create_date,main.date)=0
+FROM shop_day_order main
+where main.date >= @date",new { date= fromDate.ToString("yyyy-MM-dd")});
+            }
+        }
     }
 }
