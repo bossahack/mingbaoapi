@@ -61,9 +61,21 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                conn.Execute(@"update main set main.effect_qty=SELECT count(1) from b_order border where border.shop_id=main.shop_id and border.`status`=20 and border.create_date>=@date and DATEDIFF(border.create_date,main.date)=0
-FROM shop_day_order main
-where main.date >= @date",new { date= fromDate.ToString("yyyy-MM-dd")});
+                conn.Execute(@"CREATE TEMPORARY TABLE tmp(
+id int,
+shop_id int,
+date date
+);
+INSERT into tmp(id,shop_id,date) 
+SELECT id,shop_id,date from shop_day_order where date>=@date;
+
+UPDATE shop_day_order a ,(SELECT shop_id,DATE(create_date) date,count(1) qty from b_order
+where shop_id in (SELECT shop_id from tmp) and create_date>=@date
+GROUP BY shop_id,DATE(create_date)) b
+set a.effect_qty=b.qty
+where a.date=b.date and a.shop_id=b.shop_id;
+
+drop table tmp;", new { date= fromDate.ToString("yyyy-MM-dd")});
             }
         }
     }

@@ -102,9 +102,9 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                conn.Execute(@"UPDATE b_order set `status`= 20, update_user = -1 where `status`= 10 AND create_date >= DATE_ADD(@date, INTERVAL - 2 DAY);
-UPDATE b_order set `status`=20,update_user=-1 where `status`=0 AND create_date>=DATE_ADD(@date,interval -2 DAY) and create_date<date_add(@date, interval -24 hour);
-",new { date = date.ToString("yyyy-MM-dd") });
+                conn.Execute(@"UPDATE b_order set `status`= 20, update_user = -1,update_time=now() where `status`= 10 AND create_date >= DATE_ADD(@date, INTERVAL - 2 DAY);
+UPDATE b_order set `status`=20,update_user=-1,update_time=now() where `status`=0 AND create_date>=DATE_ADD(@date,interval -2 DAY) and create_date<date_add(@date, interval -24 hour);
+", new { date = date.ToString("yyyy-MM-dd") });
             }
         }
         

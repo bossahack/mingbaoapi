@@ -65,7 +65,7 @@ namespace Book.Job
 
         private void calcMonth()
         {
-            var now = DateTime.Now.AddDays(-2);
+            var now = DateTime.Now.AddDays(-3);
             var todayOfMonth = now.Day;//今天
             var lastDayOfMonth = now.AddDays(1 - todayOfMonth).AddMonths(1).AddDays(-1).Day;//这个月的最后一天
 

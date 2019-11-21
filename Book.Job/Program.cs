@@ -13,7 +13,6 @@ namespace Book.Job
         static void Main(string[] args)
         {
             Book.Dal.Model.ColumnMapper.SetMapper();
-            new FinishOrderJob().Execute();
             FeeJobScheduler.start().GetAwaiter().GetResult();
             while (true)
             {
@@ -37,7 +36,7 @@ namespace Book.Job
             ITrigger trigger1 = TriggerBuilder.Create()
               .WithIdentity("FeeJobTrigger")
               .StartNow()
-              .WithCronSchedule("0 08 18 * * ?")//每日0点5分执行一次
+              .WithCronSchedule("0 05 00 * * ?")//每日0点5分执行一次
               .Build();
             await scheduler.ScheduleJob(job1, trigger1);
 
@@ -61,9 +60,11 @@ namespace Book.Job
         {
             return Task.Run(() =>
             {
+                Console.WriteLine("begin");
                 new FinishOrderJob().Execute();
                 new CalcShopDayOrderJob().Execute();
                 new CalcShopMonthOrderJob().Execute();
+                Console.WriteLine("end");
             });
         }
     }
