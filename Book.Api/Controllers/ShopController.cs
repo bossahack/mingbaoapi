@@ -22,6 +22,7 @@ namespace Book.Api.Controllers
         {
             return ShopService.GetInstance().GetQRCode();
         }
+
         #endregion
 
 
@@ -46,6 +47,14 @@ namespace Book.Api.Controllers
         {
             ShopService.GetInstance().CollectShop(shopid);
         }
+
+        [Filters.UserFilter]
+        [HttpPost]
+        public void Create(string username,string pwd )
+        {
+            ShopService.GetInstance().CreateShop(username, pwd);
+        }
+
         #endregion
 
     }

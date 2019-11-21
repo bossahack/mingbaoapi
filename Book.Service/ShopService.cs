@@ -105,6 +105,28 @@ namespace Book.Service
            
         }
 
+        public void CreateShop(string username, string pwd)
+        {
+            var current = UserUtil.CurrentUser();
+            var userInfo = UserInfoDal.GetInstance().Get(current.Id);
+            if (userInfo.HasShop)
+                throw new Exception("您已开通过店铺，无需重复开通");
+
+            var shop = new Shop()
+            {
+                UserId = current.Id,
+                CreateDate = DateTime.Now,
+                Status = (int)Model.Enums.ShopStatus.Normal
+            };
+            TransactionHelper.Run(()=> {
+                userInfo.HasShop = true;
+                userInfo.LoginName = username;
+                userInfo.LoginPwd = SecurityUtil.GetInstance().GetMD5String(pwd);
+                UserInfoDal.GetInstance().Update(userInfo);
+                ShopDal.GetInstance().Create(shop);
+            });
+        }
+
     }
 
 }

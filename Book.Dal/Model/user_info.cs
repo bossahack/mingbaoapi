@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: user_info.cs
-// * history : Created by T4 11/20/2019 09:43:12 
+// * history : Created by T4 11/21/2019 14:08:23 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -84,5 +84,19 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "recommender")]
         public int Recommender { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "login_name")]
+        public string LoginName { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "login_pwd")]
+        public string LoginPwd { get; set; }
     }
 }

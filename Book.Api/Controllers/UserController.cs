@@ -20,9 +20,9 @@ namespace Book.Api.Controllers
         }
 
         [HttpPost]
-        public object ShopLogin()
+        public object ShopLogin(string username,string pwd)
         {
-            return UserService.GetInstance().ShopLogin();
+            return UserService.GetInstance().ShopLogin(username,pwd);
         }
 
         [Filters.UserFilter]

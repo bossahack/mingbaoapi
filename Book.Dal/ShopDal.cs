@@ -100,5 +100,14 @@ namespace Book.Dal
                 return result;
             }
         }
+
+        public int Create(Shop shop)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Insert<Shop>(shop);
+                return result.Value;
+            }
+        }
     }
 }

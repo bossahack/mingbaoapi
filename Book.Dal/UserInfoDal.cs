@@ -33,6 +33,14 @@ namespace Book.Dal
                 return result;
             }
         }
+        public UserInfo GetByName(string loginName)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.QueryFirstOrDefault<UserInfo>("SELECT * FROM user_info WHERE login_name= @loginName", new { loginName });
+                return result;
+            }
+        }
 
         public List<UserInfo> GetList(List<int> ids)
         {

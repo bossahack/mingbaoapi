@@ -76,14 +76,20 @@ namespace Book.Service
             };
         }
 
-        public UserInfoModel ShopLogin()
+        public UserInfoModel ShopLogin(string username, string pwd)
         {
-
+            var userInfo=userInfoDal.GetByName(username);
+            if (userInfo == null)
+                throw new Exception("用户名密码错误");
+            if(userInfo.LoginPwd!=SecurityUtil.GetInstance().GetMD5String(pwd))
+                throw new Exception("用户名密码错误");
+            if(!userInfo.HasShop)
+                throw new Exception("您未开通店铺，请进入小程序端开通");
+            var shop = ShopDal.GetInstance().GetByUser(userInfo.Id);
             UserInfoModel result = new UserInfoModel()
             {
-                Id = 2,
-                ShopId=2,
-               
+                Id = userInfo.Id,
+                ShopId= shop.Id,               
             };
             
             result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
