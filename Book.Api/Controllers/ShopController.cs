@@ -50,9 +50,9 @@ namespace Book.Api.Controllers
 
         [Filters.UserFilter]
         [HttpPost]
-        public void Create(string username,string pwd )
+        public void Create(ShopCreateModel shop)
         {
-            ShopService.GetInstance().CreateShop(username, pwd);
+            ShopService.GetInstance().CreateShop(shop.Phone, shop.Pwd);
         }
 
         #endregion

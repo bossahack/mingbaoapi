@@ -111,7 +111,9 @@ namespace Book.Service
             var userInfo = UserInfoDal.GetInstance().Get(current.Id);
             if (userInfo.HasShop)
                 throw new Exception("您已开通过店铺，无需重复开通");
-
+            var userCheck= UserInfoDal.GetInstance().GetByName(username);
+            if (userCheck != null)
+                throw new Exception("该登录帐号已存在");
             var shop = new Shop()
             {
                 UserId = current.Id,

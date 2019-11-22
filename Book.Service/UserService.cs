@@ -122,5 +122,24 @@ namespace Book.Service
             userInfo.Recommender = userId;
             userInfoDal.Update(userInfo);
         }
+
+        public object GetLoginInfo()
+        {
+            var current = UserUtil.CurrentUser();
+            var userInfo = userInfoDal.Get(current.Id);
+            return new
+            {
+                Phone=userInfo.LoginName,
+                Pwd=userInfo.LoginPwd
+            };
+        }
+
+        public void UpdateLoginPwd(string pwd)
+        {
+            var current = UserUtil.CurrentUser();
+            var userInfo = userInfoDal.Get(current.Id);
+            userInfo.LoginPwd = SecurityUtil.GetInstance().GetMD5String(pwd);
+            userInfoDal.Update(userInfo);
+        }
     }
 }

@@ -97,4 +97,11 @@ namespace Book.Model
         public int Status { get; set; }
         
     }
+
+    public class ShopCreateModel
+    {
+        public string Phone { get; set; }
+
+        public string Pwd { get; set; }
+    }
 }

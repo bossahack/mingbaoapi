@@ -45,5 +45,19 @@ namespace Book.Api.Controllers
         {
             UserService.GetInstance().Recommend(userId);
         }
+
+        [Filters.UserFilter]
+        [HttpGet]
+        public object GetLoginInfo()
+        {
+            return UserService.GetInstance().GetLoginInfo();
+        }
+
+        [Filters.UserFilter]
+        [HttpPost]
+        public void UpdateLoginPwd(string pwd)
+        {
+            UserService.GetInstance().UpdateLoginPwd(pwd);
+        }
     }
 }
