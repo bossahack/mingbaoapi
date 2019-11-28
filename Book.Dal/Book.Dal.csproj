@@ -97,6 +97,9 @@
     <Compile Include="Model\shop_day_order.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\shop_fee_record.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\shop_month_order.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
@@ -104,6 +107,9 @@
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\shop_order_date.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\user_fee_record.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\user_info.cs">
@@ -118,6 +124,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShopDal.cs" />
     <Compile Include="ShopDayOrderDal.cs" />
+    <Compile Include="ShopFeeRecordDal.cs" />
     <Compile Include="ShopMonthOrderDal.cs" />
     <Compile Include="ShopOnLineDal.cs" />
     <Compile Include="SqlHelper.cs" />

@@ -62,5 +62,23 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
                 return conn.Query<ShopMonthOrder>(@"SELECT * from shop_month_order WHERE shop_id=@shopId LIMIT @count", new { shopId = shopId, count = count }).ToList();
             }
         }
+
+        public List<ShopMonthOrder> GetList(List<int> ids)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.Query<ShopMonthOrder>("SELECT * from shop_month_order WHERE id in @ids", new { ids }).ToList();
+            }
+        }
+
+        public void Update(List<ShopMonthOrder> orders)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                orders.ForEach(order=> {
+                    conn.Update(order);
+                });
+            }
+        }
     }
 }

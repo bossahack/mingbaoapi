@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" shop_day_order.cs" company="xxxx Enterprises">
+// <copyright file=" shop_fee_record.cs" company="xxxx Enterprises">
 // * Copyright (C) 2019 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: shop_day_order.cs
+// * FileName: shop_fee_record.cs
 // * history : Created by T4 11/28/2019 18:02:47 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,10 +12,10 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// shop_day_order Entity Model
+    /// shop_fee_record Entity Model
     /// </summary>   
-	[Dapper.Table("shop_day_order")]
-    public class ShopDayOrder
+	[Dapper.Table("shop_fee_record")]
+    public class ShopFeeRecord
     {
         /// <summary>
         /// 
@@ -33,21 +33,14 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "date")]
-        public DateTime Date { get; set; }
+		[Column(Name = "fee")]
+        public decimal Fee { get; set; }
     
 
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "qty")]
-        public int Qty { get; set; }
-    
-
-        /// <summary>
-        /// 
-        /// </summary>
-		[Column(Name = "effect_qty")]
-        public int EffectQty { get; set; }
+		[Column(Name = "create_time")]
+        public DateTime CreateTime { get; set; }
     }
 }
