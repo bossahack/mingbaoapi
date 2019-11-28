@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using Book.Dal.Model;
+using Book.Model.Enums;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +39,28 @@ set monthorder.effect_qty=b.effectqty,monthorder.qty=a.qty
 WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM shop where create_date >=@createBegin and create_date<@createEnd) and monthorder.shop_id=b.shop_id and monthorder.shop_id=a.shop_id", new { createBegin = createBegin.ToString("yyyy-MM-dd"), createEnd = createEnd.ToString("yyyy-MM-dd"), orderBegin=orderBegin.ToString("yyyy-MM-dd"), orderEnd= orderEnd.ToString("yyyy-MM-dd"), year, month });
             }
 
+        }
+
+        public List<ShopMonthOrder> GetByStatus(int shopId, int status)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.Query<ShopMonthOrder>(@"SELECT * from shop_month_order WHERE shop_id=@shopId and `status` =@status", new { shopId = shopId, status = status }).ToList();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<ShopMonthOrder> GetTopList(int shopId, int count)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.Query<ShopMonthOrder>(@"SELECT * from shop_month_order WHERE shop_id=@shopId LIMIT @count", new { shopId = shopId, count = count }).ToList();
+            }
         }
     }
 }

@@ -27,6 +27,7 @@ namespace Book.Service
             var shop = ShopDal.GetInstance().Get(current.ShopId);
             if (shop == null)
                 return null;
+            
             return new ShopResponse()
             {
                 Id = shop.Id,
@@ -34,7 +35,8 @@ namespace Book.Service
                 Logo = shop.Logo,
                 Name = shop.Name,
                 Recommender = shop.Recommender,
-                Status = shop.Status
+                Status = shop.Status,
+                UnPay= ShopMonthOrderService.GetInstance().hasUnPay()
             };
         }
 

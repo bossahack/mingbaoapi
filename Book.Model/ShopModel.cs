@@ -45,6 +45,8 @@ namespace Book.Model
         /// 
         /// </summary>
         public DateTime CreateDate { get; set; }
+
+        public bool UnPay { get; set; }
     }
 
     public class OrderShopModel

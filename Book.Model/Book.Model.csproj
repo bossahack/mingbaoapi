@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillModel.cs" />
+    <Compile Include="Enums\BillStatus.cs" />
     <Compile Include="Enums\OrderStatus.cs" />
     <Compile Include="Enums\ShopStatus.cs" />
     <Compile Include="OrderModel.cs" />

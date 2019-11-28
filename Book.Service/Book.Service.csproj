@@ -54,6 +54,7 @@
     <Compile Include="DictService.cs" />
     <Compile Include="QiniuService.cs" />
     <Compile Include="ShopDayOrderService.cs" />
+    <Compile Include="ShopMonthOrderService.cs" />
     <Compile Include="ShopOnlineService.cs" />
     <Compile Include="SpreadService.cs" />
     <Compile Include="TransactionHelper.cs" />
