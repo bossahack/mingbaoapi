@@ -35,8 +35,8 @@ SELECT id,@year,@month,0,0,0,0 from shop where create_date>=@begin and create_da
             {
                 conn.Execute(@"
 UPDATE shop_month_order monthorder,(SELECT SUM( dayorder.effect_qty) effectqty,dayorder.shop_id from shop_day_order dayorder where  dayorder.date>=@orderBegin and dayorder.date<=@orderEnd GROUP BY dayorder.shop_id ) b,(SELECT SUM( dayorder.qty) qty,dayorder.shop_id from shop_day_order dayorder where  dayorder.date>=@orderBegin and dayorder.date<=@orderEnd GROUP BY dayorder.shop_id ) a
-set monthorder.effect_qty=b.effectqty,monthorder.qty=a.qty
-WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM shop where create_date >=@createBegin and create_date<@createEnd) and monthorder.shop_id=b.shop_id and monthorder.shop_id=a.shop_id", new { createBegin = createBegin.ToString("yyyy-MM-dd"), createEnd = createEnd.ToString("yyyy-MM-dd"), orderBegin=orderBegin.ToString("yyyy-MM-dd"), orderEnd= orderEnd.ToString("yyyy-MM-dd"), year, month });
+set monthorder.effect_qty=b.effectqty,monthorder.qty=a.qty,should_pay=b.effectqty/10,status=@status
+WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM shop where create_date >=@createBegin and create_date<@createEnd) and monthorder.shop_id=b.shop_id and monthorder.shop_id=a.shop_id", new { createBegin = createBegin.ToString("yyyy-MM-dd"), createEnd = createEnd.ToString("yyyy-MM-dd"), orderBegin=orderBegin.ToString("yyyy-MM-dd"), orderEnd= orderEnd.ToString("yyyy-MM-dd"), year, month,status=(int)BillStatus.UnPay });
             }
 
         }
@@ -70,6 +70,13 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
                 return conn.Query<ShopMonthOrder>("SELECT * from shop_month_order WHERE id in @ids", new { ids }).ToList();
             }
         }
+        public ShopMonthOrder Get(int id)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.QueryFirstOrDefault<ShopMonthOrder>("SELECT * from shop_month_order WHERE id = @id", new { id });
+            }
+        }
 
         public void Update(List<ShopMonthOrder> orders)
         {
@@ -78,6 +85,14 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
                 orders.ForEach(order=> {
                     conn.Update(order);
                 });
+            }
+        }
+
+        public void Update(ShopMonthOrder order)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Update(order);
             }
         }
     }

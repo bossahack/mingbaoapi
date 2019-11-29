@@ -27,5 +27,10 @@ namespace Book.Api.Controllers
         {
             ShopMonthOrderService.GetInstance().Finish(billIds,fee);
         }
+
+        public void ZeroPay(int id)
+        {
+            ShopMonthOrderService.GetInstance().ZeroPay(id);
+        }
     }
 }

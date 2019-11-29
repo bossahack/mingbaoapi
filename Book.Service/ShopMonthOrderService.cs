@@ -77,5 +77,21 @@ namespace Book.Service
                 ShopFeeRecordDal.GetInstance().Create(feeRecord);
             });
         }
+
+        public void ZeroPay(int id)
+        {
+            var current = UserUtil.CurrentUser();
+            var bill = ShopMonthOrderDal.GetInstance().Get(id);
+            if (bill == null)
+                throw new Exception("未查到该订账单");
+            if (bill.ShopId != current.ShopId)
+                throw new Exception("您无权限操作");
+            if (bill.ShouldPay > 0)
+                throw new Exception("您无权操作");
+            if (bill.Status != (int)BillStatus.UnPay)
+                throw new Exception("账单不是未付款状态，不可操作");
+            bill.Status = (int)BillStatus.Payed;
+            ShopMonthOrderDal.GetInstance().Update(bill);
+        }
     }
 }
