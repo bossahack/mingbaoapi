@@ -23,9 +23,9 @@ namespace Book.Api.Controllers
         /// </summary>
         /// <param name="billIds"></param>
         /// <param name="fee"></param>
-        public void Finish(List<int> billIds,decimal fee)
+        public void Finish(int id,decimal fee)
         {
-            ShopMonthOrderService.GetInstance().Finish(billIds,fee);
+            ShopMonthOrderService.GetInstance().Finish(id,fee);
         }
 
         public void ZeroPay(int id)

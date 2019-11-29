@@ -54,27 +54,30 @@ namespace Book.Service
 
         }
 
-        public void Finish(List<int> ids,decimal fee)
+        public void Finish(int id,decimal fee)
         {
-            if (ids == null || ids.Count == 0)
+            if (id == 0)
                 return;
             var current = UserUtil.CurrentUser();
-            var bills = ShopMonthOrderDal.GetInstance().GetList(ids);
-            if (bills.Exists(c => c.Status == (int)BillStatus.Init))
+            var bill = ShopMonthOrderDal.GetInstance().Get(id);
+            if (bill.Status == (int)BillStatus.Init)
             {
                 throw new Exception("存在初始状态的订单，操作失败");
             }
-            bills.ForEach(c => {
-                c.Status = (int)BillStatus.Payed;                
-            });
+            bill.Status = (int)BillStatus.Payed;
             ShopFeeRecord feeRecord = new ShopFeeRecord() {
                 CreateTime=DateTime.Now,
                 Fee=fee,
                 ShopId=current.ShopId
             };
+            var shop = ShopDal.GetInstance().Get(bill.ShopId);
             TransactionHelper.Run(()=> {
-                ShopMonthOrderDal.GetInstance().Update(bills);
+                ShopMonthOrderDal.GetInstance().Update(bill);
                 ShopFeeRecordDal.GetInstance().Create(feeRecord);
+                if (shop.Recommender > 0)
+                {
+                    UserFeeService.GetInstance().ShopPay(bill, shop.Recommender);
+                }
             });
         }
 

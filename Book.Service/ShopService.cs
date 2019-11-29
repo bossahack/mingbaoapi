@@ -120,6 +120,7 @@ namespace Book.Service
             {
                 UserId = current.Id,
                 CreateDate = DateTime.Now,
+                Recommender=userInfo.Recommender,
                 Status = (int)Model.Enums.ShopStatus.Normal
             };
             TransactionHelper.Run(()=> {

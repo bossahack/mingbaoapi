@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" shop_fee_record.cs" company="xxxx Enterprises">
+// <copyright file=" user_fee.cs" company="xxxx Enterprises">
 // * Copyright (C) 2019 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: shop_fee_record.cs
+// * FileName: user_fee.cs
 // * history : Created by T4 11/29/2019 16:06:27 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,10 +12,10 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// shop_fee_record Entity Model
+    /// user_fee Entity Model
     /// </summary>   
-	[Dapper.Table("shop_fee_record")]
-    public class ShopFeeRecord
+	[Dapper.Table("user_fee")]
+    public class UserFee
     {
         /// <summary>
         /// 
@@ -26,15 +26,15 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "shop_id")]
-        public int ShopId { get; set; }
+		[Column(Name = "user_id")]
+        public int UserId { get; set; }
     
 
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "fee")]
-        public decimal Fee { get; set; }
+		[Column(Name = "total")]
+        public decimal Total { get; set; }
     
 
         /// <summary>

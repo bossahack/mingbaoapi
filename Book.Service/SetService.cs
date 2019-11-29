@@ -62,7 +62,7 @@ namespace Book.Service
             var shop = ShopDal.GetInstance().Get(currentUser.ShopId);
             if (shop.UserId != currentUser.Id)
                 throw new Exception("操作失败");
-            if(!string.IsNullOrEmpty(shop.Recommender))
+            if(shop.Recommender>0)
                 ShopDal.GetInstance().SetRecommender(shop.Id, recommender);
         }
 

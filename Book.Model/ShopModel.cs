@@ -32,7 +32,7 @@ namespace Book.Model
         /// <summary>
         /// 
         /// </summary>
-        public string Recommender { get; set; }
+        public int Recommender { get; set; }
 
 
         /// <summary>
