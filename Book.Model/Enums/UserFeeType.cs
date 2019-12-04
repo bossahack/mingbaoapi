@@ -22,5 +22,10 @@ namespace Book.Model.Enums
         /// 提现
         /// </summary>
         TakeMoney=3,
+
+        /// <summary>
+        /// 我推广的用户获得了收入
+        /// </summary>
+        RecommenderIncome = 4,
     }
 }

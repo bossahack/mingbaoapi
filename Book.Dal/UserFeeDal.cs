@@ -19,13 +19,18 @@ namespace Book.Dal
             return _Instance;
         }
 
-        public bool Exist(int userId)
+        public UserFee Get(int userId)
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var userfee=conn.QueryFirstOrDefault<UserFee>("select * from user_fee where user_id=@userId", new { userId });
-                return userfee != null;
+                var userfee = conn.QueryFirstOrDefault<UserFee>("select * from user_fee where user_id=@userId", new { userId });
+                return userfee;
             }
+        }
+
+        public bool Exist(int userId)
+        {
+            return Get(userId) != null;
         }
 
         public void Create(UserFee record)

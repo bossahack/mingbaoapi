@@ -102,7 +102,10 @@ namespace Book.Service
             var userInfo = userInfoDal.Get(current.Id);
             userInfo.WxNum = model.WxNum;
             userInfo.Type = 1;
-            userInfoDal.Update(userInfo);
+            TransactionHelper.Run(()=> {
+                userInfoDal.Update(userInfo);
+                UserFeeService.GetInstance().Init(current.Id);
+            });
         }
         
         public string GetQRCode()

@@ -59,5 +59,12 @@ namespace Book.Api.Controllers
         {
             UserService.GetInstance().UpdateLoginPwd(pwd);
         }
+
+        [Filters.UserFilter]
+        [HttpGet]
+        public decimal GetIncome()
+        {
+            return UserFeeService.GetInstance().GetIncome();
+        }
     }
 }

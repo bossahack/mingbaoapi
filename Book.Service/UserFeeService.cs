@@ -1,6 +1,7 @@
 ﻿using Book.Dal;
 using Book.Dal.Model;
 using Book.Model.Enums;
+using Book.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,11 @@ namespace Book.Service
             UserFeeDal.GetInstance().Create(userFee);
         }
 
+        /// <summary>
+        /// 店铺付款，推广者获得10%到30%的收益，推广者的推广者获得推广该推广者收益的10%
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="user">推广者</param>
         public void ShopPay(ShopMonthOrder order,int user)
         {
             if (order.ShouldPay <= 0)
@@ -54,17 +60,44 @@ namespace Book.Service
                 rate = 0.3M;
             }
             var total = order.ShouldPay * rate;
-
+            var now = DateTime.Now;
             UserFeeDal.GetInstance().Plus(user, total);
             UserFeeRecordDal.GetInstance().Create(new UserFeeRecord()
             {
                 Fee = total,
                 UserId = user,
-                CreateTime = DateTime.Now,
+                CreateTime = now,
                 Type = (int)UserFeeType.ShopPay,
 
             });
 
+            if (total < 0.1M)
+                return;
+            var recommenderParent = UserInfoDal.GetInstance().Get(user).Recommender;
+            if (recommenderParent > 0)
+            {
+                var fee = total * 0.1M;
+                UserFeeDal.GetInstance().Plus(recommenderParent, fee);
+                UserFeeRecordDal.GetInstance().Create(new UserFeeRecord()
+                {
+                    Fee = fee,
+                    UserId = recommenderParent,
+                    CreateTime = now,
+                    Type = (int)UserFeeType.RecommenderIncome,
+
+                });
+
+            }
+
+        }
+
+        public decimal GetIncome()
+        {
+            var current = UserUtil.CurrentUser();
+            var userfee= UserFeeDal.GetInstance().Get(current.Id);
+            if (userfee == null)
+                throw new Exception("您没有账户");
+            return userfee.Total;
         }
     }
 }
