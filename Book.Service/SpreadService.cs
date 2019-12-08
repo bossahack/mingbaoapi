@@ -23,10 +23,10 @@ namespace Book.Service
         public List<ShopResponse> GetMyShop()
         {
             var current = UserUtil.CurrentUser();
-            var users = UserInfoDal.GetInstance().GetByRecommender(current.Id);
-            if (users == null || users.Count == 0)
-                return null;
-            var shops = ShopDal.GetInstance().GetListByUsers(users.Select(c => c.Id).ToList());
+            //var users = UserInfoDal.GetInstance().GetByRecommender(current.Id);
+            //if (users == null || users.Count == 0)
+            //    return null;
+            var shops = ShopDal.GetInstance().GetListByRecommender(current.Id);
             if (shops == null || shops.Count == 0)
                 return null;
             return shops.Select(c => new ShopResponse() {
@@ -40,10 +40,10 @@ namespace Book.Service
         public List<ShopDayOrderSpreadModel> GetMyShopOrder()
         {
             var current = UserUtil.CurrentUser();
-            var users = UserInfoDal.GetInstance().GetByRecommender(current.Id);
-            if (users == null || users.Count == 0)
-                return null;
-            var shops = ShopDal.GetInstance().GetListByUsers(users.Select(c => c.Id).ToList());
+            //var users = UserInfoDal.GetInstance().GetByRecommender(current.Id);
+            //if (users == null || users.Count == 0)
+            //    return null;
+            var shops = ShopDal.GetInstance().GetListByRecommender(current.Id);
             if (shops == null || shops.Count == 0)
                 return null;
 
@@ -65,6 +65,21 @@ namespace Book.Service
                 });
             }
             return result;
+        }
+
+        public List<UserInfoRecommendModel> GetMyRecommenders()
+        {
+            var current = UserUtil.CurrentUser();
+            var users = UserInfoDal.GetInstance().GetByRecommender(current.Id);
+            if (users == null || users.Count == 0)
+                return null;
+
+            return users.Select(c => new UserInfoRecommendModel()
+            {
+                Id = c.Id,
+                WXName = c.WxName,
+                HasShop = c.HasShop
+            }).ToList();
         }
     }
 }

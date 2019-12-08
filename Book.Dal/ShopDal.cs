@@ -92,11 +92,11 @@ namespace Book.Dal
         }
 
 
-        public List<Shop> GetListByUsers(List<int> userIds)
+        public List<Shop> GetListByRecommender(int userId)
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var result = conn.Query<Shop>("SELECT * from shop where user_id in @ids", new { ids = userIds }).ToList();
+                var result = conn.Query<Shop>("SELECT * from shop where recommender = @id", new { id = userId }).ToList();
                 return result;
             }
         }

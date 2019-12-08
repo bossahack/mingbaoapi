@@ -119,6 +119,8 @@ namespace Book.Service
         public void Recommend(int userId)
         {
             var current = UserUtil.CurrentUser();
+            if (current.Id == userId)
+                return;
             var userInfo = userInfoDal.Get(current.Id);
             if (userInfo.Recommender > 0)
                 return;

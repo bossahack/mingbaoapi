@@ -70,4 +70,11 @@
     {
         public string WxNum { get; set; }
     }
+
+    public class UserInfoRecommendModel
+    {
+        public string WXName { get; set; }
+        public int Id { get; set; }
+        public bool HasShop { get; set; }
+    }
 }
