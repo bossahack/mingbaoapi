@@ -215,6 +215,28 @@ namespace Book.Model
         public int Status { get; set; }
 
         public int UserId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ArriveTimeType { get; set; }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Note { get; set; }
+
+
+        /// <summary>
+        /// 取餐码
+        /// </summary>
+        public string TakeCode { get; set; }
+
+        /// <summary>
+        /// 是否有异常
+        /// </summary>
+        public bool HasAbnormal { get; set; }
     }
 
     public class ShopOrderItemHistory

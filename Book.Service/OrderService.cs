@@ -493,6 +493,7 @@ namespace Book.Service
                 Users=new List<ShopOrderHistoryUserInfoModel>(),
             };
             var shops = shopDal.GetList(orders.Select(c => c.ShopId).ToList());
+            var abnormals = OrderAbnormalDal.GetInstance().GetList(currentUser.ShopId, orders.Select(c => c.UserId).ToList(), DateTime.Now.AddDays(-30));
             foreach (var order in orders)
             {
                 result.Orders.Add(new ShopOrderHistory()
@@ -500,7 +501,11 @@ namespace Book.Service
                     Id = order.Id,
                     CreateDate = order.CreateDate,
                     Status = order.Status,
-                    UserId=order.UserId
+                    UserId=order.UserId,
+                    ArriveTimeType=order.ArriveTimeType,
+                    Note=order.Note,
+                    TakeCode=order.TakeCode,
+                    HasAbnormal= abnormals.Exists(c=>c.UserId==order.UserId)
                 });
             }
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
