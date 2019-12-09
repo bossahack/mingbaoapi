@@ -62,7 +62,7 @@ namespace Book.Service
             var bill = ShopMonthOrderDal.GetInstance().Get(id);
             if (bill.Status == (int)BillStatus.Init)
             {
-                throw new Exception("存在初始状态的订单，操作失败");
+                throw new Exception("订单不是待付款状态，操作失败");
             }
             bill.Status = (int)BillStatus.Payed;
             ShopFeeRecord feeRecord = new ShopFeeRecord() {
@@ -73,6 +73,10 @@ namespace Book.Service
             var shop = ShopDal.GetInstance().Get(bill.ShopId);
             TransactionHelper.Run(()=> {
                 ShopMonthOrderDal.GetInstance().Update(bill);
+                if (shop.Status == (int)ShopStatus.Arrears)
+                {
+                    ShopDal.GetInstance().SetStatus(shop.Id, (int)ShopStatus.Normal);
+                }
                 ShopFeeRecordDal.GetInstance().Create(feeRecord);
                 if (shop.Recommender > 0)
                 {

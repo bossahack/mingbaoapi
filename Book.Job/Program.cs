@@ -29,6 +29,7 @@ namespace Book.Job
             uint SC_CLOSE = 0xF060;
             RemoveMenu(closeMenu, SC_CLOSE, 0x0);
         }
+
         static void Main(string[] args)
         {
             DisableClosebtn();
@@ -56,7 +57,7 @@ namespace Book.Job
             ITrigger trigger1 = TriggerBuilder.Create()
               .WithIdentity("FeeJobTrigger")
               .StartNow()
-              .WithCronSchedule("0 05 00 * * ?")//每日0点5分执行一次
+              .WithCronSchedule("0 5 0 * * ?")//每日0点5分执行一次
               .Build();
             await scheduler.ScheduleJob(job1, trigger1);
 
@@ -84,6 +85,7 @@ namespace Book.Job
                 new FinishOrderJob().Execute();
                 new CalcShopDayOrderJob().Execute();
                 new CalcShopMonthOrderJob().Execute();
+                new CloseUnPayShopJob().Execute();
                 Console.WriteLine("end");
             });
         }

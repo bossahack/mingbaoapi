@@ -2,6 +2,7 @@
 using System.Linq;
 using Dapper;
 using Book.Dal.Model;
+using Book.Model.Enums;
 
 namespace Book.Dal
 {
@@ -107,6 +108,14 @@ namespace Book.Dal
             {
                 var result = conn.Insert<Shop>(shop);
                 return result.Value;
+            }
+        }
+
+        public void CloseUnPayShop()
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Execute("UPDATE shop set STATUS=@shopStatus where id in (SELECT shop_id from shop_month_order where `status`=@payStatus AND DATEDIFF(now(),generate_date)>1) and `status`<>@shopStatus", new { payStatus = (int)BillStatus.UnPay, shopStatus = (int)ShopStatus.Arrears });
             }
         }
     }
