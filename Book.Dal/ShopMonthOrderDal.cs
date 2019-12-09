@@ -95,5 +95,13 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
                 conn.Update(order);
             }
         }
+
+        public List<ShopMonthOrder> GetPayedList(DateTime dt)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.Query<ShopMonthOrder>("SELECT * from shop_month_order where `status`=@status and DATEDIFF(@dt,generate_date)=0", new { dt=dt.ToString("yyyy-MM-dd"),status=(int)BillStatus.Payed }).ToList();
+            }
+        }
     }
 }

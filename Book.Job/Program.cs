@@ -86,6 +86,7 @@ namespace Book.Job
                 new CalcShopDayOrderJob().Execute();
                 new CalcShopMonthOrderJob().Execute();
                 new CloseUnPayShopJob().Execute();
+                new CalcUserFee().Execute();
                 Console.WriteLine("end");
             });
         }

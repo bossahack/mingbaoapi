@@ -49,6 +49,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +60,7 @@
   <ItemGroup>
     <Compile Include="CalcShopDayOrderJob.cs" />
     <Compile Include="CalcShopMonthOrderJob.cs" />
+    <Compile Include="CalcUserFee.cs" />
     <Compile Include="CloseUnPayShopJob.cs" />
     <Compile Include="FinishOrderJob.cs" />
     <Compile Include="LogTraceListener.cs" />
@@ -73,6 +75,10 @@
     <ProjectReference Include="..\Book.Dal\Book.Dal.csproj">
       <Project>{446e473c-740e-4109-b83c-910bd4e6a705}</Project>
       <Name>Book.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Book.Service\Book.Service.csproj">
+      <Project>{29EEE1C9-5490-492E-855D-76D387D8B417}</Project>
+      <Name>Book.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -89,6 +89,9 @@ namespace Book.Service
 
             }
 
+            order.UserFeeStatus = 1;
+            ShopMonthOrderDal.GetInstance().Update(order);
+
         }
 
         public decimal GetIncome()

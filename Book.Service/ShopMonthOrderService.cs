@@ -80,10 +80,10 @@ namespace Book.Service
                     ShopDal.GetInstance().SetStatus(shop.Id, (int)ShopStatus.Normal);
                 }
                 ShopFeeRecordDal.GetInstance().Create(feeRecord);
-                if (shop.Recommender > 0)
-                {
-                    UserFeeService.GetInstance().ShopPay(bill, shop.Recommender);
-                }
+                //if (shop.Recommender > 0)//job跑
+                //{
+                //    UserFeeService.GetInstance().ShopPay(bill, shop.Recommender);
+                //}
             });
         }
 

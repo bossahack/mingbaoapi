@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: shop_month_order.cs
-// * history : Created by T4 12/09/2019 16:55:39 
+// * history : Created by T4 12/09/2019 18:20:37 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -84,5 +84,12 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "pay_date")]
         public DateTime PayDate { get; set; }
+    
+
+        /// <summary>
+        /// 0:初始 1:已付
+        /// </summary>
+		[Column(Name = "user_fee_status")]
+        public int UserFeeStatus { get; set; }
     }
 }
