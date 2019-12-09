@@ -23,11 +23,18 @@ namespace Book.Api.Filters
                 actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
                 return;
             }
-            string str = SecurityUtil.GetInstance().DecryptString(autho[0]);
-            var arr = str.Split('-');
-            if (arr == null || arr.Length != 2)
+            try
             {
-                throw new Exception("登录失效，请登录");
+                string str = SecurityUtil.GetInstance().DecryptString(autho[0]);
+                var arr = str.Split('-');
+                if (arr == null || arr.Length != 2)
+                {
+                    throw new Exception("登录失效，请登录");
+                }
+            }catch
+            {
+                actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+                return;
             }
         }
     }
