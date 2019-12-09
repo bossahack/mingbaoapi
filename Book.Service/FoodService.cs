@@ -97,6 +97,20 @@ namespace Book.Service
             foodDal.Remove(id);
         }
 
+        public void SetFoodImg(int id, string path)
+        {
+            var food = foodDal.Get(id);
+            if (food == null)
+                throw new Exception("未查询到该食品");
+
+            var currentUser = UserUtil.CurrentUser();
+            if (food.ShopId != currentUser.ShopId)
+                throw new Exception("您没有权限进行此操作");
+
+            food.Img = path;
+            foodDal.edit(food);
+        }
+
         public List<Food> GetList(int type)
         {
             var currentUser = UserUtil.CurrentUser();

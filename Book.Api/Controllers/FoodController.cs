@@ -100,6 +100,13 @@ namespace Book.Api.Controllers
             foodService.SetRemoved(id);
         }
 
+        [Filters.ShopFilter]
+        [HttpPost]
+        public void SetFoodImg([FromUri]int id, [FromUri]string path)
+        {
+            foodService.SetFoodImg(id,path);
+        }
+
 
         [Filters.ShopFilter]
         [HttpPost]
