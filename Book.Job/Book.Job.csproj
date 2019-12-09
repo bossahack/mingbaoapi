@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7F45A7B8-5906-4B26-AB93-C3B174423FA3}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Book.Job</RootNamespace>
     <AssemblyName>Book.Job</AssemblyName>
@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="CalcShopDayOrderJob.cs" />
     <Compile Include="CalcShopMonthOrderJob.cs" />
+    <Compile Include="CloseUnPayShopJob.cs" />
     <Compile Include="FinishOrderJob.cs" />
     <Compile Include="LogTraceListener.cs" />
     <Compile Include="Program.cs" />
