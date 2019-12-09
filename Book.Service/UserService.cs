@@ -123,7 +123,10 @@ namespace Book.Service
                 return;
             var userInfo = userInfoDal.Get(current.Id);
             if (userInfo.Recommender > 0)
-                return;
+                throw new Exception("已有推荐人，不可变更");
+            if ((DateTime.Now - userInfo.CreateDate).TotalDays > 7)
+                throw new Exception("已注册超过7天，操作失败");
+
             userInfo.Recommender = userId;
             userInfoDal.Update(userInfo);
         }
