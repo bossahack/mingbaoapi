@@ -21,6 +21,7 @@ namespace Book.Job
 
         static void DisableClosebtn()
         {
+            Console.Title = title;
             //与控制台标题名一样的路径
             string fullPath = System.Environment.CurrentDirectory + "\\Book.Job.exe";
             //根据控制台标题找控制台

@@ -89,7 +89,7 @@ namespace Book.Service
 
             }
 
-            order.UserFeeStatus = 1;
+            order.UserFeeStatus = (int)UserFeeStatus.Payed;
             ShopMonthOrderDal.GetInstance().Update(order);
 
         }
