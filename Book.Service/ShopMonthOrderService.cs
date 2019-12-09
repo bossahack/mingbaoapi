@@ -54,7 +54,7 @@ namespace Book.Service
 
         }
 
-        public void Finish(int id,decimal fee)
+        public void Pay(int id,decimal fee)
         {
             if (id == 0)
                 return;
@@ -64,9 +64,11 @@ namespace Book.Service
             {
                 throw new Exception("订单不是待付款状态，操作失败");
             }
+            var now = DateTime.Now;
             bill.Status = (int)BillStatus.Payed;
+            bill.PayDate = now;
             ShopFeeRecord feeRecord = new ShopFeeRecord() {
-                CreateTime=DateTime.Now,
+                CreateTime= now,
                 Fee=fee,
                 ShopId=current.ShopId
             };
@@ -97,8 +99,20 @@ namespace Book.Service
                 throw new Exception("您无权操作");
             if (bill.Status != (int)BillStatus.UnPay)
                 throw new Exception("账单不是未付款状态，不可操作");
+
+            var shop = ShopDal.GetInstance().Get(bill.ShopId);
+
             bill.Status = (int)BillStatus.Payed;
-            ShopMonthOrderDal.GetInstance().Update(bill);
+            bill.PayDate = DateTime.Now;
+
+            TransactionHelper.Run(() => {
+                ShopMonthOrderDal.GetInstance().Update(bill);
+                if (shop.Status == (int)ShopStatus.Arrears)
+                {
+                    ShopDal.GetInstance().SetStatus(shop.Id, (int)ShopStatus.Normal);
+                }
+                
+            });
         }
     }
 }

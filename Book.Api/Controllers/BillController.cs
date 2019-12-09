@@ -25,7 +25,7 @@ namespace Book.Api.Controllers
         /// <param name="fee"></param>
         public void Finish(int id,decimal fee)
         {
-            ShopMonthOrderService.GetInstance().Finish(id,fee);
+            ShopMonthOrderService.GetInstance().Pay(id,fee);
         }
 
         public void ZeroPay(int id)
