@@ -64,5 +64,14 @@ namespace Book.Dal
             }
 
         }
+
+        public int GetUserAbnormalCount(int userId,DateTime dt)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var qty = conn.ExecuteScalar<int>("SELECT count(id) from b_order_abnormal where user_id=@userId and create_date>@dt ", new { userId = userId, dt = dt.ToString("yyyy-MM-dd HH:mm:ss") });
+                return qty;
+            }
+        }
     }
 }

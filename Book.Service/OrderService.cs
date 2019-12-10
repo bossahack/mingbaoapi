@@ -348,6 +348,9 @@ namespace Book.Service
             if (foods.Exists(c => c.Status != (int)FoodStatus.Normal))
                 return string.Join(",", foods.Where(c => c.Status != (int)FoodStatus.Normal).Select(c => c.Id));
 
+            OrderQtyCheck(currentUser.Id);
+            UserAbnormalCheck(currentUser.Id);
+
             var border = new BOrder() {
                 UserId=currentUser.Id,
                 ShopId=request.ShopId,
@@ -618,9 +621,18 @@ namespace Book.Service
             //}
         }
 
-        private void OrderQtyCheck()
+        private void OrderQtyCheck(int userId)
         {
+            var qty = OrderDal.GetInstance().GetUserOrderCount(userId, DateTime.Now.AddHours(3));
+            if (qty > 3)
+                throw new Exception("3小时内下单不能超过3单");
+        }
 
+        private void UserAbnormalCheck(int userId)
+        {
+            var qty = OrderAbnormalDal.GetInstance().GetUserAbnormalCount(userId, DateTime.Now.AddMonths(-1));
+            if(qty>3)
+               throw new Exception("一个月内异常单超过3单不可下单");
         }
 
         //60个字符

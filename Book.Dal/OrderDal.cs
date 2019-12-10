@@ -129,6 +129,18 @@ UPDATE b_order set `status`=20,update_user=-1,update_time=now() where `status`=0
                 });
             }
         }
+
+        public int GetUserOrderCount(int userId,DateTime dt)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.ExecuteScalar<int>("SELECT COUNT(id) num from b_order where user_id=@userId and create_date > @dt", new
+                {
+                    userId = userId,
+                    dt = dt.ToString("yyyy-MM-dd HH:mm:ss"),
+                });
+            }
+        }
         
     }
 }
