@@ -402,6 +402,8 @@ namespace Book.Service
             if (foods.Exists(c => c.Status != (int)FoodStatus.Normal))
                 throw new Exception("部分商品已下架，请刷新页面重试");
 
+            OrderQtyCheck(currentUser.Id);
+            UserAbnormalCheck(currentUser.Id);
 
             var border = new BOrder()
             {
@@ -623,7 +625,7 @@ namespace Book.Service
 
         private void OrderQtyCheck(int userId)
         {
-            var qty = OrderDal.GetInstance().GetUserOrderCount(userId, DateTime.Now.AddHours(3));
+            var qty = OrderDal.GetInstance().GetUserOrderCount(userId, DateTime.Now.AddHours(-3));
             if (qty > 3)
                 throw new Exception("3小时内下单不能超过3单");
         }
