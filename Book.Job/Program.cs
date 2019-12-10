@@ -10,36 +10,30 @@ using System.Threading.Tasks;
 namespace Book.Job
 {
     class Program
-    {
-        static string title = "job,不可关闭";
-        [DllImport("user32.dll", EntryPoint = "FindWindow")]
-        extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
-        [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
-        extern static IntPtr GetSystemMenu(IntPtr hWnd, IntPtr bRevert);
-        [DllImport("user32.dll", EntryPoint = "RemoveMenu")]
-        extern static IntPtr RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
-
-        static void DisableClosebtn()
-        {
-            Console.Title = title;
-            //与控制台标题名一样的路径
-            string fullPath = System.Environment.CurrentDirectory + "\\Book.Job.exe";
-            //根据控制台标题找控制台
-            var windowHandle = FindWindow(null, fullPath);
-            IntPtr closeMenu = GetSystemMenu(windowHandle, IntPtr.Zero);
-            uint SC_CLOSE = 0xF060;
-            RemoveMenu(closeMenu, SC_CLOSE, 0x0);
-        }
-
+    {        
         static void Main(string[] args)
         {
-            DisableClosebtn();
             Book.Dal.Model.ColumnMapper.SetMapper();
+            ManualExe();
             FeeJobScheduler.start().GetAwaiter().GetResult();
             while (true)
             {
                 Console.ReadLine();
             }
+        }
+
+        /// <summary>
+        /// 手动执行
+        /// </summary>
+        static void ManualExe()
+        {
+            Console.WriteLine("begin");
+            new FinishOrderJob().Execute();
+            new CalcShopDayOrderJob().Execute();
+            new CalcShopMonthOrderJob().Execute();
+            new CloseUnPayShopJob().Execute();
+            new CalcUserFee().Execute();
+            Console.WriteLine("end");
         }
     }
 
@@ -58,7 +52,7 @@ namespace Book.Job
             ITrigger trigger1 = TriggerBuilder.Create()
               .WithIdentity("FeeJobTrigger")
               .StartNow()
-              .WithCronSchedule("0 5 0 * * ?")//每日0点5分执行一次
+              .WithCronSchedule("0 36 20 * * ?")//每日0点5分执行一次
               .Build();
             await scheduler.ScheduleJob(job1, trigger1);
 
@@ -92,5 +86,7 @@ namespace Book.Job
             });
         }
     }
+
+   
 
 }

@@ -1,4 +1,5 @@
 ﻿using Book.Dal.Model;
+using Book.Model.Enums;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -70,12 +71,12 @@ INSERT into tmp(id,shop_id,date)
 SELECT id,shop_id,date from shop_day_order where date>=@date;
 
 UPDATE shop_day_order a ,(SELECT shop_id,DATE(create_date) date,count(1) qty from b_order
-where shop_id in (SELECT shop_id from tmp) and create_date>=@date
+where shop_id in (SELECT shop_id from tmp) and create_date>=@date and status=@status
 GROUP BY shop_id,DATE(create_date)) b
 set a.effect_qty=b.qty
 where a.date=b.date and a.shop_id=b.shop_id;
 
-drop table tmp;", new { date= fromDate.ToString("yyyy-MM-dd")});
+drop table tmp;", new { date= fromDate.ToString("yyyy-MM-dd"),status=(int)OrderStatus.Completed});
             }
         }
     }
