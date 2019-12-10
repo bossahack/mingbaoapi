@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using Book.Model.Enums;
+
 namespace Book.Dal
 {
     public class OrderDal
@@ -105,6 +107,26 @@ namespace Book.Dal
                 conn.Execute(@"UPDATE b_order set `status`= 20, update_user = -1,update_time=now() where `status`= 10 AND create_date >= DATE_ADD(@date, INTERVAL - 2 DAY);
 UPDATE b_order set `status`=20,update_user=-1,update_time=now() where `status`=0 AND create_date>=DATE_ADD(@date,interval -2 DAY) and create_date<date_add(@date, interval -24 hour);
 ", new { date = date.ToString("yyyy-MM-dd") });
+            }
+        }
+
+        /// <summary>
+        /// 获取用户一段时间内的已完成状态的订单数
+        /// </summary>
+        /// <param name="begin"></param>
+        /// <param name="end"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public int GetUserOrderCount(DateTime begin,DateTime end,int userId)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.ExecuteScalar<int>("SELECT COUNT(id) num from b_order where user_id=@userId and create_date BETWEEN @begin and @end and `status`=@status", new {
+                    userId=userId,
+                    begin = begin,
+                    end=end,
+                    status=(int)OrderStatus.Completed
+                });
             }
         }
         

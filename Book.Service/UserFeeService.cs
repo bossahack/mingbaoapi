@@ -35,30 +35,53 @@ namespace Book.Service
         }
 
         /// <summary>
-        /// 店铺付款，推广者获得10%到30%的收益，推广者的推广者获得推广该推广者收益的10%
+        /// 店铺付款，推广者获得7%到27%的收益,如果周期内有效单量>=15收益增加3%，>=10增加2%，》=5增加1%，推广者的推广者获得推广该推广者收益的10%
         /// </summary>
         /// <param name="order"></param>
         /// <param name="user">推广者</param>
         public void ShopPay(ShopMonthOrder order,int user)
         {
-            if (order.ShouldPay <= 0)
-                return;
             if (user <= 0)
                 return;
             if (order.Status != (int)BillStatus.Payed)
                 return;
+            if (order.ShouldPay <= 0)
+            {
+                order.UserFeeStatus = (int)UserFeeStatus.Payed;
+                order.PayDate = DateTime.Now;
+                ShopMonthOrderDal.GetInstance().Update(order);
+                return;
+            }
 
             decimal rate = 0.0M;
             if (order.EffectQty < 300)
             {
-                rate = 0.1M;
+                rate = 0.07M;
             }else if (order.EffectQty < 600)
             {
-                rate = 0.2M;
+                rate = 0.17M;
+            }else if(order.EffectQty<1200)
+            {
+                rate = 0.22M;
             }else
             {
-                rate = 0.3M;
+                rate = 0.27M;
             }
+            var dt = order.GenerateDate;
+            var endDt = dt.AddDays(-2);
+            var beginDt = endDt.AddMonths(-1);
+            var totalOrderQty = OrderDal.GetInstance().GetUserOrderCount(beginDt, endDt, user);
+            if (totalOrderQty >= 15)
+            {
+                rate += 0.03M;
+            }else if (totalOrderQty >= 10)
+            {
+                rate += 0.02M;
+            }else if (totalOrderQty >= 5)
+            {
+                rate += 0.01M;
+            }
+
             var total = order.ShouldPay * rate;
             var now = DateTime.Now;
             UserFeeDal.GetInstance().Plus(user, total);
@@ -84,12 +107,12 @@ namespace Book.Service
                     UserId = recommenderParent,
                     CreateTime = now,
                     Type = (int)UserFeeType.RecommenderIncome,
-
                 });
 
             }
 
             order.UserFeeStatus = (int)UserFeeStatus.Payed;
+            order.PayDate = now;
             ShopMonthOrderDal.GetInstance().Update(order);
 
         }
