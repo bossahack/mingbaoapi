@@ -617,6 +617,12 @@ namespace Book.Service
             //    return "牛"+totalQty.ToString();
             //}
         }
+
+        private void OrderQtyCheck()
+        {
+
+        }
+
         //60个字符
         //private static string[] words =new string[] { "A", "B", " C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "喔", "P", "Q", "R", "S", "T", "U", "V", "W", "X","Y","Z", "恭", "喜", "发", "财", "万", "事", "大", "吉", "土", "豪", "啊", "我", "们", "做", "朋", "友", "太", "厉", "嗨", "啦", "哇", "赞", "美", "帅", "绝", "牛", "旺", "顺", "天", "和", "敬", "爽", "鸣", "！" };
     }
