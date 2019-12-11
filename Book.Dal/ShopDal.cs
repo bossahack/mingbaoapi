@@ -39,7 +39,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var result = conn.QueryFirst<Shop>("SELECT * from shop where user_id =@userid", new { userid = userId });
+                var result = conn.QueryFirstOrDefault<Shop>("SELECT * from shop where user_id =@userid", new { userid = userId });
                 return result;
             }
         }
