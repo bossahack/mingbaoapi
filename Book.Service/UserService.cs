@@ -126,6 +126,8 @@ namespace Book.Service
                 throw new Exception("已有推荐人，不可变更");
             if ((DateTime.Now - userInfo.CreateDate).TotalDays > 7)
                 throw new Exception("已注册超过7天，操作失败");
+            if (userInfo.HasShop)
+                throw new Exception("开通店铺前，才可设置推荐人，操作失败");
 
             userInfo.Recommender = userId;
             userInfoDal.Update(userInfo);
