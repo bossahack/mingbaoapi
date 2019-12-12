@@ -67,10 +67,10 @@ namespace Book.Service
             return result;
         }
 
-        public List<UserInfoRecommendModel> GetMyRecommenders()
+        public List<UserInfoRecommendModel> GetMyRecommenders(int index, int size)
         {
             var current = UserUtil.CurrentUser();
-            var users = UserInfoDal.GetInstance().GetByRecommender(current.Id);
+            var users = UserInfoDal.GetInstance().GetByRecommender(current.Id,index,size);
             if (users == null || users.Count == 0)
                 return null;
 

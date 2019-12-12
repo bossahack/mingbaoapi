@@ -21,9 +21,9 @@ namespace Book.Api.Controllers
             return SpreadService.GetInstance().GetMyShopOrder();
         }
 
-        public List<UserInfoRecommendModel> GetMyRecommenders()
+        public List<UserInfoRecommendModel> GetMyRecommenders(int index)
         {
-            return SpreadService.GetInstance().GetMyRecommenders();
+            return SpreadService.GetInstance().GetMyRecommenders(index,10);
         }
     }
 }

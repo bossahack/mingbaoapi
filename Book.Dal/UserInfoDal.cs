@@ -67,11 +67,11 @@ namespace Book.Dal
             }
         }
 
-        public List<UserInfo> GetByRecommender(int recommendId)
+        public List<UserInfo> GetByRecommender(int recommendId, int index, int size)
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                var result = conn.Query<UserInfo>("SELECT * from user_info where recommender=@id", new { id=recommendId }).ToList();
+                var result = conn.Query<UserInfo>($"SELECT * from user_info where recommender=@id ORDER BY create_date DESC LIMIT {index * size},{size}", new { id=recommendId }).ToList();
                 return result;
             }
         }
