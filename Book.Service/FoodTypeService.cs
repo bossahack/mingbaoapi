@@ -29,7 +29,8 @@ namespace Book.Service
             foodTypeDal.Add(new Dal.Model.FoodType()
             {
                 Name = name,
-                ShopId = currentUser.ShopId
+                ShopId = currentUser.ShopId,
+                Level = foodTypeDal.GetCount(currentUser.ShopId)
             });
 
         }

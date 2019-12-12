@@ -78,5 +78,13 @@ namespace Book.Dal
                 conn.Execute(sb.ToString());
             }
         }
+
+        public int GetCount(int shopId)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {               
+                return conn.ExecuteScalar<int>("select COUNT(1) from food_type WHERE shop_id=@shopId",new { shopId});
+            }
+        }
     }
 }

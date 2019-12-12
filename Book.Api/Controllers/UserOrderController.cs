@@ -52,6 +52,6 @@ namespace Book.Api.Controllers
         {
             return orderService.GetOrderDetail(id);
         }
-
+        
     }
 }

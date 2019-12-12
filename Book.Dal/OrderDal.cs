@@ -63,11 +63,11 @@ namespace Book.Dal
             }
         }
 
-        public void SetStatus(int id,int status)
+        public void SetStatus(int id,int status,int optUser)
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                conn.Execute("update b_order set `status`=@status WHERE id=@id", new { id = id, status = status });
+                conn.Execute("update b_order set `status`=@status,update_time=@dt,update_user=@optUser WHERE id=@id", new { id = id, status = status,dt=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),optUser=optUser });
             }
         }
 

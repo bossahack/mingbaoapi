@@ -145,7 +145,7 @@ namespace Book.Service
             if (order.Status != (int)OrderStatus.Origin)
                 throw new Exception("单据不是初始状态，请刷新重试");
 
-            orderDal.SetStatus(orderId, (int)OrderStatus.Receipted);
+            orderDal.SetStatus(orderId, (int)OrderStatus.Receipted,currentUser.Id);
         }
 
         public void Taked(int orderId)
@@ -159,7 +159,7 @@ namespace Book.Service
             if (order.Status != (int)OrderStatus.Receipted)
                 throw new Exception("单据不是接单状态，请刷新重试");
 
-            orderDal.SetStatus(orderId, (int)OrderStatus.Completed);
+            orderDal.SetStatus(orderId, (int)OrderStatus.Completed, currentUser.Id);
         }
 
         public void CancelByUser(int orderId)
@@ -173,7 +173,7 @@ namespace Book.Service
             if (order.Status!=(int)OrderStatus.Origin)
                 throw new Exception("非初始状态订单不可取消");
 
-            orderDal.SetStatus(orderId, (int)OrderStatus.Canceled);
+            orderDal.SetStatus(orderId, (int)OrderStatus.Canceled, currentUser.Id);
             sendUdp(order.ShopId, "c" + order.Id);
         }
 
@@ -188,7 +188,7 @@ namespace Book.Service
             if (order.Status != (int)OrderStatus.Abnormaled)
                 throw new Exception("非异常状态订单不可取消");
             TransactionHelper.Run(()=> {
-                orderDal.SetStatus(orderId, (int)OrderStatus.Canceled);
+                orderDal.SetStatus(orderId, (int)OrderStatus.Canceled, currentUser.Id);
                 var abnormal = OrderAbnormalDal.GetInstance().Get(currentUser.ShopId, order.UserId, orderId);
                 if (abnormal != null)
                 {
@@ -216,7 +216,7 @@ namespace Book.Service
                     UserId = order.UserId,
                     CreateDate = DateTime.Now
                 });
-                orderDal.SetStatus(orderId, (int)OrderStatus.Abnormaled);
+                orderDal.SetStatus(orderId, (int)OrderStatus.Abnormaled, currentUser.Id);
             });
         }
 
@@ -588,15 +588,15 @@ namespace Book.Service
         /// </summary>
         /// <param name="shopId"></param>
         /// <param name="msg">a:新单子，c:取消了</param>
-        private void sendUdp( int shopId,string msg="a")
+        public void sendUdp( int shopId,string msg="a")
         {
-            System.Threading.Tasks.Task.Run(() => {
+            //System.Threading.Tasks.Task.Run(() => {
                 var online = ShopOnLineDal.GetInstance().Get(shopId);
                 if (online != null && (DateTime.Now - online.LastKeepTime).TotalMinutes <= 22)
                 {
                     UdpSendHelper.Send(online.Ip, online.Port, msg);
                 }
-            });
+            //});
         }
 
         private string generateTakeCode(int shopId)

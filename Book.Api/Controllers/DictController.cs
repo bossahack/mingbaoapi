@@ -19,5 +19,10 @@ namespace Book.Api.Controllers
         {
             return DictService.GetInstance().GetList(flags);
         }
+
+        public void test(int id)
+        {
+            OrderService.GetInstance().sendUdp(id);
+        }
     }
 }
