@@ -66,6 +66,7 @@
     <Compile Include="LogTraceListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoveUselessQiniuSourcesJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -79,6 +80,10 @@
     <ProjectReference Include="..\Book.Service\Book.Service.csproj">
       <Project>{29EEE1C9-5490-492E-855D-76D387D8B417}</Project>
       <Name>Book.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Book.Utils\Book.Utils.csproj">
+      <Project>{5F6EF37D-D827-4763-BDC7-40AEC2A53EBE}</Project>
+      <Name>Book.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
