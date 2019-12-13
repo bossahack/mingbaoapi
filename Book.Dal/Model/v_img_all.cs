@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" dict.cs" company="xxxx Enterprises">
+// <copyright file=" v_img_all.cs" company="xxxx Enterprises">
 // * Copyright (C) 2019 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: dict.cs
+// * FileName: v_img_all.cs
 // * history : Created by T4 12/13/2019 15:44:49 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,28 +12,14 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// dict Entity Model
+    /// v_img_all Entity Model
     /// </summary>   
-	[Dapper.Table("dict")]
-    public class Dict
+	[Dapper.Table("v_img_all")]
+    public class VImgAll
     {
         /// <summary>
         /// 
         /// </summary>
-        public int Id { get; set; }
-    
-
-        /// <summary>
-        /// 
-        /// </summary>
-		[Column(Name = "flag")]
-        public string Flag { get; set; }
-    
-
-        /// <summary>
-        /// 
-        /// </summary>
-		[Column(Name = "value")]
-        public string Value { get; set; }
+        public string Img { get; set; }
     }
 }

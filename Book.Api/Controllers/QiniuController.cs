@@ -16,5 +16,10 @@ namespace Book.Api.Controllers
         {
             return QiniuService.GetInstance().GetSimpleKey();
         }
+
+        public void RemoveUnuseImg()
+        {
+            QiniuService.GetInstance().RemoveUnuseImg();
+        }
     }
 }

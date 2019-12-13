@@ -33,6 +33,7 @@ namespace Book.Job
             new CalcShopMonthOrderJob().Execute();
             new CloseUnPayShopJob().Execute();
             new CalcUserFee().Execute();
+            new RemoveUselessQiniuSourcesJob().Execute();
             Console.WriteLine("end");
         }
     }
@@ -52,7 +53,7 @@ namespace Book.Job
             ITrigger trigger1 = TriggerBuilder.Create()
               .WithIdentity("FeeJobTrigger")
               .StartNow()
-              .WithCronSchedule("0 36 20 * * ?")//每日0点5分执行一次
+              .WithCronSchedule("0 5 0 * * ?")//每日0点5分执行一次
               .Build();
             await scheduler.ScheduleJob(job1, trigger1);
 
@@ -82,6 +83,7 @@ namespace Book.Job
                 new CalcShopMonthOrderJob().Execute();
                 new CloseUnPayShopJob().Execute();
                 new CalcUserFee().Execute();
+                new RemoveUselessQiniuSourcesJob().Execute();
                 Console.WriteLine("end");
             });
         }

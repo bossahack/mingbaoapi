@@ -121,6 +121,9 @@
     <Compile Include="Model\user_shop.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\v_img_all.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrderAbnormalDal.cs" />
     <Compile Include="OrderDal.cs" />
     <Compile Include="OrderItemDal.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="UserFeeRecordDal.cs" />
     <Compile Include="UserInfoDal.cs" />
     <Compile Include="UserShopDal.cs" />
+    <Compile Include="VImgAllDal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model\DbEntity.tt">

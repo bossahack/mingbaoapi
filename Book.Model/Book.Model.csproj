@@ -48,6 +48,7 @@
     <Compile Include="Enums\UserFeeStatus.cs" />
     <Compile Include="Enums\UserFeeType.cs" />
     <Compile Include="OrderModel.cs" />
+    <Compile Include="QiniuModel.cs" />
     <Compile Include="ShopDayOrderModel.cs" />
     <Compile Include="ShopModel.cs" />
     <Compile Include="Enums\FoodStatus.cs" />
