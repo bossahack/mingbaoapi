@@ -13,6 +13,11 @@ namespace Book.Watch
             //调用前面的静态方法，将映射关系注册
             Book.Dal.Model.ColumnMapper.SetMapper();
             new OnlineUser().Listen();
+            new UdpSender().Listen();
+            while (true)
+            {
+                Console.ReadLine();
+            }
         }
     }
 }

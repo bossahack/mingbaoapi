@@ -590,13 +590,7 @@ namespace Book.Service
         /// <param name="msg">a:新单子，c:取消了</param>
         public void sendUdp( int shopId,string msg="a")
         {
-            //System.Threading.Tasks.Task.Run(() => {
-                var online = ShopOnLineDal.GetInstance().Get(shopId);
-                if (online != null && (DateTime.Now - online.LastKeepTime).TotalMinutes <= 22)
-                {
-                    UdpSendHelper.Send(online.Ip, online.Port, msg);
-                }
-            //});
+            UdpSendHelper.Send(string.Format($"{shopId}&{msg}"));
         }
 
         private string generateTakeCode(int shopId)
@@ -626,7 +620,7 @@ namespace Book.Service
         private void OrderQtyCheck(int userId)
         {
             var qty = OrderDal.GetInstance().GetUserOrderCount(userId, DateTime.Now.AddHours(-3));
-            if (qty > 3)
+            if (qty > 300)
                 throw new Exception("3小时内下单不能超过3单");
         }
 

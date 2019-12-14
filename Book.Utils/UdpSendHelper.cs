@@ -10,13 +10,13 @@ namespace Book.Utils
 {
     public class UdpSendHelper
     {
-        static Socket sender= new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        static Socket sender= new Socket(SocketType.Dgram, ProtocolType.Udp);
 
-        public static void Send(string ip,int port,string msg)
+        public static void Send(string msg)
         {
-            EndPoint point = new IPEndPoint(IPAddress.Parse(ip), port);
+            EndPoint point = new IPEndPoint(IPAddress.Loopback, 1025);
             Byte[] sendByte = Encoding.Default.GetBytes(msg);
-            sender.SendTo(sendByte, sendByte.Length, SocketFlags.None, point);
+            sender.SendTo(sendByte, point);
         }
 
     }

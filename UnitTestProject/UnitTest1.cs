@@ -18,7 +18,7 @@ namespace UnitTestProject
             var online = ShopOnLineDal.GetInstance().Get(2);
             if (online != null && (DateTime.Now - online.LastKeepTime).TotalMinutes <= 20)
             {
-                UdpSendHelper.Send(online.Ip, online.Port, "1");
+                //UdpSendHelper.Send(online.Ip, online.Port, "1");
             }
         }
     }
