@@ -85,7 +85,7 @@ namespace Book.Service
             var orders = orderDal.GetShopOrderAfter(currentUser.ShopId,dt.Value);
             if (orders == null || orders.Count == 0)
                 return null;
-            orders = orders.OrderBy(c => c.CreateDate).ToList();
+            orders = orders.OrderByDescending(c => c.CreateDate).ToList();
             var orderItems = orderItemDal.GetList(orders.Select(c => c.Id).ToList());
             OrderResponse result = new OrderResponse()
             {

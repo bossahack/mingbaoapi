@@ -56,6 +56,10 @@ namespace Book.Service
                     break;
                 foreach(var item in listRet.Result.Items)
                 {
+                    if(item.Key.StartsWith("source"))
+                    {
+                        continue;
+                    }
                     if (item.Key == "logo.png")
                         continue;
                     if(!VImgAllDal.GetInstance().HasImg(item.Key))
