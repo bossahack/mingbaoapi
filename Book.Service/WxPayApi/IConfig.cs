@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 
 namespace Book.Service.WxPayApi
 {
@@ -114,19 +117,19 @@ namespace Book.Service.WxPayApi
 
         public string GetAppID()
         {
-            return "";
+            return WebConfigurationManager.AppSettings["AppId"];
         }
         public string GetMchID()
         {
-            return "";
+            return WebConfigurationManager.AppSettings["MchId"];
         }
         public string GetKey()
         {
-            return "";
+            return WebConfigurationManager.AppSettings["Key"];
         }
         public string GetAppSecret()
         {
-            return "";
+            return WebConfigurationManager.AppSettings["AppSecret"];
         }
 
 
@@ -139,11 +142,11 @@ namespace Book.Service.WxPayApi
         */
         public string GetSSlCertPath()
         {
-            return "";
+            return WebConfigurationManager.AppSettings["SSlCertPath"];
         }
         public string GetSSlCertPassword()
         {
-            return "";
+            return WebConfigurationManager.AppSettings["SSlCertPassword"];
         }
 
 
@@ -153,7 +156,7 @@ namespace Book.Service.WxPayApi
         */
         public string GetNotifyUrl()
         {
-            return "";
+            return WebConfigurationManager.AppSettings["NotifyUrl"];
         }
 
         //=======【商户系统后台机器IP】===================================== 
@@ -161,7 +164,29 @@ namespace Book.Service.WxPayApi
         */
         public string GetIp()
         {
-            return "0.0.0.0";
+            if (!string.IsNullOrEmpty(ip))
+                return ip;
+            try
+            {
+                string HostName = Dns.GetHostName(); //得到主机名
+                IPHostEntry IpEntry = Dns.GetHostEntry(HostName);
+                for (int i = 0; i < IpEntry.AddressList.Length; i++)
+                {
+                    //从IP地址列表中筛选出IPv4类型的IP地址
+                    //AddressFamily.InterNetwork表示此IP为IPv4,
+                    //AddressFamily.InterNetworkV6表示此地址为IPv6类型
+                    if (IpEntry.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        ip= IpEntry.AddressList[i].ToString();
+                        return ip;
+                    }
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
         }
 
 
@@ -190,5 +215,7 @@ namespace Book.Service.WxPayApi
         {
             return 1;
         }
+
+        private static string ip;
     }
 }
