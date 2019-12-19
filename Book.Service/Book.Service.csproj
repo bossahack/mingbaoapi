@@ -67,6 +67,15 @@
     <Compile Include="UserFeeService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="WeChatAppDecrypt.cs" />
+    <Compile Include="WxPayApi\HttpService.cs" />
+    <Compile Include="WxPayApi\IConfig.cs" />
+    <Compile Include="WxPayApi\Log.cs" />
+    <Compile Include="WxPayApi\Notify.cs" />
+    <Compile Include="WxPayApi\RandomGenerator.cs" />
+    <Compile Include="WxPayApi\SafeXmlDocument.cs" />
+    <Compile Include="WxPayApi\WxPayApi.cs" />
+    <Compile Include="WxPayApi\WxPayData.cs" />
+    <Compile Include="WxPayApi\WxPayException.cs" />
     <Compile Include="WxService.cs" />
   </ItemGroup>
   <ItemGroup>
