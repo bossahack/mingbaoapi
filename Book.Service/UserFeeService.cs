@@ -48,7 +48,7 @@ namespace Book.Service
             if (order.ShouldPay <= 0)
             {
                 order.UserFeeStatus = (int)UserFeeStatus.Payed;
-                order.PayDate = DateTime.Now;
+                order.UserFeePayDate = DateTime.Now;
                 ShopMonthOrderDal.GetInstance().Update(order);
                 return;
             }
@@ -112,7 +112,7 @@ namespace Book.Service
             }
 
             order.UserFeeStatus = (int)UserFeeStatus.Payed;
-            order.PayDate = now;
+            order.UserFeePayDate = now;
             ShopMonthOrderDal.GetInstance().Update(order);
 
         }

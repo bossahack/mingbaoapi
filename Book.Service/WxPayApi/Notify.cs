@@ -23,28 +23,28 @@ namespace Book.Service.WxPayApi
         /// 接收从微信支付后台发送过来的数据并验证签名
         /// </summary>
         /// <returns>微信支付后台返回的数据</returns>
-        public WxPayData GetNotifyData(string result)
+        public WxPayData GetNotifyData(System.IO.Stream s)
         {
             //接收从微信后台POST过来的数据
-            //System.IO.Stream s = page.Request.InputStream;
-            //int count = 0;
-            //byte[] buffer = new byte[1024];
-            //StringBuilder builder = new StringBuilder();
-            //while ((count = s.Read(buffer, 0, 1024)) > 0)
-            //{
-            //    builder.Append(Encoding.UTF8.GetString(buffer, 0, count));
-            //}
-            //s.Flush();
-            //s.Close();
-            //s.Dispose();
+            //System.IO.Stream s = System.Net.Http.Request.InputStream;
+            int count = 0;
+            byte[] buffer = new byte[1024];
+            StringBuilder builder = new StringBuilder();
+            while ((count = s.Read(buffer, 0, 1024)) > 0)
+            {
+                builder.Append(Encoding.UTF8.GetString(buffer, 0, count));
+            }
+            s.Flush();
+            s.Close();
+            s.Dispose();
 
-            //Log.Info(this.GetType().ToString(), "Receive data from WeChat : " + builder.ToString());
+            Log.Info(this.GetType().ToString(), "Receive data from WeChat : " + builder.ToString());
 
             //转换数据格式并验证签名
             WxPayData data = new WxPayData();
             try
             {
-                data.FromXml(result);
+                data.FromXml(builder.ToString());
             }
             catch (WxPayException ex)
             {

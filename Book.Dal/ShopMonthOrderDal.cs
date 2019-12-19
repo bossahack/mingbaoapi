@@ -24,8 +24,8 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                conn.Execute(@"INSERT into shop_month_order(shop_id,year,month,qty,effect_qty,should_pay,status,user_fee_status)
-SELECT id,@year,@month,0,0,0,0,0 from shop where create_date>=@begin and create_date<@end and not EXISTS(select 1 FROM shop_month_order mo where mo.shop_id=shop.id and `month`=@month and year=@year)", new { begin = begin.ToString("yyyy-MM-dd"),end=end.ToString("yyyy-MM-dd"),year,month });
+                conn.Execute(@"INSERT into shop_month_order(shop_id,year,month,qty,effect_qty,should_pay,status,user_fee_status,trade_no)
+SELECT id,@year,@month,0,0,0,0,0,CONCAT(year, RIGHT(CONCAT('0',`month`),2), RIGHT(CONCAT('000000',`shop_id`),7),'m') from shop where create_date>=@begin and create_date<@end and not EXISTS(select 1 FROM shop_month_order mo where mo.shop_id=shop.id and `month`=@month and year=@year)", new { begin = begin.ToString("yyyy-MM-dd"),end=end.ToString("yyyy-MM-dd"),year,month });
             }
         }
 
@@ -75,6 +75,13 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
             using (var conn = SqlHelper.GetInstance())
             {
                 return conn.QueryFirstOrDefault<ShopMonthOrder>("SELECT * from shop_month_order WHERE id = @id", new { id });
+            }
+        }
+        public ShopMonthOrder Get(string tradeNo)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.QueryFirstOrDefault<ShopMonthOrder>("SELECT * from shop_month_order WHERE trade_no = @tradeNo", new { tradeNo });
             }
         }
 
