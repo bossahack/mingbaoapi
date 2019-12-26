@@ -84,7 +84,7 @@ namespace Book.Service
 
         private ListResult getQiniuSourcesLimit(string marker, BucketManager bucketManager)
         {
-            int limit = 5;
+            int limit = 50;
            
             ListResult listRet = bucketManager.ListFiles(Bucket, "", marker, limit, "");
             return listRet;
