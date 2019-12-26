@@ -358,7 +358,7 @@ namespace Book.Service
                 ArriveTimeType=request.ArriveTimeType,
                 Note=request.Note,
                 CreateDate=DateTime.Now,
-                TakeCode= generateTakeCode(request.ShopId)
+                TakeCode= generateTakeCode(request.ShopId, currentUser.Id)
             };
             var orderItems = new List<BOrderItem>();
             foreach( var item in request.Items)
@@ -413,7 +413,7 @@ namespace Book.Service
                 ArriveTimeType = order.ArriveTimeType,
                 Note = order.Note,
                 CreateDate = DateTime.Now,
-                TakeCode = generateTakeCode(order.ShopId)
+                TakeCode = generateTakeCode(order.ShopId,currentUser.Id)
             };
             var orderItems = new List<BOrderItem>();
             foreach (var item in items)
@@ -593,7 +593,7 @@ namespace Book.Service
             UdpSendHelper.Send(string.Format($"{shopId}&{msg}"));
         }
 
-        private string generateTakeCode(int shopId)
+        private string generateTakeCode(int shopId,int userId)
         {
             int totalQty = 0;
             var dayOrder=ShopDayOrderDal.GetInstance().get(shopId, DateTime.Now);
@@ -604,7 +604,7 @@ namespace Book.Service
             {
                 totalQty = dayOrder.Qty+1;
             }
-            return totalQty.ToString();
+            return $"{totalQty}-{userId}";
             //var lenght = words.Length;
             //if (totalQty < lenght *10 )
             //{
@@ -620,8 +620,8 @@ namespace Book.Service
         private void OrderQtyCheck(int userId)
         {
             var qty = OrderDal.GetInstance().GetUserOrderCount(userId, DateTime.Now.AddHours(-3));
-            if (qty > 300)
-                throw new Exception("3小时内下单不能超过3单");
+            //if (qty > 300)
+            //    throw new Exception("3小时内下单不能超过3单");
         }
 
         private void UserAbnormalCheck(int userId)
