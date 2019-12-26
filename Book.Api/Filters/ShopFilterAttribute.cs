@@ -16,6 +16,33 @@ namespace Book.Api.Filters
         {
             base.OnActionExecuting(actionContext);
 
+            var versionStr = System.Web.HttpContext.Current.Request.Headers.GetValues("version");
+            if (versionStr != null || versionStr.Count() > 0)
+            {
+                var version = versionStr[0];
+                if (!string.IsNullOrEmpty(version))
+                {
+                    string a_v = "app_version";
+                    var cacheVersion = CacheHelper.GetCache(a_v);
+                    if (cacheVersion != null)
+                    {
+                        if (version != cacheVersion.ToString())
+                        {
+                            actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.PreconditionFailed);
+                            return;
+                        }
+                    }else
+                    {
+                        var dict = Service.DictService.GetInstance().Get("appVersion");
+                        CacheHelper.SetCache(a_v, dict.Value);
+                        if (version != dict.Value)
+                        {
+                            actionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.PreconditionFailed);
+                            return;
+                        }
+                    }
+                }
+            }
 
             var autho = System.Web.HttpContext.Current.Request.Headers.GetValues("Authorization");
             if (autho == null || autho.Count() == 0)
