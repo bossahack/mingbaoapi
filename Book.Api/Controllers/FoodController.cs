@@ -65,10 +65,6 @@ namespace Book.Api.Controllers
         [HttpPost]
         public void Create(FoodRequest request)
         {
-            if (string.IsNullOrEmpty(request.Img))
-            {
-                request.Img = "https://bpic.588ku.com/art_water_pic/19/07/13/4ab51bea856b0993ec8c9eb220b3ed7d.jpg";
-            }
             foodService.Create(request);
         }
 
