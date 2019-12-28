@@ -64,8 +64,13 @@ namespace Book.Service
 
             var shops = ShopDal.GetInstance().GetList(userShopRelations.Select(c=>c.ShopId).ToList());
 
+            var orderShops = (from s in shops
+                        join r in userShopRelations on s.Id equals r.ShopId
+                        orderby r.LastedDate descending
+                        select s).ToList();
+
             var result = new List<ShopResponse>();
-            foreach(var shop in shops)
+            foreach(var shop in orderShops)
             {
                 result.Add(new ShopResponse() {
                     Id = shop.Id,
@@ -85,12 +90,14 @@ namespace Book.Service
             if (UserShopDal.GetInstance().Exist(current.Id, shopid))
                 throw new Exception("您已经关注了此商家");
 
+            var now = DateTime.Now;
             var usershop = new UserShop()
             {
                 UserId = current.Id,
                 ShopId = shopid,
-                CreateDate = DateTime.Now,
+                CreateDate = now,
                 Total = 0,
+                LastedDate= now
             };
 
             UserShopDal.GetInstance().Add(usershop);
@@ -102,7 +109,7 @@ namespace Book.Service
             var shop = ShopDal.GetInstance().Get(current.ShopId);
             if (shop == null)
                 return null;
-            string scene = "id" + current.Id;
+            string scene = "id" + current.ShopId;
             return WxService.GetInstance().GetQrCode(scene);
            
         }

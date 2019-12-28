@@ -35,11 +35,28 @@ namespace Book.Dal
             }
         }
 
+        public UserShop Get(int userid, int shopid)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.QueryFirstOrDefault<UserShop>("SELECT * FROM user_shop where user_id=@userid and shop_id=@shopid", new { userid = userid, shopid = shopid });
+                return result;
+            }
+        }
+
         public void Add(UserShop usershop)
         {
             using (var conn = SqlHelper.GetInstance())
             {
-               conn.Insert<UserShop>(usershop);
+                conn.Insert<UserShop>(usershop);
+            }
+        }
+
+        public void Update(UserShop usershop)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Update(usershop);
             }
         }
     }
