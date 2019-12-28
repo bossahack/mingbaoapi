@@ -389,7 +389,8 @@ namespace Book.Service
             var order = orderDal.Get(orderId);
             var currentUser = UserUtil.CurrentUser();
 
-            if (!UserShopDal.GetInstance().Exist(currentUser.Id,order.ShopId))
+            var userShop = UserShopDal.GetInstance().Get(currentUser.Id, order.ShopId);
+            if (userShop == null)
                 throw new Exception("您未关注该商家，不可下单");
 
             var shop = shopDal.Get(order.ShopId);
@@ -407,6 +408,7 @@ namespace Book.Service
 
             OrderQtyCheck(currentUser.Id);
             UserAbnormalCheck(currentUser.Id);
+            var now = DateTime.Now;
 
             var border = new BOrder()
             {
@@ -415,7 +417,7 @@ namespace Book.Service
                 Status = (int)OrderStatus.Origin,
                 ArriveTimeType = order.ArriveTimeType,
                 Note = order.Note,
-                CreateDate = DateTime.Now,
+                CreateDate = now,
                 TakeCode = generateTakeCode(order.ShopId,currentUser.Id)
             };
             var orderItems = new List<BOrderItem>();
@@ -430,11 +432,13 @@ namespace Book.Service
                     Qty = item.Qty,
                 });
             }
+            userShop.LastedDate = now;
             TransactionHelper.Run(() => {
                 var orderid = orderDal.Create(border);
                 orderItems.ForEach(c => c.OrderId = orderid);
                 orderItemDal.Create(orderItems);
                 ShopDayOrderService.GetInstance().AddQty(border.ShopId, 1);
+                UserShopDal.GetInstance().Update(userShop);
             });
             sendUdp(order.ShopId);
         }
