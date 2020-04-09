@@ -3,6 +3,8 @@ using System.Linq;
 using Dapper;
 using Book.Dal.Model;
 using Book.Model.Enums;
+using Book.Model;
+using System.Text;
 
 namespace Book.Dal
 {
@@ -116,6 +118,38 @@ namespace Book.Dal
             using (var conn = SqlHelper.GetInstance())
             {
                 conn.Execute("UPDATE shop set STATUS=@shopStatus where id in (SELECT shop_id from shop_month_order where `status`=@payStatus AND DATEDIFF(now(),generate_date)>1) and `status`<>@shopStatus", new { payStatus = (int)BillStatus.UnPay, shopStatus = (int)ShopStatus.Arrears });
+            }
+        }
+
+
+        public Page<Shop> Search(ShopSearchParam para)
+        {
+            StringBuilder sb = new StringBuilder($"Where create_date>=@dateBegin and create_date<@dateEnd ");
+            var p = new DynamicParameters();
+            p.Add("dateBegin", para.CreateDateBegin);
+            p.Add("dateEnd", para.CreateDateEnd);
+            if (para.Status.HasValue)
+            {
+                sb.Append("and status=@status ");
+                p.Add("status", para.Status);
+            }
+            
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var where = sb.ToString();
+                var total = conn.ExecuteScalar<int>("select  * from shop " + where, p);
+                if (total == 0)
+                    return new Page<Shop>()
+                    {
+                        Total = 0,
+                        Items = null
+                    };
+                var items = conn.GetListPaged<Shop>(para.Index, para.Size, where, "create_date desc", p);
+                return new Page<Shop>()
+                {
+                    Total = total,
+                    Items = items.ToList()
+                };
             }
         }
     }

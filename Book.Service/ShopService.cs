@@ -139,6 +139,30 @@ namespace Book.Service
             });
         }
 
+        public Page<ShopSearchModel> Search(ShopSearchParam para)
+        {
+            var db=ShopDal.GetInstance().Search(para);
+            if (db.Total == 0)
+                return new Page<ShopSearchModel>()
+                {
+                    Total = 0
+                };
+            return new Page<ShopSearchModel>()
+            {
+                Total = db.Total,
+                Items = db.Items.Select(c => new ShopSearchModel()
+                {
+                    Id=c.Id,
+                    Address=c.Address,
+                    CreateDate=c.CreateDate,
+                    Logo=c.Logo,
+                    Name=c.Name,
+                    Recommender=c.Recommender,
+                    Status=c.Status
+                }).ToList()
+            };
+        }
+
     }
 
 }

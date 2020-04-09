@@ -37,8 +37,10 @@ namespace Book.Watch
                         {
                             int length = server.ReceiveFrom(buffer, ref point);//接收数据报
                             string message = Encoding.UTF8.GetString(buffer, 0, length);
-                            if (message == "0")
+                            if (message == "0") {
+                                server.SendTo(Encoding.Default.GetBytes("a"), point);
                                 continue;
+                            }
 
                             int shopId = 0;
                             int.TryParse(message, out shopId);

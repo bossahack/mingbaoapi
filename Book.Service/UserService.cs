@@ -4,6 +4,7 @@ using Book.Model;
 using Book.Utils;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Web.Configuration;
 
 namespace Book.Service
@@ -150,6 +151,27 @@ namespace Book.Service
             var userInfo = userInfoDal.Get(current.Id);
             userInfo.LoginPwd = SecurityUtil.GetInstance().GetMD5String(pwd);
             userInfoDal.Update(userInfo);
+        }
+
+        public Page<UserSearchModel> Search(UserSearchParam para)
+        {
+            var db = userInfoDal.Search(para);
+            if (db.Total == 0)
+                return new Page<UserSearchModel>() {
+                    Total=0
+                };
+            return new Page<UserSearchModel>()
+            {
+                Total = db.Total,
+                Items = db.Items.Select(c => new UserSearchModel()
+                {
+                    CreateDate=c.CreateDate,
+                    HasShop=c.HasShop,
+                    Id=c.Id,
+                    Type=c.Type,
+                    WXName=c.WxName
+                }).ToList()
+            };
         }
     }
 }

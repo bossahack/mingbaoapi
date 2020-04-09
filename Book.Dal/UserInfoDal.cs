@@ -1,7 +1,9 @@
 ﻿using Book.Dal.Model;
+using Book.Model;
 using Dapper;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Book.Dal
 {
@@ -73,6 +75,42 @@ namespace Book.Dal
             {
                 var result = conn.Query<UserInfo>($"SELECT * from user_info where recommender=@id ORDER BY create_date DESC LIMIT {index * size},{size}", new { id=recommendId }).ToList();
                 return result;
+            }
+        }
+
+        public Page<UserInfo> Search(UserSearchParam para)
+        {
+            StringBuilder sb = new StringBuilder($"Where create_date>=@dateBegin and create_date<@dateEnd ");
+            var  p = new DynamicParameters();
+            p.Add("dateBegin",para.CreateDateBegin);
+            p.Add("dateEnd",para.CreateDateEnd);
+            if (para.HasShop.HasValue)
+            {
+                sb.Append("and has_shop=@hasShop ");
+                p.Add("hasShop",para.HasShop);
+            }
+            if(para.IsRecommender.HasValue)
+            {
+                if(para.IsRecommender.Value)
+                    sb.Append("and type=1 ");
+                else
+                    sb.Append("and type<>1 ");                
+            }
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var where = sb.ToString();
+                var total = conn.ExecuteScalar<int>("select  * from user_info " + where, p);
+                if (total == 0)
+                    return new Page<UserInfo>() {
+                        Total=0,
+                        Items=null
+                    };
+                var items = conn.GetListPaged<UserInfo>(para.Index, para.Size, where,"create_date desc", p);
+                return new Page<UserInfo>()
+                {
+                    Total = total,
+                    Items = items.ToList()
+                };
             }
         }
 

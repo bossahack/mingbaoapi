@@ -1,4 +1,6 @@
-﻿namespace Book.Model
+﻿using System;
+
+namespace Book.Model
 {
     public class UserInfoModel
     {
@@ -76,5 +78,33 @@
         public string WXName { get; set; }
         public int Id { get; set; }
         public bool HasShop { get; set; }
+    }
+
+    /// <summary>
+    /// 用户列表
+    /// </summary>
+    public class UserSearchModel
+    {        
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Id { get; set; }
+
+        public string WXName { get; set; }
+
+        public bool HasShop { get; set; }
+
+        public int Type { get; set; }        
+
+        public DateTime CreateDate { get; set; }
+    }
+
+    public class UserSearchParam: PageSearch
+    {
+        public DateTime CreateDateBegin { get; set; }
+        public DateTime CreateDateEnd { get; set; }
+        public bool? HasShop { get; set; }
+        public bool? IsRecommender  { get; set; }
+
     }
 }
