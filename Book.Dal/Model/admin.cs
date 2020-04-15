@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" user_fee_record.cs" company="xxxx Enterprises">
+// <copyright file=" admin.cs" company="xxxx Enterprises">
 // * Copyright (C) 2020 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: user_fee_record.cs
+// * FileName: admin.cs
 // * history : Created by T4 04/15/2020 17:48:24 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,10 +12,10 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// user_fee_record Entity Model
+    /// admin Entity Model
     /// </summary>   
-	[Dapper.Table("user_fee_record")]
-    public class UserFeeRecord
+	[Dapper.Table("admin")]
+    public class Admin
     {
         /// <summary>
         /// 
@@ -26,15 +26,15 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "user_id")]
-        public int UserId { get; set; }
+		[Column(Name = "name")]
+        public string Name { get; set; }
     
 
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "fee")]
-        public decimal Fee { get; set; }
+		[Column(Name = "pwd")]
+        public string Pwd { get; set; }
     
 
         /// <summary>
@@ -42,12 +42,5 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "create_time")]
         public DateTime CreateTime { get; set; }
-    
-
-        /// <summary>
-        /// 1:店铺提成 2:推广提成 3:提现
-        /// </summary>
-		[Column(Name = "type")]
-        public int Type { get; set; }
     }
 }

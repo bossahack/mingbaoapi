@@ -1,10 +1,10 @@
 //-----------------------------------------------------------------------
 // <copyright file=" user_info.cs" company="xxxx Enterprises">
-// * Copyright (C) 2019 xxxx Enterprises All Rights Reserved
+// * Copyright (C) 2020 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: user_info.cs
-// * history : Created by T4 12/19/2019 18:04:24 
+// * history : Created by T4 04/15/2020 17:48:24 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;

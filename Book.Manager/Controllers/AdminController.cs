@@ -1,4 +1,6 @@
-﻿using Book.Utils;
+﻿using Book.Model;
+using Book.Service;
+using Book.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +13,9 @@ namespace Book.Manager.Controllers
     public class AdminController : ApiController
     {
         [HttpPost]
-        public object Login()
+        public object Login(AdminLoginParam para)
         {
-            var id = 1;
-            return new
-            {
-                ID = id,
-                Token = SecurityUtil.GetInstance().EncryptString(id.ToString())
-            };
-            throw new Exception("用户名密码错误");
+            return AdminService.GetInstance().Login(para);
         } 
     }
 }

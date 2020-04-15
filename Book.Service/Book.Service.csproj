@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminService.cs" />
     <Compile Include="DictService.cs" />
     <Compile Include="QiniuService.cs" />
     <Compile Include="ShopDayOrderService.cs" />

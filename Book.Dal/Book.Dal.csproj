@@ -54,9 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminDal.cs" />
     <Compile Include="DictDal.cs" />
     <Compile Include="FoodDal.cs" />
     <Compile Include="FoodTypeDal.cs" />
+    <Compile Include="Model\admin.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\b_order.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
