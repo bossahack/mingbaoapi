@@ -105,7 +105,7 @@ namespace Book.Dal
                         Total=0,
                         Items=null
                     };
-                var items = conn.GetListPaged<UserInfo>(para.Index, para.Size, where,"create_date desc", p);
+                var items = conn.GetListPaged<UserInfo>(para.PageIndex, para.PageSize, where,"create_date desc", p);
                 return new Page<UserInfo>()
                 {
                     Total = total,

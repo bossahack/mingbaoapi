@@ -1,5 +1,6 @@
 ﻿using Book.Dal;
 using Book.Dal.Model;
+using Book.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,30 @@ namespace Book.Service
             };
             ShopDayOrderDal.GetInstance().Create(dayorder);
 
+        }
+
+        public Page<ShopDayOrderSearchModel> Search(ShopDayOrderSearchParam para)
+        {
+            var db = ShopDayOrderDal.GetInstance().Search(para);
+            if (db.Total == 0)
+                return new Page<ShopDayOrderSearchModel>()
+                {
+                    Total = 0
+                };
+            var shops = ShopDal.GetInstance().GetList(db.Items.Select(c => c.ShopId).ToList());
+            return new Page<ShopDayOrderSearchModel>()
+            {
+                Total = db.Total,
+                Items = db.Items.Select(c => new ShopDayOrderSearchModel()
+                {
+                    Id = c.Id,
+                    Date=c.Date,
+                    EffectQty=c.EffectQty,
+                    Qty=c.Qty,
+                    ShopId=c.ShopId,
+                    ShopName= shops.FirstOrDefault(s=>s.Id==c.ShopId)?.Name
+                }).ToList()
+            };
         }
 
     }

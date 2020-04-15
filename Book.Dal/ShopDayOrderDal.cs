@@ -1,4 +1,5 @@
 ﻿using Book.Dal.Model;
+using Book.Model;
 using Book.Model.Enums;
 using Dapper;
 using System;
@@ -77,6 +78,38 @@ set a.effect_qty=b.qty
 where a.date=b.date and a.shop_id=b.shop_id;
 
 drop table tmp;", new { date= fromDate.ToString("yyyy-MM-dd"),status=(int)OrderStatus.Completed});
+            }
+        }
+
+
+        public Page<ShopDayOrder> Search(ShopDayOrderSearchParam para)
+        {
+            StringBuilder sb = new StringBuilder($"Where date>=@dateBegin and date<@dateEnd ");
+            var p = new DynamicParameters();
+            p.Add("dateBegin", para.CreateDateBegin);
+            p.Add("dateEnd", para.CreateDateEnd);
+            if (para.ShopId.HasValue)
+            {
+                sb.Append("and shop_id=@shopId ");
+                p.Add("shopId", para.ShopId);
+            }
+
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var where = sb.ToString();
+                var total = conn.ExecuteScalar<int>("select  count(1) from shop_day_order " + where, p);
+                if (total == 0)
+                    return new Page<ShopDayOrder>()
+                    {
+                        Total = 0,
+                        Items = null
+                    };
+                var items = conn.GetListPaged<ShopDayOrder>(para.PageIndex, para.PageSize, where, "date desc", p);
+                return new Page<ShopDayOrder>()
+                {
+                    Total = total,
+                    Items = items.ToList()
+                };
             }
         }
     }

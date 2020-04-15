@@ -17,5 +17,10 @@ namespace Book.Manager.Controllers
         {
             return ShopService.GetInstance().Search(para);
         }
+
+        public Page<ShopDayOrderSearchModel> SearchDayOrder(ShopDayOrderSearchParam para)
+        {
+            return ShopDayOrderService.GetInstance().Search(para);
+        }
     }
 }
