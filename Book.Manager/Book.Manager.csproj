@@ -114,9 +114,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\AdminFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,6 +141,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Book.Dal\Book.Dal.csproj">
+      <Project>{446e473c-740e-4109-b83c-910bd4e6a705}</Project>
+      <Name>Book.Dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Book.Model\Book.Model.csproj">
       <Project>{56d26f19-d105-4782-94f5-5aff5d882327}</Project>
       <Name>Book.Model</Name>

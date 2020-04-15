@@ -94,7 +94,7 @@ namespace Book.Dal
                 if(para.IsRecommender.Value)
                     sb.Append("and type=1 ");
                 else
-                    sb.Append("and type<>1 ");                
+                    sb.Append("and(type is null or type<>1) ");                
             }
             using (var conn = SqlHelper.GetInstance())
             {

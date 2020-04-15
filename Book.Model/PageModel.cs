@@ -15,7 +15,7 @@ namespace Book.Model
 
     public class PageSearch
     {
-        public int Index { get; set; }
-        public int Size { get; set; }
+        public int Index { get; set; } = 1;
+        public int Size { get; set; } = 10;
     }
 }

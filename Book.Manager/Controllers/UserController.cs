@@ -1,4 +1,5 @@
-﻿using Book.Model;
+﻿using Book.Manager.Filters;
+using Book.Model;
 using Book.Service;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Http;
 
 namespace Book.Manager.Controllers
 {
+    [AdminFilter]
     public class UserController : ApiController
     {
         public Page<UserSearchModel> Search(UserSearchParam para)

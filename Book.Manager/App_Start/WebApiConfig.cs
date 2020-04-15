@@ -14,11 +14,20 @@ namespace Book.Manager
             // Web API 路由
             config.MapHttpAttributeRoutes();
 
+            //config.Routes.MapHttpRoute(
+            //    name: "DefaultApi",
+            //    routeTemplate: "api/{controller}/{action}",
+            //    defaults: new { id = RouteParameter.Optional }
+            //);
+
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+               name: "DefaultApi",
+               routeTemplate: "api/{controller}/{action}",
+               defaults: new { id = RouteParameter.Optional }
+           );
+
+            //调用前面的静态方法，将映射关系注册
+            Book.Dal.Model.ColumnMapper.SetMapper();
         }
     }
 }
