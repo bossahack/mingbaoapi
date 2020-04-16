@@ -47,6 +47,13 @@ namespace Book.Api.Controllers
         }
 
         [Filters.UserFilter]
+        [HttpPost]
+        public void RecommendByShop(int shopId)
+        {
+            UserService.GetInstance().RecommendByShop(shopId);
+        }
+
+        [Filters.UserFilter]
         [HttpGet]
         public object GetLoginInfo()
         {
