@@ -5,6 +5,7 @@ using Book.Dal.Model;
 using Book.Model.Enums;
 using Book.Model;
 using System.Text;
+using System;
 
 namespace Book.Dal
 {
@@ -150,6 +151,15 @@ namespace Book.Dal
                     Total = total,
                     Items = items.ToList()
                 };
+            }
+        }
+
+        public int GetRegisterShopNum(DateTime dt)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.ExecuteScalar<int>("SELECT count(1) from shop where create_date>=@date;", new { date = dt.ToShortDateString() });
+                return result;
             }
         }
     }

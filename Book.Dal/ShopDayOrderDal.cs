@@ -112,5 +112,14 @@ drop table tmp;", new { date= fromDate.ToString("yyyy-MM-dd"),status=(int)OrderS
                 };
             }
         }
+
+        public int GetShopOrderNum(DateTime dt)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.ExecuteScalar<int>("SELECT SUM(qty) from shop_day_order where date=@date;", new { date = dt.ToShortDateString() });
+                return result;
+            }
+        }
     }
 }

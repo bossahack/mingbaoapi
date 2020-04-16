@@ -162,7 +162,11 @@ namespace Book.Service
                 }).ToList()
             };
         }
-        
+
+        public int GetRegisterShopNum()
+        {
+            return ShopDal.GetInstance().GetRegisterShopNum(DateTime.Now);
+        }
     }
 
 }

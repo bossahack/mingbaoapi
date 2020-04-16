@@ -117,6 +117,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\TodayController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\AdminFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">

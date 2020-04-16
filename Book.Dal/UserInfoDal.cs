@@ -1,6 +1,7 @@
 ﻿using Book.Dal.Model;
 using Book.Model;
 using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -111,6 +112,23 @@ namespace Book.Dal
                     Total = total,
                     Items = items.ToList()
                 };
+            }
+        }
+
+        public int GetRegisterNum(DateTime dt)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.ExecuteScalar<int>("SELECT count(1)  from user_info where create_date>=@date",new { date = dt.ToShortDateString() });
+                return result;
+            }
+        }
+        public int GetRegisterNum(DateTime dt,int commenderType)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.ExecuteScalar<int>("SELECT count(1)  from user_info where create_date>=@date and recommender_type=@type", new { date = dt.ToShortDateString(), type = commenderType });
+                return result;
             }
         }
 

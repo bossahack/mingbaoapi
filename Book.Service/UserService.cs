@@ -132,7 +132,7 @@ namespace Book.Service
                 throw new Exception("开通店铺前，才可设置推荐人，操作失败");
 
             userInfo.Recommender = userId;
-            userInfo.RecommnderType = (int)RecommenderType.User;
+            userInfo.RecommenderType = (int)RecommenderType.User;
             userInfoDal.Update(userInfo);
         }
 
@@ -149,7 +149,7 @@ namespace Book.Service
                 throw new Exception("开通店铺前，才可设置推荐人，操作失败");
 
             userInfo.Recommender = shopId;
-            userInfo.RecommnderType = (int)RecommenderType.Shop;
+            userInfo.RecommenderType = (int)RecommenderType.Shop;
             userInfoDal.Update(userInfo);
         }
 
@@ -191,6 +191,20 @@ namespace Book.Service
                     WXName=c.WxName
                 }).ToList()
             };
+        }
+
+        public int GetRegisterNum()
+        {
+            return userInfoDal.GetRegisterNum(DateTime.Now);
+        }
+
+        public int GetRegisterNumByUser()
+        {
+            return userInfoDal.GetRegisterNum(DateTime.Now, (int)RecommenderType.User);
+        }
+        public int GetRegisterNumByShop()
+        {
+            return userInfoDal.GetRegisterNum(DateTime.Now, (int)RecommenderType.Shop);
         }
     }
 }

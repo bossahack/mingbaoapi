@@ -60,5 +60,9 @@ namespace Book.Service
             };
         }
 
+        public int GetShopOrderNum()
+        {
+            return ShopDayOrderDal.GetInstance().GetShopOrderNum(DateTime.Now);
+        }
     }
 }

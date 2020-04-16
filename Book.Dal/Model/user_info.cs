@@ -103,7 +103,7 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "recommnder_type")]
-        public int RecommnderType { get; set; }
+		[Column(Name = "recommender_type")]
+        public int RecommenderType { get; set; }
     }
 }
