@@ -23,6 +23,13 @@ namespace Book.Api.Controllers
             return ShopService.GetInstance().GetQRCode();
         }
 
+        [Filters.ShopFilter]
+        [HttpGet]
+        public object GetUsers(int index, int size)
+        {
+            return ShopService.GetInstance().GetUsers(index,size);
+        }
+
         #endregion
 
 

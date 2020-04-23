@@ -634,8 +634,8 @@ namespace Book.Service
         private void UserAbnormalCheck(int userId)
         {
             var qty = OrderAbnormalDal.GetInstance().GetUserAbnormalCount(userId, DateTime.Now.AddMonths(-1));
-            if(qty>3)
-               throw new Exception("一个月内异常单超过3单不可下单");
+            if(qty>2)
+               throw new Exception("一个月内异常单超过2单不可下单");
         }
 
         //60个字符

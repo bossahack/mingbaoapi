@@ -59,5 +59,14 @@ namespace Book.Dal
                 conn.Update(usershop);
             }
         }
+
+        public List<UserShop> GetPages(int shopId, int index, int size)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Query<UserShop>($"SELECT * FROM user_shop where shop_id=@shopid ORDER BY create_date DESC LIMIT {index * size},{size}", new { shopid = shopId }).ToList();
+                return result;
+            }
+        }
     }
 }

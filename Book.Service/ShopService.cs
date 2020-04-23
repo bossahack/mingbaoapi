@@ -167,6 +167,28 @@ namespace Book.Service
         {
             return ShopDal.GetInstance().GetRegisterShopNum(DateTime.Now);
         }
+
+        public object GetUsers(int index, int size)
+        {
+            var current = UserUtil.CurrentUser();
+            var userShops=UserShopDal.GetInstance().GetPages(current.ShopId, index, size);
+            if (userShops == null || userShops.Count == 0)
+                return null;
+
+            var users = UserInfoDal.GetInstance().GetList(userShops.Select(c => c.UserId).ToList());
+            var abnormals = OrderAbnormalDal.GetInstance().GetList(current.ShopId, users.Select(c => c.Id).ToList(), DateTime.Now.AddDays(-30));
+            return userShops.Select(c => {
+                var user = users.FirstOrDefault(d => d.Id == c.UserId);
+                return new
+                {
+                    user.Id,
+                    user.WxName,
+                    user.CreateDate,
+                    c.Total,
+                    AbnormalNum = abnormals.Count(d => d.UserId == c.UserId)
+                };
+            });
+        }
     }
 
 }
