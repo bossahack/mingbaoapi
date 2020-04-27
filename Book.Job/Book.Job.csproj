@@ -61,6 +61,7 @@
     <Compile Include="CalcShopDayOrderJob.cs" />
     <Compile Include="CalcShopMonthOrderJob.cs" />
     <Compile Include="CalcUserFee.cs" />
+    <Compile Include="CalcUserShopOrder.cs" />
     <Compile Include="CloseUnPayShopJob.cs" />
     <Compile Include="FinishOrderJob.cs" />
     <Compile Include="LogTraceListener.cs" />

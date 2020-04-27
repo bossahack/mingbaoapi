@@ -83,6 +83,7 @@ namespace Book.Job
                 new CalcShopMonthOrderJob().Execute();
                 new CloseUnPayShopJob().Execute();
                 new CalcUserFee().Execute();
+                new CalcUserShopOrder().Execute();
                 new RemoveUselessQiniuSourcesJob().Execute();
                 Console.WriteLine("end");
             });

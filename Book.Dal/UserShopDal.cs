@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
+using System;
+
 namespace Book.Dal
 {
     public class UserShopDal
@@ -66,6 +68,14 @@ namespace Book.Dal
             {
                 var result = conn.Query<UserShop>($"SELECT * FROM user_shop where shop_id=@shopid ORDER BY create_date DESC LIMIT {index * size},{size}", new { shopid = shopId }).ToList();
                 return result;
+            }
+        }
+
+        public void CalcUserShopOrder(DateTime date)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var result = conn.Execute($"UPDATE user_shop a INNER JOIN (select shop_id,user_id,count(1) num from b_order where create_date>=@begin and create_date<@end GROUP BY shop_id, user_id) b on a.shop_id = b.shop_id and a.user_id = b.user_id set a.total = a.total + b.num,a.lasted_date=NOW()", new { begin = date.ToString("yyyy-MM-dd"), end = date.AddDays(1).ToString("yyyy-MM-dd") });
             }
         }
     }
