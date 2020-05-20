@@ -204,6 +204,43 @@ namespace Book.Service
             }
         }
 
+        public Page<BillShopModel> Search(BillShopParam para)
+        {
+            var monthOrders = ShopMonthOrderDal.GetInstance().Search(para);
+            if (monthOrders.Total == 0)
+                return new Page<BillShopModel>() {
+                    Total=0
+                };
+            var result = new Page<BillShopModel>() {
+                Total = monthOrders.Total,
+                Items=new List<BillShopModel>()
+            };
+
+            var shops = ShopDal.GetInstance().GetList(monthOrders.Items.Select(c => c.ShopId).ToList());
+            monthOrders.Items.ForEach(item =>
+            {
+                var shop = shops.FirstOrDefault(c => c.Id == item.ShopId);
+                var bill = new BillShopModel()
+                {
+                    Id = item.Id,
+                    Month = item.Month,
+                    Year = item.Year,
+                    EffectQty = item.EffectQty,
+                    Qty = item.Qty,
+                    Status = item.Status,
+                    ShopAddress = shop.Address,
+                    ShopCreateDate = shop.CreateDate,
+                    ShopId = shop.Id,
+                    ShopName = shop.Name,
+                    ShopStatus = shop.Status,
+                    ShouldPay = item.ShouldPay
+                };
+                result.Items.Add(bill);
+            });
+            return result;
+
+        }
+
         private bool QueryOrder(string transaction_id)
         {
             WxPayData req = new WxPayData();

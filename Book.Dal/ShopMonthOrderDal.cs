@@ -1,4 +1,5 @@
 ﻿using Book.Dal.Model;
+using Book.Model;
 using Book.Model.Enums;
 using Dapper;
 using System;
@@ -25,7 +26,7 @@ namespace Book.Dal
             using (var conn = SqlHelper.GetInstance())
             {
                 conn.Execute($@"INSERT into shop_month_order(shop_id,year,month,qty,effect_qty,should_pay,status,user_fee_status,trade_no)
-SELECT id,@year,@month,0,0,0,0,0,CONCAT(@year, {month.ToString().PadLeft(2,'0')}, RIGHT(CONCAT('000000',id),7),'m') from shop where DAY(create_date)>=DAY(@begin) and DAY(create_date)<DAY(@end) and not EXISTS(select 1 FROM shop_month_order mo where mo.shop_id=shop.id and `month`=@month and year=@year)", new { begin = begin.ToString("yyyy-MM-dd"),end=end.ToString("yyyy-MM-dd"),year,month });
+SELECT id,@year,@month,0,0,0,@status,@userfeestatus,CONCAT(@year, {month.ToString().PadLeft(2,'0')}, RIGHT(CONCAT('000000',id),7),'m') from shop where DAY(create_date)>=DAY(@begin) and DAY(create_date)<DAY(@end) and not EXISTS(select 1 FROM shop_month_order mo where mo.shop_id=shop.id and `month`=@month and year=@year)", new { begin = begin.ToString("yyyy-MM-dd"),end=end.ToString("yyyy-MM-dd"),year,month,status=(int)BillStatus.Init,userfeestatus=(int)UserFeeStatus.Init });
             }
         }
 
@@ -59,7 +60,7 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                return conn.Query<ShopMonthOrder>(@"SELECT * from shop_month_order WHERE shop_id=@shopId LIMIT @count", new { shopId = shopId, count = count }).ToList();
+                return conn.Query<ShopMonthOrder>(@"SELECT * from shop_month_order WHERE shop_id=@shopId ORDER BY id desc LIMIT @count", new { shopId = shopId, count = count }).ToList();
             }
         }
 
@@ -108,6 +109,41 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
             using (var conn = SqlHelper.GetInstance())
             {
                 return conn.Query<ShopMonthOrder>("SELECT * from shop_month_order where `status`=@status and DATEDIFF(@dt,generate_date)=0", new { dt=dt.ToString("yyyy-MM-dd"),status=(int)BillStatus.Payed }).ToList();
+            }
+        }
+
+
+        public Page<ShopMonthOrder> Search(BillShopParam para)
+        {
+            StringBuilder sb = new StringBuilder($"Where 1=1 ");
+            var p = new DynamicParameters();
+            if (para.ShopId.HasValue)
+            {
+                sb.Append("and shop_id=@shopid ");
+                p.Add("shopid", para.ShopId);
+            }
+            if (para.BillStatus.HasValue)
+            {
+                sb.Append("and status=@status ");
+                p.Add("status", para.BillStatus);
+            }
+
+            using (var conn = SqlHelper.GetInstance())
+            {
+                var where = sb.ToString();
+                var total = conn.ExecuteScalar<int>("select  * from shop_month_order " + where, p);
+                if (total == 0)
+                    return new Page<ShopMonthOrder>()
+                    {
+                        Total = 0,
+                        Items = null
+                    };
+                var items = conn.GetListPaged<ShopMonthOrder>(para.PageIndex, para.PageSize, where, "generate_date desc", p);
+                return new Page<ShopMonthOrder>()
+                {
+                    Total = total,
+                    Items = items.ToList()
+                };
             }
         }
     }
