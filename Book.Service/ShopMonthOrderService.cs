@@ -241,6 +241,42 @@ namespace Book.Service
 
         }
 
+        public void Pay(BillPayParam param)
+        {
+            if (param.Id <= 0)
+                throw new Exception("出错了");
+            var current = AdminUtil.CurrentUser();
+            var bill = ShopMonthOrderDal.GetInstance().Get(param.Id);
+            if (bill == null)
+                throw new Exception("未查到该账单");
+            if (bill.Status == (int)BillStatus.Init)
+                throw new Exception("账单不是待付款状态，操作失败");
+            if (bill.Status == (int)BillStatus.Payed)
+                throw new Exception("账单已付款完成，操作失败");
+            var now = DateTime.Now;
+
+            bill.Status = (int)BillStatus.Payed;
+            bill.ShopPayDate = DateTime.Now;
+
+            ShopFeeRecord record = new ShopFeeRecord() {
+                ShopId=bill.ShopId,
+                AdminId=current.Id,
+                CreateTime=now,
+                Note=param.Note,
+                Fee=bill.ShouldPay
+            };
+            var shop = ShopDal.GetInstance().Get(bill.ShopId);
+            TransactionHelper.Run(() =>
+            {
+                ShopMonthOrderDal.GetInstance().Update(bill);
+                ShopFeeRecordDal.GetInstance().Create(record);
+                if (shop.Status == (int)ShopStatus.Arrears)
+                {
+                    ShopDal.GetInstance().SetStatus(shop.Id, (int)ShopStatus.Normal);
+                }
+            });
+        }
+
         private bool QueryOrder(string transaction_id)
         {
             WxPayData req = new WxPayData();

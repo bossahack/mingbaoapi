@@ -136,4 +136,11 @@ namespace Book.Model
         /// </summary>
         public DateTime ShopCreateDate { get; set; }
     }
+
+    public class BillPayParam
+    {
+        public int Id { get; set; }
+
+        public string Note { get; set; }
+    }
 }

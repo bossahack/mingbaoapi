@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: user_info.cs
-// * history : Created by T4 04/16/2020 10:25:10 
+// * history : Created by T4 05/20/2020 13:48:45 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -101,7 +101,7 @@ namespace Book.Dal.Model
     
 
         /// <summary>
-        /// 
+        /// 0:人，1:店
         /// </summary>
 		[Column(Name = "recommender_type")]
         public int RecommenderType { get; set; }

@@ -17,5 +17,10 @@ namespace Book.Manager.Controllers
         {
             return ShopMonthOrderService.GetInstance().Search(para);
         }
+
+        public void Pay(BillPayParam param)
+        {
+            ShopMonthOrderService.GetInstance().Pay(param);
+        }
     }
 }

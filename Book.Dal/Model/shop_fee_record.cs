@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: shop_fee_record.cs
-// * history : Created by T4 04/16/2020 10:25:10 
+// * history : Created by T4 05/20/2020 13:48:45 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -42,5 +42,19 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "create_time")]
         public DateTime CreateTime { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "admin_id")]
+        public int AdminId { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "note")]
+        public string Note { get; set; }
     }
 }
