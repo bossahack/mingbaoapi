@@ -73,8 +73,9 @@ namespace Book.Service
             return new UserInfoModel()
             {
                 Id = dbUser.Id,
-                WXName= wechatUserInfo.nickName,
-                Type=dbUser.Type
+                WXName = wechatUserInfo.nickName,
+                Type = dbUser.Type,
+                WxPhone = dbUser.WxPhone
             };
         }
 
@@ -207,7 +208,7 @@ namespace Book.Service
             return userInfoDal.GetRegisterNum(DateTime.Now, (int)RecommenderType.Shop);
         }
 
-        public void UpdatePhone(string code)
+        public UserInfoModel UpdatePhone(string code)
         {
             var current = UserUtil.CurrentUser();
             var now = DateTime.Now;
@@ -228,6 +229,13 @@ namespace Book.Service
             dbUser.WxPhone = record.Phone;
             userInfoDal.Update(dbUser);
 
+            return new UserInfoModel()
+            {
+                Id = dbUser.Id,
+                WXName = dbUser.WxName,
+                Type = dbUser.Type,
+                WxPhone = dbUser.WxPhone
+            };
         }
 
         public void SendCode(string phone)

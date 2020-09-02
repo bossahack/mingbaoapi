@@ -76,9 +76,9 @@ namespace Book.Api.Controllers
 
         [Filters.UserFilter]
         [HttpPost]
-        public void UpdatePhone(string code)
+        public UserInfoModel UpdatePhone(string code)
         {
-            UserService.GetInstance().UpdatePhone(code);
+            return UserService.GetInstance().UpdatePhone(code);
         }
 
         [Filters.UserFilter]

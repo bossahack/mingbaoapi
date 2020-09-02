@@ -23,6 +23,8 @@ namespace Book.Model
         public int Type { get; set; }
 
         public string WxNum { get; set; }
+
+        public string WxPhone { get; set; }
     }
 
     ///// <summary>
