@@ -1,9 +1,9 @@
 //-----------------------------------------------------------------------
-// <copyright file=" user_fee.cs" company="xxxx Enterprises">
+// <copyright file=" phone_code_record.cs" company="xxxx Enterprises">
 // * Copyright (C) 2020 xxxx Enterprises All Rights Reserved
 // * version : 4.0.30319.42000
 // * author  : licun
-// * FileName: user_fee.cs
+// * FileName: phone_code_record.cs
 // * history : Created by T4 09/01/2020 15:37:08 
 // </copyright>
 //-----------------------------------------------------------------------
@@ -12,10 +12,10 @@ using System;
 namespace Book.Dal.Model
 {
     /// <summary>
-    /// user_fee Entity Model
+    /// phone_code_record Entity Model
     /// </summary>   
-	[Dapper.Table("user_fee")]
-    public class UserFee
+	[Dapper.Table("phone_code_record")]
+    public class PhoneCodeRecord
     {
         /// <summary>
         /// 
@@ -33,8 +33,15 @@ namespace Book.Dal.Model
         /// <summary>
         /// 
         /// </summary>
-		[Column(Name = "total")]
-        public decimal Total { get; set; }
+		[Column(Name = "phone")]
+        public string Phone { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "code")]
+        public string Code { get; set; }
     
 
         /// <summary>

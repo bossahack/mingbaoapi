@@ -73,5 +73,19 @@ namespace Book.Api.Controllers
         {
             return UserFeeService.GetInstance().GetIncome();
         }
+
+        [Filters.UserFilter]
+        [HttpPost]
+        public void UpdatePhone(string code)
+        {
+            UserService.GetInstance().UpdatePhone(code);
+        }
+
+        [Filters.UserFilter]
+        [HttpPost]
+        public void SendCode(string phone)
+        {
+            UserService.GetInstance().SendCode(phone);
+        }
     }
 }

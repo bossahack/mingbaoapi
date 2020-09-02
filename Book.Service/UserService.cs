@@ -206,5 +206,65 @@ namespace Book.Service
         {
             return userInfoDal.GetRegisterNum(DateTime.Now, (int)RecommenderType.Shop);
         }
+
+        public void UpdatePhone(string code)
+        {
+            var current = UserUtil.CurrentUser();
+            var now = DateTime.Now;
+            var record = PhoneCodeRecordDal.GetInstance().GetFirst(current.Id);
+            if (record == null)
+                throw new Exception("验证码已失效，请重新发送验证码");
+
+            if((now- record.CreateTime).TotalMinutes>10)
+                throw new Exception("验证码已失效，请重新发送验证码");
+
+            if(record.Code.ToLower()!=code.ToLower())
+                throw new Exception("验证码错误");
+
+            var dbUser = userInfoDal.Get(current.Id);
+            if(dbUser==null)
+                throw new Exception("用户不存在");
+
+            dbUser.WxPhone = record.Phone;
+            userInfoDal.Update(dbUser);
+
+        }
+
+        public void SendCode(string phone)
+        {
+            var current = UserUtil.CurrentUser();
+
+            var now = DateTime.Now;
+            var h24 = now.AddDays(-1);
+            var recordCount = PhoneCodeRecordDal.GetInstance().GetTotalAfterTime(current.Id, h24);
+            if (recordCount > 2)
+                throw new Exception("");
+
+            var d180 = now.AddDays(-180);
+            recordCount= PhoneCodeRecordDal.GetInstance().GetTotalAfterTime(current.Id, h24);
+            if (recordCount > 8)
+                throw new Exception("");
+
+            phone = "+86" + phone;
+            var code = GenerateCode();
+            TransactionHelper.Run(()=> {
+
+                PhoneCodeRecordDal.GetInstance().Create(new PhoneCodeRecord()
+                {
+                    Code = code,
+                    Phone = phone,
+                    CreateTime = now,
+                    UserId = current.Id
+                });
+                new ShortMessageService().Send(phone, code);
+            });
+
+        }
+
+        private string GenerateCode()
+        {
+            var num=new Random().Next(9999);
+            return num.ToString().PadLeft(4);
+        }
     }
 }

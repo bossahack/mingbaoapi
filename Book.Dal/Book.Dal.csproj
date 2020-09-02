@@ -95,6 +95,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntityHelper.ttinclude</DependentUpon>
     </Compile>
+    <Compile Include="Model\phone_code_record.cs">
+      <DependentUpon>DbEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\shop.cs">
       <DependentUpon>DbEntity.tt</DependentUpon>
     </Compile>
@@ -131,6 +134,7 @@
     <Compile Include="OrderAbnormalDal.cs" />
     <Compile Include="OrderDal.cs" />
     <Compile Include="OrderItemDal.cs" />
+    <Compile Include="PhoneCodeRecordDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShopDal.cs" />
     <Compile Include="ShopDayOrderDal.cs" />
