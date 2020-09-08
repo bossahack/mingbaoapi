@@ -246,14 +246,13 @@ namespace Book.Service
             var h24 = now.AddDays(-1);
             var recordCount = PhoneCodeRecordDal.GetInstance().GetTotalAfterTime(current.Id, h24);
             if (recordCount > 2)
-                throw new Exception("");
+                throw new Exception("一天内只可发送3条验证码");
 
             var d180 = now.AddDays(-180);
             recordCount= PhoneCodeRecordDal.GetInstance().GetTotalAfterTime(current.Id, h24);
             if (recordCount > 8)
-                throw new Exception("");
-
-            phone = "+86" + phone;
+                throw new Exception("半年内发送短信数过多");
+            
             var code = GenerateCode();
             TransactionHelper.Run(()=> {
 
@@ -264,7 +263,7 @@ namespace Book.Service
                     CreateTime = now,
                     UserId = current.Id
                 });
-                new ShortMessageService().Send(phone, code);
+                new ShortMessageService().Send("+86" + phone, code);
             });
 
         }

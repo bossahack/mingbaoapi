@@ -31,7 +31,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                return conn.QueryFirstOrDefault<PhoneCodeRecord>("select  * from phone_code_record where user_id=@0 order by create_time desc",new { userId });
+                return conn.QueryFirstOrDefault<PhoneCodeRecord>("select * from phone_code_record where user_id=@userId order by create_time desc  LIMIT 1", new { userId });
             }
         }
 

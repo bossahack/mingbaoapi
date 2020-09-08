@@ -42,7 +42,7 @@ namespace Book.Service
                 SmsClient client = new SmsClient(cred, "ap-guangzhou");                               
                 SendSmsRequest req = new SendSmsRequest();                
                 req.SmsSdkAppid = SmsSdkAppid;
-                req.Sign = SmsSign;
+                req.Sign = UTF8Encoding.UTF8.GetString(UTF8Encoding.UTF8.GetBytes("我不排队公众号"));
                 req.PhoneNumberSet = new String[] {phone };
                 req.TemplateID = SmsTemplateID;
                 req.TemplateParamSet = new String[] { code };
