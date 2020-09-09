@@ -75,7 +75,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                conn.Execute("UPDATE shop SET wx_phone=@phone where id=@id", new { phone = phone, id = shopid });
+                conn.Execute("UPDATE shop SET phone=@phone where id=@id", new { phone = phone, id = shopid });
             }
         }
 

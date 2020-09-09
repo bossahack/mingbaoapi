@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: user_fee_record.cs
-// * history : Created by T4 09/01/2020 15:37:08 
+// * history : Created by T4 09/08/2020 16:59:13 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;

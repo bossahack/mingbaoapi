@@ -36,7 +36,8 @@ namespace Book.Service
                 Name = shop.Name,
                 Recommender = shop.Recommender,
                 Status = shop.Status,
-                UnPay= ShopMonthOrderService.GetInstance().hasUnPay()
+                UnPay= ShopMonthOrderService.GetInstance().hasUnPay(),
+                Phone=shop.Phone
             };
         }
 
@@ -51,7 +52,8 @@ namespace Book.Service
                 Address = shop.Address,
                 Logo = shop.Logo,
                 Name = shop.Name,
-                Status = shop.Status
+                Status = shop.Status,
+                Phone=shop.Phone
             };
         }
 

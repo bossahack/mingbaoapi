@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: shop.cs
-// * history : Created by T4 09/01/2020 15:37:08 
+// * history : Created by T4 09/08/2020 16:59:13 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -70,5 +70,12 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "create_date")]
         public DateTime CreateDate { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "phone")]
+        public string Phone { get; set; }
     }
 }

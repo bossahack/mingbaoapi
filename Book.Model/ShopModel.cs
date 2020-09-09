@@ -47,6 +47,8 @@ namespace Book.Model
         public DateTime CreateDate { get; set; }
 
         public bool UnPay { get; set; }
+
+        public string Phone { get; set; }
     }
 
     public class OrderShopModel
@@ -97,6 +99,8 @@ namespace Book.Model
         /// 0:正常 10:不营业 20:欠费
         /// </summary>
         public int Status { get; set; }
+
+        public string Phone { get; set; }
         
     }
 
