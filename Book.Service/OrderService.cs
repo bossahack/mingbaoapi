@@ -71,7 +71,8 @@ namespace Book.Service
                 result.Users.Add(new ShopOrderHistoryUserInfoModel()
                 {
                     Id=user.Id,
-                    WXName=user.WxName
+                    WXName=user.WxName,
+                    Phone=user.WxPhone
                 });
             }
             return result;
@@ -128,7 +129,8 @@ namespace Book.Service
                 result.Users.Add(new ShopOrderHistoryUserInfoModel()
                 {
                     Id = user.Id,
-                    WXName = user.WxName
+                    WXName = user.WxName,
+                    Phone=user.WxPhone
                 });
             }
             return result;
@@ -538,7 +540,8 @@ namespace Book.Service
                 result.Users.Add(new ShopOrderHistoryUserInfoModel()
                 {
                     Id = item.Id,
-                    WXName = item.WxName
+                    WXName = item.WxName,
+                    Phone=item.WxPhone
                 });
             }
             return result;

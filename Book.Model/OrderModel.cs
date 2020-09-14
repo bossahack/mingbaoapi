@@ -273,8 +273,9 @@ namespace Book.Model
         /// 
         /// </summary>
         public int Id { get; set; }
-        
+
         public string WXName { get; set; }
+        public string Phone { get; set; }
     }
 
     #endregion
