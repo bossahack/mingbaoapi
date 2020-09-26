@@ -59,7 +59,7 @@ namespace Book.Dal
         /// n天内的有效单量
         /// </summary>
         /// <param name="fromDate"></param>
-        public void CalcShopDayOrder(DateTime fromDate)
+        public void CalcShopDayOrderQty(DateTime fromDate)
         {
             using (var conn = SqlHelper.GetInstance())
             {
@@ -119,6 +119,34 @@ drop table tmp;", new { date= fromDate.ToString("yyyy-MM-dd"),status=(int)OrderS
             {
                 var result = conn.ExecuteScalar<int>("SELECT SUM(qty) from shop_day_order where date=@date;", new { date = dt.ToShortDateString() });
                 return result;
+            }
+        }
+
+
+        public List<ShopDayOrder> GetAfterDay( DateTime day)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                return conn.Query<ShopDayOrder>("SELECT * from shop_day_order where  date>=@date", new { date = day.ToString("yyyy-MM-dd") }).ToList();
+            }
+        }
+
+
+
+        public void CalcDayOrderFee(DateTime day)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Execute(@"
+UPDATE shop_day_order dayorder
+INNER JOIN (SELECT b.shop_id,a.date, SUM(b.total_price) totalprice 
+from shop_day_order a
+inner join b_order b on a.shop_id=b.shop_id and a.date=DATE(b.create_date)
+where a.date>=@dateBegin
+and b.total_price is not null
+GROUP  BY b.shop_id,a.date) dayorderfee on dayorder.shop_id=dayorderfee.shop_id and dayorder.date=dayorderfee.date
+set dayorder.fee=dayorderfee.totalprice
+", new { dateBegin = day.ToString("yyyy-MM-dd") });
             }
         }
     }

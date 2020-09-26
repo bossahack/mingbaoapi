@@ -19,7 +19,10 @@ namespace Book.Job
                 {
                     return;
                 }
-                ShopDayOrderDal.GetInstance().CalcShopDayOrder(DateTime.Now.AddDays(-2));
+                var beginDay = DateTime.Now.AddDays(-2);
+                calcOrderFee(beginDay);
+                calcDayOrderFee(beginDay);
+                ShopDayOrderDal.GetInstance().CalcShopDayOrderQty(DateTime.Now.AddDays(-2));
             }
             catch(Exception ex)
             {
@@ -27,6 +30,28 @@ namespace Book.Job
                 retryCount++;
                 Execute(retryCount);
             }
+        }
+
+        private void calc()
+        {
+            var beginDate = DateTime.Now.AddDays(-2);
+            var shopDayOrders = ShopDayOrderDal.GetInstance().GetAfterDay(beginDate);
+            if (shopDayOrders == null)
+                return;
+            foreach(var shopDayOrder in shopDayOrders)
+            {
+
+            }
+        }
+
+        private void calcOrderFee(DateTime beginDay)
+        {
+            OrderDal.GetInstance().CalcOrderPrice(beginDay);
+        }
+        private void calcDayOrderFee(DateTime beginDay)
+        {
+            ShopDayOrderDal.GetInstance().CalcDayOrderFee(beginDay);
+
         }
     }
 }

@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: shop_day_order.cs
-// * history : Created by T4 09/08/2020 16:59:13 
+// * history : Created by T4 09/22/2020 17:42:08 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -49,5 +49,12 @@ namespace Book.Dal.Model
         /// </summary>
 		[Column(Name = "effect_qty")]
         public int EffectQty { get; set; }
+    
+
+        /// <summary>
+        /// 
+        /// </summary>
+		[Column(Name = "fee")]
+        public decimal Fee { get; set; }
     }
 }

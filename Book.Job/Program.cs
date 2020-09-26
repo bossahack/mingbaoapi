@@ -14,7 +14,7 @@ namespace Book.Job
         static void Main(string[] args)
         {
             Book.Dal.Model.ColumnMapper.SetMapper();
-            //ManualExe();
+            ManualExe();
             FeeJobScheduler.start().GetAwaiter().GetResult();
             while (true)
             {
@@ -32,7 +32,7 @@ namespace Book.Job
             new CalcShopDayOrderJob().Execute();
             new CalcShopMonthOrderJob().Execute();
             new CloseUnPayShopJob().Execute();
-            new CalcUserFee().Execute();
+            //new CalcUserFee().Execute();
             new RemoveUselessQiniuSourcesJob().Execute();
             Console.WriteLine("end");
         }

@@ -16,25 +16,25 @@
       <publishTime>08/03/2019 23:29:52</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/14/2020 15:13:45</publishTime>
+      <publishTime>09/14/2020 15:55:36</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/14/2020 15:13:45</publishTime>
+      <publishTime>09/14/2020 15:55:36</publishTime>
     </File>
     <File Include="bin/Book.Api.dll">
-      <publishTime>09/14/2020 15:13:21</publishTime>
+      <publishTime>09/14/2020 15:55:12</publishTime>
     </File>
     <File Include="bin/Book.Dal.dll">
-      <publishTime>09/10/2020 17:59:59</publishTime>
+      <publishTime>09/14/2020 15:55:05</publishTime>
     </File>
     <File Include="bin/Book.Model.dll">
-      <publishTime>09/10/2020 17:59:57</publishTime>
+      <publishTime>09/14/2020 15:55:04</publishTime>
     </File>
     <File Include="bin/Book.Service.dll">
-      <publishTime>09/10/2020 18:00:02</publishTime>
+      <publishTime>09/14/2020 15:55:06</publishTime>
     </File>
     <File Include="bin/Book.Utils.dll">
-      <publishTime>09/10/2020 18:00:00</publishTime>
+      <publishTime>09/14/2020 15:55:05</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>08/11/2018 10:03:48</publishTime>
@@ -154,7 +154,7 @@
       <publishTime>09/14/2020 15:12:12</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/14/2020 15:13:26</publishTime>
+      <publishTime>09/14/2020 15:55:17</publishTime>
     </File>
     <File Include="Web.config">
       <publishTime>09/14/2020 15:13:22</publishTime>

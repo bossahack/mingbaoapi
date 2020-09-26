@@ -141,6 +141,19 @@ UPDATE b_order set `status`=20,update_user=-1,update_time=now() where `status`=0
                 });
             }
         }
-        
+
+
+        public void CalcOrderPrice(DateTime day)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Execute(@"UPDATE b_order ordermaster
+inner JOIN (SELECT a.id, SUM(b.food_price*qty) totalFee FROM `b_order` a
+INNER JOIN b_order_item b on a.id=b.order_id
+where a.create_date>=@dateBegin and `status`=20
+GROUP BY a.id) orderfee on ordermaster.id=orderfee.id
+set ordermaster.total_price=orderfee.totalFee", new { dateBegin = day.ToString("yyyy-MM-dd") });
+            }
+        }
     }
 }
