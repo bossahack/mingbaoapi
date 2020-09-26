@@ -104,7 +104,7 @@ namespace Book.Dal
         {
             using (var conn = SqlHelper.GetInstance())
             {
-                conn.Execute(@"UPDATE b_order set `status`= 20, update_user = -1,update_time=now() where `status`= 10 AND create_date >= DATE_ADD(@date, INTERVAL - 2 DAY);
+                conn.Execute(@"UPDATE b_order set `status`= 20, update_user = -1,update_time=now() where `status`= 10 AND create_date >= DATE_ADD(@date, INTERVAL - 2 DAY) and create_date<date_add(@date, interval -4 hour);
 UPDATE b_order set `status`=20,update_user=-1,update_time=now() where `status`=0 AND create_date>=DATE_ADD(@date,interval -2 DAY) and create_date<date_add(@date, interval -24 hour);
 ", new { date = date.ToString("yyyy-MM-dd") });
             }
@@ -169,7 +169,7 @@ when total_price<25 then 0.6
 when total_price<30 then 0.7
 else 1
 end 
-where create_date>=@dateBegin and total_price is not null and `status`=20", new { dateBegin = day.ToString("yyyy-MM-dd") });
+where create_date>=@dateBegin and `status`=20 and total_price is not null", new { dateBegin = day.ToString("yyyy-MM-dd") });
             }
         }
     }
