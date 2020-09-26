@@ -36,8 +36,8 @@ SELECT id,@year,@month,0,0,0,@status,@userfeestatus,CONCAT(@year, {month.ToStrin
             {
                 conn.Execute(@"
 UPDATE shop_month_order monthorder,(SELECT SUM( dayorder.effect_qty) effectqty,dayorder.shop_id from shop_day_order dayorder where  dayorder.date>=@orderBegin and dayorder.date<=@orderEnd GROUP BY dayorder.shop_id ) b,(SELECT SUM( dayorder.qty) qty,dayorder.shop_id from shop_day_order dayorder where  dayorder.date>=@orderBegin and dayorder.date<=@orderEnd GROUP BY dayorder.shop_id ) a,(SELECT SUM( dayorder.fee) totalfee,dayorder.shop_id from shop_day_order dayorder where  dayorder.date>=@orderBegin and dayorder.date<=@orderEnd GROUP BY dayorder.shop_id ) fee
-set monthorder.effect_qty=b.effectqty,monthorder.qty=a.qty,should_pay=c.ttalfee,status=@status,generate_date=now()
-WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM shop where Day(create_date) >=Day(@createBegin) and Day(create_date)<Day(@createEnd)) and monthorder.shop_id=b.shop_id and monthorder.shop_id=a.shop_id and monthorder.shop_id=c.shop_id", new { createBegin = createBegin.ToString("yyyy-MM-dd"), createEnd = createEnd.ToString("yyyy-MM-dd"), orderBegin=orderBegin.ToString("yyyy-MM-dd"), orderEnd= orderEnd.ToString("yyyy-MM-dd"), year, month,status=(int)BillStatus.UnPay });
+set monthorder.effect_qty=b.effectqty,monthorder.qty=a.qty,should_pay=fee.totalfee,status=@status,generate_date=now()
+WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM shop where Day(create_date) >=Day(@createBegin) and Day(create_date)<Day(@createEnd)) and monthorder.shop_id=b.shop_id and monthorder.shop_id=a.shop_id and monthorder.shop_id=fee.shop_id", new { createBegin = createBegin.ToString("yyyy-MM-dd"), createEnd = createEnd.ToString("yyyy-MM-dd"), orderBegin=orderBegin.ToString("yyyy-MM-dd"), orderEnd= orderEnd.ToString("yyyy-MM-dd"), year, month,status=(int)BillStatus.UnPay });
             }
 
         }
