@@ -14,7 +14,7 @@ namespace Book.Job
         static void Main(string[] args)
         {
             Book.Dal.Model.ColumnMapper.SetMapper();
-            ManualExe();
+            //ManualExe();
             FeeJobScheduler.start().GetAwaiter().GetResult();
             while (true)
             {
