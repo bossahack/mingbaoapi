@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: b_order.cs
-// * history : Created by T4 09/22/2020 17:42:08 
+// * history : Created by T4 09/26/2020 14:51:31 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;
@@ -87,9 +87,16 @@ namespace Book.Dal.Model
     
 
         /// <summary>
-        /// 
+        /// 总价
         /// </summary>
 		[Column(Name = "total_price")]
         public decimal TotalPrice { get; set; }
+    
+
+        /// <summary>
+        /// 费用
+        /// </summary>
+		[Column(Name = "fee")]
+        public decimal Fee { get; set; }
     }
 }

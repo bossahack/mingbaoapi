@@ -4,7 +4,7 @@
 // * version : 4.0.30319.42000
 // * author  : licun
 // * FileName: user_shop.cs
-// * history : Created by T4 09/22/2020 17:42:08 
+// * history : Created by T4 09/26/2020 14:51:31 
 // </copyright>
 //-----------------------------------------------------------------------
 using System;

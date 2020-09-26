@@ -155,5 +155,22 @@ GROUP BY a.id) orderfee on ordermaster.id=orderfee.id
 set ordermaster.total_price=orderfee.totalFee", new { dateBegin = day.ToString("yyyy-MM-dd") });
             }
         }
+
+        public void CalcOrderFee(DateTime day)
+        {
+            using (var conn = SqlHelper.GetInstance())
+            {
+                conn.Execute(@"UPDATE b_order set fee=case 
+when total_price<5 then 0.1
+when total_price<10 then 0.2
+when total_price<15 then 0.3
+when total_price<20 then 0.5
+when total_price<25 then 0.6
+when total_price<30 then 0.7
+else 1
+end 
+where create_date>=@dateBegin and total_price is not null and `status`=20", new { dateBegin = day.ToString("yyyy-MM-dd") });
+            }
+        }
     }
 }

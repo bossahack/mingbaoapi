@@ -139,13 +139,13 @@ drop table tmp;", new { date= fromDate.ToString("yyyy-MM-dd"),status=(int)OrderS
             {
                 conn.Execute(@"
 UPDATE shop_day_order dayorder
-INNER JOIN (SELECT b.shop_id,a.date, SUM(b.total_price) totalprice 
+INNER JOIN (SELECT b.shop_id,a.date, SUM(b.fee) fee 
 from shop_day_order a
 inner join b_order b on a.shop_id=b.shop_id and a.date=DATE(b.create_date)
 where a.date>=@dateBegin
 and b.total_price is not null
 GROUP  BY b.shop_id,a.date) dayorderfee on dayorder.shop_id=dayorderfee.shop_id and dayorder.date=dayorderfee.date
-set dayorder.fee=dayorderfee.totalprice
+set dayorder.fee=dayorderfee.fee
 ", new { dateBegin = day.ToString("yyyy-MM-dd") });
             }
         }

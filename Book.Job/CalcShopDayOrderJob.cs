@@ -20,7 +20,8 @@ namespace Book.Job
                     return;
                 }
                 var beginDay = DateTime.Now.AddDays(-2);
-                calcOrderFee(beginDay);
+                calcOrderPrice(beginDay);
+                CalcOrderFee(beginDay);
                 calcDayOrderFee(beginDay);
                 ShopDayOrderDal.GetInstance().CalcShopDayOrderQty(DateTime.Now.AddDays(-2));
             }
@@ -44,9 +45,14 @@ namespace Book.Job
             }
         }
 
-        private void calcOrderFee(DateTime beginDay)
+        private void calcOrderPrice(DateTime beginDay)
         {
             OrderDal.GetInstance().CalcOrderPrice(beginDay);
+        }
+
+        private void CalcOrderFee(DateTime beginDay)
+        {
+            OrderDal.GetInstance().CalcOrderFee(beginDay);
         }
         private void calcDayOrderFee(DateTime beginDay)
         {
