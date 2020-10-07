@@ -48,7 +48,7 @@ namespace Book.Watch
                                 continue;
 
                             var online = ShopOnLineDal.GetInstance().Get(shopId);
-                            if (online != null && (DateTime.Now - online.LastKeepTime).TotalMinutes < 5)
+                            if (online != null)
                             {
                                 EndPoint shopPoint = new IPEndPoint(IPAddress.Parse(online.Ip), online.Port);
                                 OnlineUser.server.SendTo(Encoding.Default.GetBytes(arr[1]), shopPoint);

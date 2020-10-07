@@ -39,7 +39,7 @@ namespace Book.Watch
                             string message = Encoding.UTF8.GetString(buffer, 0, length);
                             if (message == "0") {
                                 Console.WriteLine(DateTime.Now.ToShortTimeString());
-                                server.SendTo(Encoding.Default.GetBytes("a"), point);
+                                server.SendTo(Encoding.Default.GetBytes("r"), point);
                                 continue;
                             }
 

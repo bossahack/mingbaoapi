@@ -598,7 +598,7 @@ namespace Book.Service
         /// </summary>
         /// <param name="shopId"></param>
         /// <param name="msg">a:新单子，c:取消了</param>
-        public void sendUdp( int shopId,string msg="a")
+        public void sendUdp( int shopId,string msg="n")
         {
             UdpSendHelper.Send(string.Format($"{shopId}&{msg}"));
         }
