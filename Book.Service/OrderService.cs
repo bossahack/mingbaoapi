@@ -630,8 +630,8 @@ namespace Book.Service
         private void OrderQtyCheck(int userId)
         {
             var qty = OrderDal.GetInstance().GetUserOrderCount(userId, DateTime.Now.AddHours(-3));
-            //if (qty > 300)
-            //    throw new Exception("3小时内下单不能超过3单");
+            if (qty > 3)
+                throw new Exception("3小时内下单不能超过3单");
         }
 
         private void UserAbnormalCheck(int userId)
