@@ -14,7 +14,7 @@ namespace Book.Job
         static void Main(string[] args)
         {
             Book.Dal.Model.ColumnMapper.SetMapper();
-            //ManualExe();
+            new helper().ManualExe();
             FeeJobScheduler.start().GetAwaiter().GetResult();
             while (true)
             {
@@ -22,20 +22,20 @@ namespace Book.Job
             }
         }
 
-        /// <summary>
-        /// 手动执行
-        /// </summary>
-        static void ManualExe()
-        {
-            Console.WriteLine("begin");
-            new FinishOrderJob().Execute();
-            new CalcShopDayOrderJob().Execute();
-            new CalcShopMonthOrderJob().Execute();
-            new CloseUnPayShopJob().Execute();
-            //new CalcUserFee().Execute();
-            new RemoveUselessQiniuSourcesJob().Execute();
-            Console.WriteLine("end");
-        }
+        ///// <summary>
+        ///// 手动执行
+        ///// </summary>
+        //static void ManualExe()
+        //{
+        //    Console.WriteLine("begin");
+        //    new FinishOrderJob().Execute();
+        //    new CalcShopDayOrderJob().Execute();
+        //    new CalcShopMonthOrderJob().Execute();
+        //    new CloseUnPayShopJob().Execute();
+        //    //new CalcUserFee().Execute();
+        //    new RemoveUselessQiniuSourcesJob().Execute();
+        //    Console.WriteLine("end");
+        //}
     }
 
 
@@ -77,17 +77,25 @@ namespace Book.Job
         {
             return Task.Run(() =>
             {
-                Console.WriteLine("begin");
-                new FinishOrderJob().Execute();
-                new CalcShopDayOrderJob().Execute();
-                new CalcShopMonthOrderJob().Execute();
-                new CloseUnPayShopJob().Execute();
-                new CalcUserFee().Execute();
-                new CalcUserShopOrder().Execute();
-                new RemoveUselessQiniuSourcesJob().Execute();
-                Console.WriteLine("end");
+                new helper().ManualExe();
             });
         }
+    }
+
+    public class helper
+    {
+        public void ManualExe()
+        {
+            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")+"begin");
+            new FinishOrderJob().Execute();
+            new CalcShopDayOrderJob().Execute();
+            new CalcShopMonthOrderJob().Execute();
+            new CloseUnPayShopJob().Execute();
+            //new CalcUserFee().Execute();
+            new RemoveUselessQiniuSourcesJob().Execute();
+            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "end");
+        }
+
     }
 
    

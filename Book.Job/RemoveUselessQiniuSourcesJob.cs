@@ -23,6 +23,7 @@ namespace Book.Job
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 Trace.WriteLine(ex.ToString());
                 retryCount++;
                 Execute(retryCount);

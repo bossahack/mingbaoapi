@@ -16,25 +16,25 @@
       <publishTime>08/03/2019 23:29:52</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/14/2020 15:55:36</publishTime>
+      <publishTime>10/10/2020 10:32:51</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/14/2020 15:55:36</publishTime>
+      <publishTime>10/10/2020 10:32:50</publishTime>
     </File>
     <File Include="bin/Book.Api.dll">
-      <publishTime>09/14/2020 15:55:12</publishTime>
+      <publishTime>10/10/2020 10:32:22</publishTime>
     </File>
     <File Include="bin/Book.Dal.dll">
-      <publishTime>09/14/2020 15:55:05</publishTime>
+      <publishTime>09/26/2020 18:11:35</publishTime>
     </File>
     <File Include="bin/Book.Model.dll">
       <publishTime>09/14/2020 15:55:04</publishTime>
     </File>
     <File Include="bin/Book.Service.dll">
-      <publishTime>09/14/2020 15:55:06</publishTime>
+      <publishTime>10/10/2020 10:32:16</publishTime>
     </File>
     <File Include="bin/Book.Utils.dll">
-      <publishTime>09/14/2020 15:55:05</publishTime>
+      <publishTime>10/10/2020 10:32:16</publishTime>
     </File>
     <File Include="bin/BouncyCastle.Crypto.dll">
       <publishTime>08/11/2018 10:03:48</publishTime>
@@ -79,7 +79,7 @@
       <publishTime>09/29/2019 09:18:34</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>04/22/2019 01:06:16</publishTime>
+      <publishTime>11/09/2019 00:56:44</publishTime>
     </File>
     <File Include="bin/Pathoschild.Http.Client.dll">
       <publishTime>04/18/2018 15:54:34</publishTime>
@@ -151,13 +151,13 @@
       <publishTime>01/28/2015 04:03:48</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>09/14/2020 15:12:12</publishTime>
+      <publishTime>10/09/2020 14:56:26</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/14/2020 15:55:17</publishTime>
+      <publishTime>10/10/2020 10:32:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/14/2020 15:13:22</publishTime>
+      <publishTime>10/10/2020 10:32:23</publishTime>
     </File>
   </ItemGroup>
 </Project>

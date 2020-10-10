@@ -5,6 +5,7 @@ using Qiniu.Storage;
 using Qiniu.Util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -103,17 +104,17 @@ namespace Book.Service
 
             if (ret.Code != (int)HttpCode.OK)
             {
-                Console.WriteLine("删除出错了");
+                Trace.WriteLine("删除出错了");
             }
             foreach (BatchInfo info in ret.Result)
             {
                 if (info.Code == (int)HttpCode.OK)
                 {
-                    Console.WriteLine("删除成功");
+                    Trace.WriteLine("删除成功");
                 }
                 else
                 {
-                    Console.WriteLine(info.Data.Error);
+                    Trace.WriteLine(info.Data.Error);
                 }
             }
         }

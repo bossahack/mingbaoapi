@@ -52,7 +52,8 @@ namespace Book.Service
                     Id = dbUser.Id,
                     WXName =dbUser.WxName,
                     Type=dbUser.Type,
-                    WxNum=dbUser.WxNum
+                    WxNum=dbUser.WxNum,
+                    WxPhone=dbUser.WxPhone,
                 };
             }
             result.Token = SecurityUtil.GetInstance().EncryptString($"{result.Id}-{result.ShopId}");
@@ -75,6 +76,7 @@ namespace Book.Service
                 Id = dbUser.Id,
                 WXName = wechatUserInfo.nickName,
                 Type = dbUser.Type,
+                WxNum=dbUser.WxNum,
                 WxPhone = dbUser.WxPhone
             };
         }
