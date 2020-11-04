@@ -131,7 +131,7 @@ WHERE year=@year and `month`=@month and monthorder.shop_id in (SELECT id FROM sh
             using (var conn = SqlHelper.GetInstance())
             {
                 var where = sb.ToString();
-                var total = conn.ExecuteScalar<int>("select  * from shop_month_order " + where, p);
+                var total = conn.ExecuteScalar<int>("select  count(1) from shop_month_order " + where, p);
                 if (total == 0)
                     return new Page<ShopMonthOrder>()
                     {

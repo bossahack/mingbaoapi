@@ -29,7 +29,7 @@ namespace Book.Watch
                 try
                 {
                     EndPoint point = new IPEndPoint(IPAddress.Any, 0);//用来保存发送方的ip和端口号
-                    byte[] buffer = new byte[10];
+                    byte[] buffer = new byte[507];
 
                     while (true)
                     {

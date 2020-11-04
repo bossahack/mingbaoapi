@@ -138,7 +138,7 @@ namespace Book.Dal
             using (var conn = SqlHelper.GetInstance())
             {
                 var where = sb.ToString();
-                var total = conn.ExecuteScalar<int>("select  * from shop " + where, p);
+                var total = conn.ExecuteScalar<int>("select  count(*) from shop " + where, p);
                 if (total == 0)
                     return new Page<Shop>()
                     {
